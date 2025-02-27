@@ -3,8 +3,8 @@ import {
   LoginOTPSchema,
   OTPVerifiedReponseSchema,
   VerifyLoginOTPSchema,
-} from "../common";
-import { SuccessSchema } from "../../common";
+} from "@/auth/common";
+import { SuccessSchema } from "@/common";
 
 const c = initContract();
 
