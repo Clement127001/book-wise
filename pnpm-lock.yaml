@@ -6,7 +6,14 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    dependencies:
+      '@ts-rest/core':
+        specifier: ^3.52.0
+        version: 3.52.0(@types/node@22.13.5)(zod@3.24.2)
+      zod:
+        specifier: ^3.24.2
+        version: 3.24.2
 
   apps/backend:
     dependencies:
@@ -101,6 +108,15 @@ importers:
       typescript-eslint:
         specifier: ^8.20.0
         version: 8.24.1(eslint@9.21.0)(typescript@5.7.3)
+
+  apps/contract:
+    dependencies:
+      '@ts-rest/core':
+        specifier: ^3.52.0
+        version: 3.52.0(@types/node@22.13.5)(zod@3.24.2)
+      zod:
+        specifier: ^3.24.2
+        version: 3.24.2
 
 packages:
 
@@ -879,6 +895,17 @@ packages:
 
   '@tokenizer/token@0.3.0':
     resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
+
+  '@ts-rest/core@3.52.0':
+    resolution: {integrity: sha512-t2KWbRWTh9ikYFOugDNFGaEhiPOzlzkQA8uRHebRN/HtJoauPS4ry3jgdvd5hYQNB/QlfpYeLqBCnGudc9vFog==}
+    peerDependencies:
+      '@types/node': ^18.18.7 || >=20.8.4
+      zod: ^3.22.3
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      zod:
+        optional: true
 
   '@tsconfig/node10@1.0.11':
     resolution: {integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==}
@@ -3352,6 +3379,9 @@ packages:
     resolution: {integrity: sha512-cYVsTjKl8b+FrnidjibDWskAv7UKOfcwaVZdp/it9n1s9fU3IkgDbhdIRKCW4JDsAlECJY0ytoVPT3sK6kideA==}
     engines: {node: '>=18'}
 
+  zod@3.24.2:
+    resolution: {integrity: sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==}
+
 snapshots:
 
   '@ampproject/remapping@2.3.0':
@@ -4236,6 +4266,11 @@ snapshots:
       defer-to-connect: 2.0.1
 
   '@tokenizer/token@0.3.0': {}
+
+  '@ts-rest/core@3.52.0(@types/node@22.13.5)(zod@3.24.2)':
+    optionalDependencies:
+      '@types/node': 22.13.5
+      zod: 3.24.2
 
   '@tsconfig/node10@1.0.11': {}
 
@@ -6987,3 +7022,5 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   yoctocolors-cjs@2.1.2: {}
+
+  zod@3.24.2: {}

@@ -18,8 +18,8 @@
 
 ### the following things are need to be done before tuesday (11/03):
 
-- [ ] DB design
-- [ ] api design
+- [ ] DB design -> the core basic is done
+- [ ] api design -> api routes are almost done
 - [ ] project setup for backend
 - [ ] project setup for frontend with the colors -> no need for mobile responsiveness for v 1.0
 - [ ] Start backend
