@@ -33,6 +33,7 @@ export default defineConfig({
   },
 
   driverOptions: {
+    //TODO: temporarily disabled the ssl connection for local usage
     // connection: {
     //   ssl: {
     //     rejectUnauthorized: false,
