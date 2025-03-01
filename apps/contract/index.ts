@@ -1,10 +1,12 @@
 import { initContract } from "@ts-rest/core";
-import { authContract } from "@/auth/contract";
+import { adminAuthContract } from "@/adminAuth/contract";
+import { userAuthContract } from "@/userAuth/contract";
 import { userContract } from "@/user/contract";
 
 const c = initContract();
 
 export const contract = c.router({
-  auth: authContract,
+  adminAuth: adminAuthContract,
+  userAuth: userAuthContract,
   user: userContract,
 });

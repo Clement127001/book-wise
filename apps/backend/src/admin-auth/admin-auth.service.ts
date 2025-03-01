@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class UserAuthService {
+export class AdminAuthService {
   async getHello(): Promise<string> {
-    return 'Hai I am the auth service';
+    return 'Hi I am admin auth service';
   }
 }

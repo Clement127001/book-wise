@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { UserAuthService } from '@/user-auth/user-auth.service';
 
-import { userAuthContract } from 'contract/auth/userAuth/contract';
+import { userAuthContract } from 'contract/userAuth/contract';
 
 import {
   nestControllerContract,
@@ -19,11 +19,15 @@ export type UserAuthRequestShape = NestRequestShapes<typeof userAuthController>;
 export class UserAuthController
   implements NestControllerInterface<typeof userAuthController>
 {
-  constructor(private readonly userAuthServide: UserAuthService) {}
+  constructor(private readonly userAuthService: UserAuthService) {}
 
   @TsRest(userAuthContract.generateUserEmailVerficationOTP)
-  async generateUserEmailVerficationOTP() {
-    // { body }: UserAuthRequestShape['generateUserEmailVerficationOTP'], // @TsRestRequest(userAuthController.generateUserEmailVerficationOTP)
+  async generateUserEmailVerficationOTP(
+    @TsRestRequest()
+    { body }: UserAuthRequestShape['generateUserEmailVerficationOTP'],
+  ) {
+    await this.userAuthService.getHello();
+
     return {
       status: 200 as const,
       body: {

@@ -1,10 +1,10 @@
 import { initContract } from "@ts-rest/core";
 import {
+  SuccessSchema,
   LoginOTPSchema,
   OTPVerifiedReponseSchema,
   VerifyLoginOTPSchema,
-} from "@/auth/common";
-import { SuccessSchema } from "@/common";
+} from "@/common";
 
 const c = initContract();
 
