@@ -1,6 +1,6 @@
 # this is the first part of learning full stack devlopment on my own
 
-- the first part is going to have the simple application ( may be span upto 12 days that all)
+- the first part is going to have the simple application ( may be span upto 15 days that all)
 
   - day 1: design the db and api routes, then complete the backend setup
 
@@ -16,14 +16,14 @@
 
 ## the todo that are need to be checked are:
 
-### the following things are need to be done before tuesday (11/03):
+### the following things are need to be done before tuesday (14/03):
 
-- [ ] DB design -> the core basic is done
-- [ ] api design -> api routes are almost done
-- [ ] project setup for backend
-- [ ] project setup for frontend with the colors -> no need for mobile responsiveness for v 1.0
-- [ ] Start backend
+- [x] DB design -> the core basic is done
+- [x] api design -> api routes are almost done
+- [x] project setup for backend
+- [x] Start backend
 - [ ] do auth part
+- [ ] project setup for frontend with the colors -> no need for mobile responsiveness for v 1.0
 - [ ] frontend for auth part with the email verification
 - [ ] admin panel routes
 - [ ] frontend for admin panel
