@@ -11,7 +11,9 @@ export class UserAuthService {
     data: UserAuthRequestShape['verfiyUserEmailVerificationOTP']['body'],
   ) {
     //FIXME: dummy verificationId
-    return 'hi';
+    const verificationId = 'hi';
+
+    return { verificationId };
   }
 
   async generateUserLoginOTP(

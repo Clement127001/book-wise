@@ -42,7 +42,7 @@ export class UserAuthController
     @TsRestRequest()
     { body }: UserAuthRequestShape['verfiyUserEmailVerificationOTP'],
   ) {
-    const verificationId =
+    const { verificationId } =
       await this.userAuthService.verfiyUserEmailVerificationOTP(body);
 
     return {

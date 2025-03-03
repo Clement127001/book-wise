@@ -131,6 +131,15 @@
           "length": 6,
           "mappedType": "datetime"
         },
+        "admin_id": {
+          "name": "admin_id",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "text"
+        },
         "email": {
           "name": "email",
           "type": "text",
@@ -175,7 +184,21 @@
         }
       ],
       "checks": [],
-      "foreignKeys": {},
+      "foreignKeys": {
+        "admin_login_otp_admin_id_foreign": {
+          "constraintName": "admin_login_otp_admin_id_foreign",
+          "columnNames": [
+            "admin_id"
+          ],
+          "localTableName": "public.admin_login_otp",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.admin",
+          "deleteRule": "set null",
+          "updateRule": "cascade"
+        }
+      },
       "nativeEnums": {}
     },
     {
@@ -361,6 +384,17 @@
       "name": "user",
       "schema": "public",
       "indexes": [
+        {
+          "keyName": "user_email_identity_card_url_unique",
+          "columnNames": [
+            "email",
+            "identity_card_url"
+          ],
+          "composite": true,
+          "constraint": true,
+          "primary": false,
+          "unique": true
+        },
         {
           "keyName": "user_pkey",
           "columnNames": [

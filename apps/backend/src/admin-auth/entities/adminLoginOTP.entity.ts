@@ -1,8 +1,12 @@
-import { Entity, Property } from '@mikro-orm/core';
+import { Admin } from '@/admin/entities/admin.entity';
+import { Entity, ManyToOne, Property } from '@mikro-orm/core';
 import { BaseEntity } from 'base.entity';
 
 @Entity()
 export class AdminLoginOTP extends BaseEntity {
+  @ManyToOne({ nullable: true })
+  admin?: Admin;
+
   @Property()
   email: string;
 
@@ -12,9 +16,19 @@ export class AdminLoginOTP extends BaseEntity {
   @Property({ type: 'boolean', default: false })
   isUsed: boolean;
 
-  constructor({ email, otp }: { email: string; otp: string }) {
+  constructor({
+    email,
+    otp,
+    admin,
+  }: {
+    email: string;
+    otp: string;
+    admin?: Admin;
+  }) {
     super();
+    this.admin = admin;
     this.email = email;
     this.otp = otp;
+    this.isUsed = this.isUsed;
   }
 }

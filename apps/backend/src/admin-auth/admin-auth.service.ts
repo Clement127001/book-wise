@@ -33,7 +33,11 @@ export class AdminAuthService {
       specialChars: false,
     });
 
-    const adminLoginOtp = new AdminLoginOTP({ email, otp });
+    const adminLoginOtp = new AdminLoginOTP({
+      email,
+      otp,
+      admin: this.em.getReference(Admin, admin.id),
+    });
 
     this.em.persistAndFlush(adminLoginOtp);
   }

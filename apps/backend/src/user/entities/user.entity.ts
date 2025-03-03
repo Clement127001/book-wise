@@ -1,8 +1,9 @@
-import { Entity, Enum, Property } from '@mikro-orm/core';
+import { Entity, Enum, Property, Unique } from '@mikro-orm/core';
 import { BaseEntity } from 'base.entity';
 import { UserAccountStatus } from 'contract/enum';
 
 @Entity()
+@Unique({ properties: ['email', 'identityCardUrl'] })
 export class User extends BaseEntity {
   @Property()
   firstname: string;
