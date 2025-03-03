@@ -1,9 +1,15 @@
 import { plainToClass } from 'class-transformer';
-import { IsInt, validateSync } from 'class-validator';
+import { IsInt, IsString, validateSync } from 'class-validator';
 
 class EnvironmentVariables {
   @IsInt()
   PORT!: number;
+
+  @IsString()
+  DATABASE_URL!: string;
+
+  @IsString()
+  JWT_SECRET!: string;
 }
 
 export function validate(config: Record<string, unknown>) {

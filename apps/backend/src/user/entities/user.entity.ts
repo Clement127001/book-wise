@@ -3,7 +3,6 @@ import { BaseEntity } from 'base.entity';
 import { UserAccountStatus } from 'contract/enum';
 
 @Entity()
-@Unique({ properties: ['email', 'identityCardUrl'] })
 export class User extends BaseEntity {
   @Property()
   firstname: string;
@@ -15,16 +14,18 @@ export class User extends BaseEntity {
   avatarUrl: string | null;
 
   @Property()
+  @Unique()
   identityCardUrl: string;
 
   @Property()
+  @Unique()
   email: string;
 
   @Property({ type: 'boolean', default: false })
   isDeleted: boolean;
 
   @Enum({ items: () => UserAccountStatus, default: UserAccountStatus.PENDING })
-  isVerified: UserAccountStatus;
+  verificationStatus: UserAccountStatus;
 
   constructor({
     firstname,
@@ -45,5 +46,7 @@ export class User extends BaseEntity {
     this.avatarUrl = avatarUrl;
     this.identityCardUrl = identityCardUrl;
     this.email = email;
+    this.isDeleted = false;
+    this.verificationStatus = UserAccountStatus.PENDING;
   }
 }

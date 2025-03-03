@@ -3,4 +3,5 @@ export default () => ({
   database: {
     dbUrl: process.env['DATABASE_URL'],
   },
+  secret: process.env['JWT_SECRET'] || 'super-secret-123',
 });

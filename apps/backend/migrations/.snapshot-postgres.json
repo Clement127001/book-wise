@@ -365,8 +365,8 @@
           "default": "false",
           "mappedType": "boolean"
         },
-        "is_verified": {
-          "name": "is_verified",
+        "verification_status": {
+          "name": "verification_status",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,
@@ -385,12 +385,21 @@
       "schema": "public",
       "indexes": [
         {
-          "keyName": "user_email_identity_card_url_unique",
           "columnNames": [
-            "email",
             "identity_card_url"
           ],
-          "composite": true,
+          "composite": false,
+          "keyName": "user_identity_card_url_unique",
+          "constraint": true,
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "email"
+          ],
+          "composite": false,
+          "keyName": "user_email_unique",
           "constraint": true,
           "primary": false,
           "unique": true
@@ -441,6 +450,15 @@
           "length": 6,
           "mappedType": "datetime"
         },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        },
         "email": {
           "name": "email",
           "type": "text",
@@ -485,7 +503,20 @@
         }
       ],
       "checks": [],
-      "foreignKeys": {},
+      "foreignKeys": {
+        "user_login_otp_user_id_foreign": {
+          "constraintName": "user_login_otp_user_id_foreign",
+          "columnNames": [
+            "user_id"
+          ],
+          "localTableName": "public.user_login_otp",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.user",
+          "updateRule": "cascade"
+        }
+      },
       "nativeEnums": {}
     }
   ],

@@ -26,9 +26,10 @@ export class AdminLoginOTP extends BaseEntity {
     admin?: Admin;
   }) {
     super();
+
     this.admin = admin;
     this.email = email;
     this.otp = otp;
-    this.isUsed = this.isUsed;
+    this.isUsed = false;
   }
 }

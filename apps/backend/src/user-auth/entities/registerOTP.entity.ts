@@ -16,5 +16,6 @@ export class RegisterOTP extends BaseEntity {
     super();
     this.email = email;
     this.otp = otp;
+    this.isUsed = false;
   }
 }
