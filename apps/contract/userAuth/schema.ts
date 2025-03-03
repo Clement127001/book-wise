@@ -1,5 +1,7 @@
 import { z } from "zod";
-import { SuccessSchema } from "../common";
+import { LoginOTPRequetSchema, SuccessSchema } from "../common";
+
+export const UserEmailVerificationRequestSchema = LoginOTPRequetSchema;
 
 export const UserEmailVerfiedSuccessSchema = SuccessSchema.extend({
   verificationId: z.string(),

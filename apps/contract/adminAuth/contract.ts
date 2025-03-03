@@ -1,9 +1,9 @@
 import { initContract } from "@ts-rest/core";
 import {
   SuccessSchema,
-  LoginOTPSchema,
-  LoginOTPVerifiedSchema,
-  VerifyLoginOTPSchema,
+  LoginOTPRequetSchema,
+  LoginOTPVerifiedSuccessSchema,
+  VerifyEmailOTPRequestSchema,
 } from "../common";
 
 const c = initContract();
@@ -13,7 +13,7 @@ export const adminAuthContract = c.router(
     generateAdminLoginOTP: {
       method: "POST",
       path: "/generateAdminLoginOTP",
-      body: LoginOTPSchema,
+      body: LoginOTPRequetSchema,
       responses: {
         200: SuccessSchema,
       },
@@ -21,9 +21,9 @@ export const adminAuthContract = c.router(
     verifyAdminLoginOTP: {
       method: "POST",
       path: "/verifyAdminLoginOTP",
-      body: VerifyLoginOTPSchema,
+      body: VerifyEmailOTPRequestSchema,
       responses: {
-        201: LoginOTPVerifiedSchema,
+        201: LoginOTPVerifiedSuccessSchema,
       },
     },
   },

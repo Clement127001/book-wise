@@ -5,14 +5,14 @@ export const SuccessSchema = z.object({
   message: z.string(),
 });
 
-export const LoginOTPSchema = z.object({
+export const LoginOTPRequetSchema = z.object({
   email: z.string().email({ message: "Please provide a valid email address" }),
 });
 
-export const VerifyLoginOTPSchema = LoginOTPSchema.extend({
+export const VerifyEmailOTPRequestSchema = LoginOTPRequetSchema.extend({
   otp: z.string().length(6, { message: "Please Provide a valid OTP" }),
 });
 
-export const LoginOTPVerifiedSchema = SuccessSchema.extend({
+export const LoginOTPVerifiedSuccessSchema = SuccessSchema.extend({
   token: z.string(),
 });

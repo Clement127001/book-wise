@@ -1,36 +1,23 @@
 import { initContract } from "@ts-rest/core";
 import {
   SuccessSchema,
-  LoginOTPSchema,
-  VerifyLoginOTPSchema,
-  LoginOTPVerifiedSchema,
+  LoginOTPRequetSchema,
+  VerifyEmailOTPRequestSchema,
+  LoginOTPVerifiedSuccessSchema,
 } from "../common";
-import { UserEmailVerfiedSuccessSchema } from "./schema";
+import {
+  UserEmailVerfiedSuccessSchema,
+  UserEmailVerificationRequestSchema,
+} from "./schema";
 
 const c = initContract();
 
 export const userAuthContract = c.router(
   {
-    generateUserLoginOTP: {
-      method: "POST",
-      path: "/generateUserLoginOTP",
-      body: LoginOTPSchema,
-      responses: {
-        200: SuccessSchema,
-      },
-    },
-    verifyUserLoginOTP: {
-      method: "POST",
-      path: "/verifyUserLoginOTP",
-      body: VerifyLoginOTPSchema,
-      responses: {
-        200: LoginOTPVerifiedSchema,
-      },
-    },
     generateUserEmailVerficationOTP: {
       method: "POST",
       path: "/generateUserEmailVerficationOTP",
-      body: LoginOTPSchema,
+      body: UserEmailVerificationRequestSchema,
       responses: {
         200: SuccessSchema,
       },
@@ -38,9 +25,25 @@ export const userAuthContract = c.router(
     verfiyUserEmailVerificationOTP: {
       method: "POST",
       path: "/generateUserEmailVerficationOTP",
-      body: VerifyLoginOTPSchema,
+      body: VerifyEmailOTPRequestSchema,
       responses: {
         201: UserEmailVerfiedSuccessSchema,
+      },
+    },
+    generateUserLoginOTP: {
+      method: "POST",
+      path: "/generateUserLoginOTP",
+      body: LoginOTPRequetSchema,
+      responses: {
+        200: SuccessSchema,
+      },
+    },
+    verifyUserLoginOTP: {
+      method: "POST",
+      path: "/verifyUserLoginOTP",
+      body: VerifyEmailOTPRequestSchema,
+      responses: {
+        200: LoginOTPVerifiedSuccessSchema,
       },
     },
   },
