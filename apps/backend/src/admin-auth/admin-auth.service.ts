@@ -66,7 +66,7 @@ export class AdminAuthService {
     if (isOtpExpired) throw new BadRequestException('OTP is expired');
 
     wrap(otpData).assign({ isUsed: true });
-    this.em.persistAndFlush(otpData);
+    await this.em.persistAndFlush(otpData);
 
     const token = await this.authService.generateJWTToken({
       id: admin.id,

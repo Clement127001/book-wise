@@ -5,10 +5,15 @@ import { User } from '@/user/entities/user.entity';
 import { checkOTPExpiration, generateOTP } from '@/utils';
 import { RegisterOTP } from '@/user-auth/entities/registerOTP.entity';
 import { EmailVerification } from '@/user-auth/entities/emailVerification.entity';
+import { UserLoginOTP } from './entities/userLoginOTP.entity';
+import { AuthService } from '@/auth/auth.service';
 
 @Injectable()
 export class UserAuthService {
-  constructor(private em: EntityManager) {}
+  constructor(
+    private em: EntityManager,
+    private authService: AuthService,
+  ) {}
 
   async generateUserEmailVerficationOTP(
     data: UserAuthRequestShape['generateUserEmailVerficationOTP']['body'],
@@ -62,13 +67,62 @@ export class UserAuthService {
 
   async generateUserLoginOTP(
     data: UserAuthRequestShape['generateUserLoginOTP']['body'],
-  ) {}
+  ) {
+    const { email } = data;
+
+    const user = await this.em.findOne(User, { email, isDeleted: false });
+
+    if (!user)
+      throw new BadRequestException(
+        'User with given mail not exist.Please register an account.',
+      );
+
+    const otp = generateOTP();
+
+    const loginOTP = new UserLoginOTP({
+      email: email,
+      otp: otp,
+      user: this.em.getReference(User, user.id),
+    });
+
+    await this.em.persistAndFlush(loginOTP);
+  }
 
   async verifyUserLoginOTP(
     data: UserAuthRequestShape['verifyUserLoginOTP']['body'],
   ) {
-    //FIXME: dummy token
-    const token = 'hi';
+    const { email, otp } = data;
+
+    const user = await this.em.findOne(User, { email, isDeleted: false });
+
+    if (!user)
+      throw new BadRequestException(
+        'User with given mail not exist.Please register an account.',
+      );
+
+    const otpData = await this.em.findOne(
+      UserLoginOTP,
+      { email },
+      { orderBy: { createdAt: QueryOrder.desc } },
+    );
+
+    if (!otpData || otpData.otp !== otp)
+      throw new BadRequestException('Invalid OTP');
+
+    if (otpData.isUsed)
+      throw new BadRequestException('OTP has been used already');
+
+    const isOtpExpired = checkOTPExpiration(otpData.createdAt);
+
+    if (isOtpExpired) throw new BadRequestException('OTP is expired');
+
+    wrap(otpData).assign({ isUsed: true });
+    await this.em.persistAndFlush(otpData);
+
+    const token = await this.authService.generateJWTToken({
+      id: user.id,
+      email: user.email,
+    });
 
     return { token };
   }
