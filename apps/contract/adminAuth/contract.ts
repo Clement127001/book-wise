@@ -2,7 +2,7 @@ import { initContract } from "@ts-rest/core";
 import {
   SuccessSchema,
   LoginOTPSchema,
-  OTPVerifiedReponseSchema,
+  LoginOTPVerifiedSchema,
   VerifyLoginOTPSchema,
 } from "../common";
 
@@ -23,7 +23,7 @@ export const adminAuthContract = c.router(
       path: "/verifyAdminLoginOTP",
       body: VerifyLoginOTPSchema,
       responses: {
-        201: OTPVerifiedReponseSchema,
+        201: LoginOTPVerifiedSchema,
       },
     },
   },

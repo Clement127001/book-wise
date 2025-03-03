@@ -1,15 +1,10 @@
 import { EntityManager, QueryOrder, wrap } from '@mikro-orm/postgresql';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { nestControllerContract, NestRequestShapes } from '@ts-rest/nest';
 import { Admin } from '@/admin/entities/admin.entity';
 import { AdminLoginOTP } from '@/admin-auth/entities/adminLoginOTP.entity';
 import * as otpGenerator from 'otp-generator';
-import { adminAuthContract } from 'contract/adminAuth/contract';
 import { AuthService } from '@/auth/auth.service';
-
-export const adminAuthController = nestControllerContract(adminAuthContract);
-
-type AdminAuthRequestShape = NestRequestShapes<typeof adminAuthController>;
+import { AdminAuthRequestShape } from '@/admin-auth/admin-auth.controller';
 
 @Injectable()
 export class AdminAuthService {

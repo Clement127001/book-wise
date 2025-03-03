@@ -13,6 +13,6 @@ export const VerifyLoginOTPSchema = LoginOTPSchema.extend({
   otp: z.string().length(6, { message: "Please Provide a valid OTP" }),
 });
 
-export const OTPVerifiedReponseSchema = SuccessSchema.extend({
+export const LoginOTPVerifiedSchema = SuccessSchema.extend({
   token: z.string(),
 });

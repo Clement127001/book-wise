@@ -32,7 +32,7 @@ export class AdminAuthController
       status: 200 as const,
       body: {
         success: true,
-        message: 'Login otp sent via email.',
+        message: 'Login OTP sent via email.',
       },
     };
   }
