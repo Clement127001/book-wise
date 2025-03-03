@@ -4,11 +4,11 @@ import {
   LoginOTPRequetSchema,
   VerifyEmailOTPRequestSchema,
   LoginOTPVerifiedSuccessSchema,
-} from "contract/common";
+} from "../common";
 import {
   UserEmailVerfiedSuccessSchema,
   UserEmailVerificationRequestSchema,
-} from "contract/userAuth/schema";
+} from "../userAuth/schema";
 
 const c = initContract();
 
@@ -24,7 +24,7 @@ export const userAuthContract = c.router(
     },
     verfiyUserEmailVerificationOTP: {
       method: "POST",
-      path: "/generateUserEmailVerficationOTP",
+      path: "/verifyUserEmailVerficationOTP",
       body: VerifyEmailOTPRequestSchema,
       responses: {
         201: UserEmailVerfiedSuccessSchema,

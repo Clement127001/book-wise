@@ -2,9 +2,9 @@ import { EntityManager, QueryOrder, wrap } from '@mikro-orm/postgresql';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Admin } from '@/admin/entities/admin.entity';
 import { AdminLoginOTP } from '@/admin-auth/entities/adminLoginOTP.entity';
-import * as otpGenerator from 'otp-generator';
 import { AuthService } from '@/auth/auth.service';
 import { AdminAuthRequestShape } from '@/admin-auth/admin-auth.controller';
+import { checkOTPExpiration, generateOTP } from '@/utils';
 
 @Injectable()
 export class AdminAuthService {
@@ -26,12 +26,7 @@ export class AdminAuthService {
       throw new BadRequestException('Admin with given email not found');
     }
 
-    const otp = otpGenerator.generate(6, {
-      digits: true,
-      lowerCaseAlphabets: false,
-      upperCaseAlphabets: false,
-      specialChars: false,
-    });
+    const otp = generateOTP();
 
     const adminLoginOtp = new AdminLoginOTP({
       email,
@@ -39,7 +34,7 @@ export class AdminAuthService {
       admin: this.em.getReference(Admin, admin.id),
     });
 
-    this.em.persistAndFlush(adminLoginOtp);
+    await this.em.persistAndFlush(adminLoginOtp);
   }
 
   async verifyAdminLoginOTP(
@@ -66,9 +61,7 @@ export class AdminAuthService {
     if (otpData.isUsed)
       throw new BadRequestException('OTP has been used already');
 
-    const tenMinutes = 10 * 60 * 1000;
-    const isOtpExpired =
-      new Date().getTime() - new Date(otpData.createdAt).getTime() > tenMinutes;
+    const isOtpExpired = checkOTPExpiration(otpData.createdAt);
 
     if (isOtpExpired) throw new BadRequestException('OTP is expired');
 

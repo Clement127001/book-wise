@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { LoginOTPVerifiedSuccessSchema } from "contract/common";
+import { LoginOTPVerifiedSuccessSchema } from "../common";
 
 export const CreateUserSchema = z.object({
   firstname: z

@@ -1,8 +1,5 @@
 import { initContract } from "@ts-rest/core";
-import {
-  CreateUserSchema,
-  CreateUserSuccessSchema,
-} from "contract/user/schema";
+import { CreateUserSchema, CreateUserSuccessSchema } from "../user/schema";
 
 const c = initContract();
 
