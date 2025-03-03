@@ -6,9 +6,8 @@ import {
   TsRest,
   TsRestRequest,
 } from '@ts-rest/nest';
-
-import { adminAuthContract } from 'contract/adminAuth/contract';
 import { AdminAuthService } from '@/admin-auth/admin-auth.service';
+import { adminAuthContract } from 'contract/adminAuth/contract';
 
 const adminAuthController = nestControllerContract(adminAuthContract);
 
@@ -27,13 +26,30 @@ export class AdminAuthController
     @TsRestRequest()
     { body }: AdminAuthRequestShape['generateAdminLoginOTP'],
   ) {
-    await this.adminAuthService.getHello();
+    await this.adminAuthService.generateAdminLoginOTP(body);
 
     return {
       status: 200 as const,
       body: {
         success: true,
-        message: 'Login link sent via email.',
+        message: 'Login otp sent via email.',
+      },
+    };
+  }
+
+  @TsRest(adminAuthContract.verifyAdminLoginOTP)
+  async verifyAdminLoginOTP(
+    @TsRestRequest()
+    { body }: AdminAuthRequestShape['verifyAdminLoginOTP'],
+  ) {
+    const { token } = await this.adminAuthService.verifyAdminLoginOTP(body);
+
+    return {
+      status: 201 as const,
+      body: {
+        success: true,
+        message: 'OTP verified.',
+        token,
       },
     };
   }

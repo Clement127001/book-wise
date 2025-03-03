@@ -6,5 +6,6 @@ import { UserAuthService } from '@/user-auth/user-auth.service';
   imports: [],
   controllers: [UserAuthController],
   providers: [UserAuthService],
+  exports: [UserAuthService],
 })
 export class UserAuthModule {}

@@ -4,7 +4,7 @@ import {
   LoginOTPSchema,
   OTPVerifiedReponseSchema,
   VerifyLoginOTPSchema,
-} from "@/common";
+} from "../common";
 
 const c = initContract();
 
@@ -23,9 +23,9 @@ export const adminAuthContract = c.router(
       path: "/verifyAdminLoginOTP",
       body: VerifyLoginOTPSchema,
       responses: {
-        200: OTPVerifiedReponseSchema,
+        201: OTPVerifiedReponseSchema,
       },
     },
   },
-  { pathPrefix: "/admin" }
+  { pathPrefix: "/adminAuth" }
 );
