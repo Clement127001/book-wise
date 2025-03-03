@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { LoginOTPVerifiedSuccessSchema } from "contract/common";
 
 export const CreateUserSchema = z.object({
   firstname: z
@@ -20,3 +21,5 @@ export const CreateUserSchema = z.object({
   avatarUrl: z.string().url().optional(),
   verficationId: z.string(),
 });
+
+export const CreateUserSuccessSchema = LoginOTPVerifiedSuccessSchema;

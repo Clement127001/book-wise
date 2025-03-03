@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { LoginOTPRequetSchema, SuccessSchema } from "../common";
+import { LoginOTPRequetSchema, SuccessSchema } from "contract/common";
 
 export const UserEmailVerificationRequestSchema = LoginOTPRequetSchema;
 

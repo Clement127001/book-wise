@@ -1,6 +1,8 @@
 import { initContract } from "@ts-rest/core";
-import { CreateUserSchema } from "../user/schema";
-import { SuccessSchema } from "../common";
+import {
+  CreateUserSchema,
+  CreateUserSuccessSchema,
+} from "contract/user/schema";
 
 const c = initContract();
 
@@ -11,7 +13,7 @@ export const userContract = c.router(
       path: "/createUser",
       body: CreateUserSchema,
       responses: {
-        200: SuccessSchema,
+        201: CreateUserSuccessSchema,
       },
     },
   },

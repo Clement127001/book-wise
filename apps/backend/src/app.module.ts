@@ -9,6 +9,7 @@ import { UserAuthModule } from '@/user-auth/user-auth.module';
 import mikroOrmConfig from 'mikro-orm.config';
 import { AdminAuthModule } from '@/admin-auth/admin-auth.module';
 import { AuthModule } from '@/auth/auth.module';
+import { UserModule } from '@/user/user.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AuthModule } from '@/auth/auth.module';
     AuthModule,
     UserAuthModule,
     AdminAuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

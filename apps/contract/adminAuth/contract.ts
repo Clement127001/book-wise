@@ -4,7 +4,7 @@ import {
   LoginOTPRequetSchema,
   LoginOTPVerifiedSuccessSchema,
   VerifyEmailOTPRequestSchema,
-} from "../common";
+} from "contract/common";
 
 const c = initContract();
 

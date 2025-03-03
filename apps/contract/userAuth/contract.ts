@@ -4,11 +4,11 @@ import {
   LoginOTPRequetSchema,
   VerifyEmailOTPRequestSchema,
   LoginOTPVerifiedSuccessSchema,
-} from "../common";
+} from "contract/common";
 import {
   UserEmailVerfiedSuccessSchema,
   UserEmailVerificationRequestSchema,
-} from "./schema";
+} from "contract/userAuth/schema";
 
 const c = initContract();
 

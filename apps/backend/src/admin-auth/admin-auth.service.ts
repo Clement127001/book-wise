@@ -10,7 +10,7 @@ import { AdminAuthRequestShape } from '@/admin-auth/admin-auth.controller';
 export class AdminAuthService {
   constructor(
     private em: EntityManager,
-    private jwtService: AuthService,
+    private authService: AuthService,
   ) {}
 
   async generateAdminLoginOTP(
@@ -75,7 +75,7 @@ export class AdminAuthService {
     wrap(otpData).assign({ isUsed: true });
     this.em.persistAndFlush(otpData);
 
-    const token = await this.jwtService.generateJWTToken({
+    const token = await this.authService.generateJWTToken({
       id: admin.id,
       email: admin.email,
     });
