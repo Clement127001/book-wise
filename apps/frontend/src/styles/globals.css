@@ -131,44 +131,44 @@ img {
     --radius: 0.5rem;
 
     /* admin - light  */
-    --app-admin-primary-100: 229, 58%, 90%;
-    --app-admin-primary-200: 229, 58%, 80%;
-    --app-admin-primary-300: 229, 58%, 70%;
-    --app-admin-primary-400: 229, 58%, 60%;
-    --app-admin-primary-500: 229, 58%, 50%;
-    --app-admin-primary-600: 229, 58%, 40%;
-    --app-admin-primary-700: 229, 58%, 35%;
-    --app-admin-primary-800: 229, 58%, 30%;
+    --app-admin-primary-100: 229 58% 90%;
+    --app-admin-primary-200: 229 58% 80%;
+    --app-admin-primary-300: 229 58% 70%;
+    --app-admin-primary-400: 229 58% 60%;
+    --app-admin-primary-500: 229 58% 50%;
+    --app-admin-primary-600: 229 58% 40%;
+    --app-admin-primary-700: 229 58% 35%;
+    --app-admin-primary-800: 229 58% 30%;
 
-    --app-admin-bg: 240, 100%, 99%;
+    --app-admin-bg: 240 100% 99%;
 
-    --app-admin-book-borrowed: 258, 54%, 52%;
-    --app-admin-book-returned: 201, 98%, 32%;
-    --app-admin-book-latereturn: 341, 85%, 41%;
+    --app-admin-book-borrowed: 258 54% 52%;
+    --app-admin-book-returned: 201 98% 32%;
+    --app-admin-book-latereturn: 341 85% 41%;
 
-    --app-admin-status-pending: 22, 75%, 54%;
-    --app-admin-status-accepted: 155, 97%, 24%;
-    --app-admin-status-denied: 341, 85%, 41%;
+    --app-admin-status-pending: 22 75% 54%;
+    --app-admin-status-accepted: 155 97% 24%;
+    --app-admin-status-denied: 341 85% 41%;
 
-    --app-admin-link: 206, 100%, 47%;
+    --app-admin-link: 206 100% 47%;
 
     /* TODO: add user color palatte while doing the user panel */
 
-    --app-black-100: 0, 0%, 20%;
-    --app-black-200: 0, 0%, 13%, 0;
-    --app-black-300: 0, 0%, 7%;
+    --app-black-100: 0 0% 20%;
+    --app-black-200: 0 0% 13% 0;
+    --app-black-300: 0 0% 7%;
 
-    --app-gray-100: 214, 32%, 91%, 1;
-    --app-gray-200: 0, 0%, 56%;
-    --app-gray-300: 214, 6%, 79%;
-    --app-gray-400: 100, 5%, 53%;
-    --app-gray-500: 220, 11%, 64%;
-    --app-gray-600: 0, 0%, 47%;
-    --app-gray-700: 229, 5%, 55%;
-    --app-gray-800: 0, 0%, 40%, 1;
+    --app-gray-100: 214 32% 91% 1;
+    --app-gray-200: 0 0% 56%;
+    --app-gray-300: 214 6% 79%;
+    --app-gray-400: 100 5% 53%;
+    --app-gray-500: 220 11% 64%;
+    --app-gray-600: 0 0% 47%;
+    --app-gray-700: 229 5% 55%;
+    --app-gray-800: 0 0% 40% 1;
 
-    --app-purple-100: 246, 17%, 35%;
-    --app-purple-200: 267, 100%, 92%;
+    --app-purple-100: 246 17% 35%;
+    --app-purple-200: 267 100% 92%;
 
     --app-accent-success-100: theme(colors.green.100);
     --app-accent-success-200: theme(colors.green.200);
@@ -219,41 +219,45 @@ img {
     --chart-5: 340 75% 55%;
 
     /* admin - dark  */
-    --app-admin-primary-100: 229, 58%, 90%;
-    --app-admin-primary-200: 229, 58%, 80%;
-    --app-admin-primary-300: 229, 58%, 70%;
-    --app-admin-primary-400: 229, 58%, 60%;
-    --app-admin-primary-500: 229, 58%, 50%;
-    --app-admin-primary-600: 229, 58%, 40%;
-    --app-admin-primary-700: 229, 58%, 35%;
-    --app-admin-primary-800: 229, 58%, 30%;
+    /* admin - light  */
+    --app-admin-primary-100: 229 58% 90%;
+    --app-admin-primary-200: 229 58% 80%;
+    --app-admin-primary-300: 229 58% 70%;
+    --app-admin-primary-400: 229 58% 60%;
+    --app-admin-primary-500: 229 58% 50%;
+    --app-admin-primary-600: 229 58% 40%;
+    --app-admin-primary-700: 229 58% 35%;
+    --app-admin-primary-800: 229 58% 30%;
 
-    --app-admin-bg: 240, 100%, 99%;
+    --app-admin-bg: 240 100% 99%;
 
-    --app-admin-book-borrowed: 258, 54%, 52%;
-    --app-admin-book-returned: 201, 98%, 32%;
-    --app-admin-book-latereturn: 341, 85%, 41%;
+    --app-admin-book-borrowed: 258 54% 52%;
+    --app-admin-book-returned: 201 98% 32%;
+    --app-admin-book-latereturn: 341 85% 41%;
 
-    --app-admin-status-pending: 22, 75%, 54%;
-    --app-admin-status-accepted: 155, 97%, 24%;
-    --app-admin-status-denied: 341, 85%, 41%;
+    --app-admin-status-pending: 22 75% 54%;
+    --app-admin-status-accepted: 155 97% 24%;
+    --app-admin-status-denied: 341 85% 41%;
 
-    --app-admin-link: 206, 100%, 47%;
+    --app-admin-link: 206 100% 47%;
 
-    --app-black-100: 0, 0%, 20%;
-    --app-black-200: 0, 0%, 13%, 0;
-    --app-black-300: 240, 100%, 3%;
+    /* TODO: add user color palatte while doing the user panel */
 
-    --app-gray-100: 0, 0%, 56%;
-    --app-gray-200: 100, 5%, 53%;
-    --app-gray-300: 214, 6%, 79%;
-    --app-gray-400: 220, 11%, 64%;
-    --app-gray-500: 0, 0%, 47%;
-    --app-gray-600: 229, 5%, 55%;
-    --app-gray-700: 0, 0%, 40%, 1;
+    --app-black-100: 0 0% 20%;
+    --app-black-200: 0 0% 13% 0;
+    --app-black-300: 0 0% 7%;
 
-    --app-purple-100: 246, 17%, 35%;
-    --app-purple-200: 267, 100%, 92%;
+    --app-gray-100: 214 32% 91% 1;
+    --app-gray-200: 0 0% 56%;
+    --app-gray-300: 214 6% 79%;
+    --app-gray-400: 100 5% 53%;
+    --app-gray-500: 220 11% 64%;
+    --app-gray-600: 0 0% 47%;
+    --app-gray-700: 229 5% 55%;
+    --app-gray-800: 0 0% 40% 1;
+
+    --app-purple-100: 246 17% 35%;
+    --app-purple-200: 267 100% 92%;
 
     --app-accent-success-100: theme(colors.green.100);
     --app-accent-success-200: theme(colors.green.200);
