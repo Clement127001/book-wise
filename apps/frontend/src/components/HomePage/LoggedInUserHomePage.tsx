@@ -7,9 +7,9 @@ const LoggedInUserHomePage = ({ role }: { role: UserRoleEnum }) => {
     <div className="flex flex-col self-center gap-4">
       <div className="flex max-h-20 items-center gap-4">
         <img className="w-20" src="assets/admin/admin-logo.svg" />
-        <h1 className="text-[52px] font-semibold">BookWise</h1>
+        <h1 className="text-[52px] font-semibold text-white">BookWise</h1>
       </div>
-      <p className="text-app-gray-600 text-md tracking-normal leading-6">
+      <p className="text-app-gray-200 text-md tracking-normal leading-6">
         Book Wise is your smart companion for discovering, organizing, and
         tracking books effortlessly. Whether you're an avid reader or just
         getting started, it helps you explore recommendations and manage your
@@ -19,7 +19,7 @@ const LoggedInUserHomePage = ({ role }: { role: UserRoleEnum }) => {
         book finds its place! 📚✨
       </p>
 
-      <Button className="w-fit px-4 py-6 bg-app-admin-primary-700 hover:bg-app-admin-primary-800 tracking-wider">
+      <Button className="w-fit px-4 py-6 text-black bg-[#e0c096] hover:bg-[#EED1AC] tracking-wider">
         {role === UserRoleEnum.ADMIN ? (
           <Link href={"/admin/dashboard"}>Explore Dashboard</Link>
         ) : (

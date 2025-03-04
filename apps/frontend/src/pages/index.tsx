@@ -7,11 +7,11 @@ export default function Home() {
   const role = UserRoleEnum.USER;
 
   return (
-    <div className="grid grid-cols-2 w-full gap-5 h-screen px-40 py-32">
+    <div className="grid grid-cols-2 w-full gap-5 h-screen px-40 py-32 bg-gradient-to-br from-app-admin-primary-800  via-black via-30% to-black">
       <img
         src={"assets/home/home-page-cover.webp"}
         alt="explore book wise"
-        className="rounded-xl outline outline-1 outline-app-gray-700 object-cover h-[70vh] shadow-xl"
+        className="rounded-xl object-cover h-[70vh] shadow-md shadow-[#EED1AC]"
       />
       <>
         {isLoggedIn ? (
