@@ -18,3 +18,8 @@ export interface MakeApiCallFunctionProps<T> {
   showFailureMsg?: boolean;
   finallyFn?: () => void;
 }
+
+export enum UserRoleEnum {
+  ADMIN = "Admin",
+  USER = "User",
+}

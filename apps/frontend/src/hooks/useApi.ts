@@ -8,6 +8,7 @@ export function useApi() {
   const { showPageLoader, hidePageLoader } = usePageLoader();
   const [isLoading, setIsLoading] = useState(false);
 
+  //TODO:   need to change it without using logger and axios
   const makeApiCall = async function <
     T extends { status: number; body?: any }
   >({

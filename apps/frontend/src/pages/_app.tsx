@@ -1,7 +1,31 @@
-import { Toaster } from "@/components/ui/sonner";
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
 import Head from "next/head";
+import type { AppProps } from "next/app";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/sonner";
+import { PageLoaderProvider } from "@/context/pageLoaderProvider";
+import "@/styles/globals.css";
+
+type responseType = { response: { status: number } };
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: (_, err: unknown) => {
+        const error = err as responseType;
+
+        if (error) {
+          if (
+            (error.response && error.response.status >= 500) ||
+            error.response.status < 600
+          ) {
+            return true;
+          }
+        }
+        return false;
+      },
+    },
+  },
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -15,7 +39,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Toaster />
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <PageLoaderProvider>
+          <Component {...pageProps} />
+        </PageLoaderProvider>
+      </QueryClientProvider>
     </>
   );
 }
