@@ -8,7 +8,6 @@ export function useApi() {
   const { showPageLoader, hidePageLoader } = usePageLoader();
   const [isLoading, setIsLoading] = useState(false);
 
-  //TODO:   need to change it without using logger and axios
   const makeApiCall = async function <
     T extends { status: number; body?: any }
   >({
@@ -53,8 +52,8 @@ export function useApi() {
           response.body.message &&
           showFailureMsg
         ) {
-          toast.error(failureMsgProps?.title ?? "Error", {
-            duration: 5000,
+          toast.error(failureMsgProps?.title ?? "Error Occurred", {
+            duration: 3000,
             description: response.body.message,
             cancel: {
               label: "cancel",
@@ -77,6 +76,15 @@ export function useApi() {
             }
           }
           outputString = outputString.trim();
+
+          toast.error("Error Occurred", {
+            duration: 3000,
+            description: outputString,
+            cancel: {
+              label: "cancel",
+              onClick: () => {},
+            },
+          });
         }
         hidePageLoader();
         setIsLoading(false);
@@ -92,7 +100,7 @@ export function useApi() {
         return;
       }
       toast.error(failureMsgProps?.title ?? "Error", {
-        duration: 5000,
+        duration: 3000,
         description: errorResponse.message,
         cancel: {
           label: "cancel",
