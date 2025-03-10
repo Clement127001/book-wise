@@ -4,6 +4,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/sonner";
 import { PageLoaderProvider } from "@/context/pageLoaderProvider";
 import "@/styles/globals.css";
+import { LoginProvider } from "@/context/LoginProvider";
+import { UserDataProvider } from "@/context/UserDataProvider";
 
 type responseType = { response: { status: number } };
 
@@ -31,17 +33,27 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Overqualifiedhousewives - Celebrating Women Who Excel</title>
+        <title>BookWise</title>
         <meta
           name="description"
-          content="Your gateway to discovering extraordinary women professionals who bring creativity, expertise, and leadership to the table. Empowering women, transforming organizations."
+          content=" Book Wise is your smart companion for discovering, organizing, and
+        tracking books effortlessly. Whether you're an avid reader or just
+        getting started, it helps you explore recommendations and manage your
+        personal library with ease. With intuitive features and a sleek
+        interface, finding and keeping track of your favorite books has never
+        been simpler. Elevate your reading experience with Book Wise—where every
+        book finds its place! 📚✨"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Toaster />
       <QueryClientProvider client={queryClient}>
         <PageLoaderProvider>
-          <Component {...pageProps} />
+          <LoginProvider>
+            <UserDataProvider>
+              <Component {...pageProps} />
+            </UserDataProvider>
+          </LoginProvider>
         </PageLoaderProvider>
       </QueryClientProvider>
     </>

@@ -1,11 +1,6 @@
-import PageLoader from "@/components/common/PageLoader";
 import { createContext, ReactNode, useState, useContext } from "react";
-
-interface PageLoaderContextInterface {
-  isPageLoaderVisible: boolean;
-  hidePageLoader: () => void;
-  showPageLoader: () => void;
-}
+import PageLoader from "@/components/common/PageLoader";
+import { PageLoaderContextInterface } from "@/types/common";
 
 const PageLoaderContext = createContext<PageLoaderContextInterface>({
   isPageLoaderVisible: false,

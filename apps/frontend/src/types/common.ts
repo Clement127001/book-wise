@@ -23,3 +23,29 @@ export enum UserRoleEnum {
   ADMIN = "Admin",
   USER = "User",
 }
+
+export enum TrueFalseEnum {
+  TRUE = "true",
+  FALSE = "false",
+}
+
+export interface PageLoaderContextInterface {
+  isPageLoaderVisible: boolean;
+  hidePageLoader: () => void;
+  showPageLoader: () => void;
+}
+
+export interface LoginContextInterface {
+  isLoggedIn: boolean;
+  refreshLoginState: () => void;
+}
+
+interface UserDataInterface {
+  id: string;
+  name: string;
+  role: UserRoleEnum;
+}
+
+export interface UserDetailsInterface {
+  userData: UserDataInterface;
+}
