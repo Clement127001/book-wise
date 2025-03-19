@@ -1,12 +1,13 @@
 import LoggedInUserHomePageAction from "@/components/HomePage/LoggedInUserHomePageAction";
 import PublicUserHomePageAction from "@/components/HomePage/PublicUserHomePageAction";
+import { UseLogin } from "@/context/LoginProvider";
 import { UserRoleEnum } from "@/types/common";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
 export default function Home() {
-  const isLoggedIn = false;
+  const { isLoggedIn } = UseLogin();
   const role = UserRoleEnum.ADMIN;
 
   const router = useRouter();
@@ -42,6 +43,7 @@ export default function Home() {
         },
       });
     }
+
     delete query.ua;
     router.replace("/");
   }, [router.isReady, toast, isUnauthorised, query, router]);

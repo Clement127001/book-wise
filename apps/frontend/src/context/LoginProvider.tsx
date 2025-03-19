@@ -8,7 +8,7 @@ import {
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { LoginContextInterface } from "@/types/common";
-import { loginPages, loginRestrictedPages } from "@/utils/common";
+import { loginRestrictedPages, validateToken } from "@/utils/common";
 
 const LoginContext = createContext<LoginContextInterface>({
   isLoggedIn: false,
@@ -23,9 +23,10 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
   const [isLogInChecked, setIsLogInChecked] = useState<boolean>(false);
 
   const refreshLoginState = () => {
-    const cookie = Cookies.get("userToken");
-    const isValidCookie = cookie !== undefined && cookie.length !== 0;
-    setIsLoggedIn(isValidCookie);
+    const token = Cookies.get("userToken");
+    const isValidToken = validateToken(token);
+
+    setIsLoggedIn(isValidToken);
     setIsLogInChecked(true);
   };
 
@@ -41,10 +42,6 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
       router.push("/?ua=true");
     }
   }, [router, path, isLoggedIn]);
-
-  if (loginPages.includes(path)) {
-    return <>{children}</>;
-  }
 
   if (!isLogInChecked) {
     return <div className="w-[100vw] h-[100vh] bg-app-gray-700"></div>;
