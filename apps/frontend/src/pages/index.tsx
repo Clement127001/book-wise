@@ -1,5 +1,5 @@
-import LoggedInUserHomePageAction from "@/components/HomePage/LoggedInUserHomePageAction";
-import PublicUserHomePageAction from "@/components/HomePage/PublicUserHomePageAction";
+import LoggedInUserHomePageAction from "@/components/homePage/LoggedInUserHomePageAction";
+import PublicUserHomePageAction from "@/components/homePage/PublicUserHomePageAction";
 import { UseLogin } from "@/context/LoginProvider";
 import { UserRoleEnum } from "@/types/common";
 import { useRouter } from "next/router";
