@@ -99,7 +99,7 @@ const AdminLogin = () => {
       onSuccessFn: (res) => {
         if (res.status === 201 && res.body) {
           const responseBody = res.body as { token: string };
-          Cookies.set("userToken", responseBody.token, {
+          Cookies.set("userToken", res.body.token, {
             expires: 7,
           });
           router.push("/admin/dashboard");
@@ -146,7 +146,7 @@ const AdminLogin = () => {
               hForm={adminLoginForm}
               label="email address"
               name="email"
-              placeholder="e.g: sumathi@overqualifiedhousewives.com"
+              placeholder="e.g: johndoe12@gmail.com"
               registerOptions={{
                 required: "Email is required",
                 validate: (value) =>

@@ -30,7 +30,7 @@ export function LoginOTPInput<T extends FieldValues>({
           {label}
         </Label>
       )}
-      <div className="relative flex ">
+      <div className="relative flex">
         <Controller
           control={control}
           name={name}
@@ -40,7 +40,7 @@ export function LoginOTPInput<T extends FieldValues>({
               onChange={field.onChange}
               value={field.value}
               disabled={field.disabled}
-              maxLength={4}
+              maxLength={6}
               placeholder={placeholder}
             >
               <InputOTPGroup>
@@ -48,6 +48,8 @@ export function LoginOTPInput<T extends FieldValues>({
                 <InputOTPSlot index={1} />
                 <InputOTPSlot index={2} />
                 <InputOTPSlot index={3} />
+                <InputOTPSlot index={4} />
+                <InputOTPSlot index={5} />
               </InputOTPGroup>
             </InputOTP>
           )}
