@@ -6,21 +6,13 @@ import { ChevronRight, RotateCw } from "lucide-react";
 import { toast } from "sonner";
 import { CommonInput } from "@/components/form/CommonInput";
 import { LoginOTPInput } from "@/components/form/LoginOTPInput";
-import { Button } from "@/components/ui/button";
+import AdminPrimaryButton from "@/components/admin/AdminPrimaryButton";
 import { useApi } from "@/hooks/useApi";
 import { useTimer } from "@/hooks/useTimer";
 import { getQueryClient } from "@/utils/api";
 import { validateEmail, validateLoginOTP } from "@/utils/common";
-
-export interface AdminLoginForm {
-  email: string;
-  otp: string | null;
-}
-
-export const defaultLoginFormValues: AdminLoginForm = {
-  email: "",
-  otp: null,
-};
+import { defaultLoginFormValues } from "@/utils/admin/login";
+import { AdminLoginForm } from "@/types/admin/login";
 
 const AdminLogin = () => {
   const router = useRouter();
@@ -99,7 +91,7 @@ const AdminLogin = () => {
       onSuccessFn: (res) => {
         if (res.status === 201 && res.body) {
           const responseBody = res.body as { token: string };
-          Cookies.set("userToken", res.body.token, {
+          Cookies.set("userToken", responseBody.token, {
             expires: 7,
           });
           router.push("/admin/dashboard");
@@ -128,7 +120,7 @@ const AdminLogin = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
-      <section className="min-w-[90%] sm:min-w-[500px] flex flex-col items-center justify-center p-4 pt-12 shadow-xl rounded-xl">
+      <section className="min-w-[90%] sm:min-w-[480px] flex flex-col items-center justify-center p-4 pt-12 shadow-xl rounded-xl outline outline-[1.5px] outline-app-gray-100">
         <img
           src={"/assets/admin/admin-logo.svg"}
           alt={"logo"}
@@ -155,15 +147,14 @@ const AdminLogin = () => {
               }}
             />
             {!isEmailVerified && (
-              <Button
-                className="w-full my-4 bg-app-admin-primary-700 hover:bg-app-admin-primary-800
-                outline outline-2 outline-app-primary-700 border-[0.75px] border-app-primary-500 group rounded-[10px] text-[16px] text-white font-[500] min-h-[48px] disabled:border-0 disabled:shadow-none disabled:cursor-not-allowed"
+              <AdminPrimaryButton
+                className="w-full my-4"
                 type="submit"
                 disabled={!isEmailValid}
               >
                 Send OTP
                 <ChevronRight className="group-hover:scale-[1.35] group-hover:translate-x-2 ease-linear transition-[300ms]" />
-              </Button>
+              </AdminPrimaryButton>
             )}
 
             {isEmailVerified && (
@@ -180,18 +171,14 @@ const AdminLogin = () => {
                   }}
                 />
 
-                <Button
-                  className={`w-full mt-8 bg-app-primary-700 hover:bg-[#207F75] outline outline-2 outline-app-primary-700 border-[0.75px] cursor-pointer  border-app-primary-500 group rounded-[10px] text-[16px] font-[500] min-h-[44px] ${
-                    !isOTPValid
-                      ? "cursor-not-allowed border-0"
-                      : "cursor-pointer"
-                  }`}
+                <AdminPrimaryButton
+                  className={`w-full mt-8`}
                   type="submit"
                   disabled={!isOTPValid}
                 >
                   Verify OTP
                   <ChevronRight className="group-hover:scale-[1.35] group-hover:translate-x-2 ease-linear transition-[300ms]" />
-                </Button>
+                </AdminPrimaryButton>
 
                 <div className="flex gap-3 font-normal text-[14px] mt-3">
                   <p> Didn’t receive OTP ?</p>
