@@ -4,13 +4,17 @@ import { UserRoleEnum } from "@/types/common";
 
 const LoggedInUserHomePageAction = ({ role }: { role: UserRoleEnum }) => {
   return (
-    <Button>
+    <>
       {role === UserRoleEnum.ADMIN ? (
-        <Link href={"/admin/dashboard"}>Explore Dashboard</Link>
+        <Link href={"/admin/dashboard"}>
+          <Button>Explore Dashboard</Button>
+        </Link>
       ) : (
-        <Link href={"/user/home"}>Explore Books</Link>
+        <Link href={"/user/home"}>
+          <Button>Explore Books</Button>
+        </Link>
       )}
-    </Button>
+    </>
   );
 };
 

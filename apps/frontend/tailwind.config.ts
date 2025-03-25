@@ -95,6 +95,7 @@ export default {
               denied: "hsl(341, 85%, 41%)",
             },
           },
+          user: {},
           gray: {
             100: "hsla(214, 32%, 91%, 1)",
             200: "hsl(214, 6%, 79%)",
@@ -139,6 +140,10 @@ export default {
             },
           },
         },
+      },
+      backgroundImage: {
+        "user-gradient":
+          "linear-gradient(to bottom right, hsl(229, 58%, 30%), black 30%, black)",
       },
     },
   },

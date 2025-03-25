@@ -20,7 +20,7 @@ export default function Home() {
 
     if (isUnauthorised === "true") {
       toast.warning("Unauthorised", {
-        description: "Login is required",
+        description: "Please login to view the page",
         duration: 2000,
         action: {
           label: "close",
@@ -49,7 +49,7 @@ export default function Home() {
   }, [router.isReady, toast, isUnauthorised, query, router]);
 
   return (
-    <div className="grid grid-cols-2 w-full gap-5 h-screen px-40 py-32 bg-gradient-to-br from-app-admin-primary-800  via-black via-30% to-black">
+    <div className="grid grid-cols-2 w-full gap-5 h-screen px-40 py-32 bg-user-gradient">
       <img
         src={"assets/home/home-page-cover.webp"}
         alt="explore book wise"
