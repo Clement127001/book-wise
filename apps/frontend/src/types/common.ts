@@ -49,3 +49,8 @@ interface UserDataInterface {
 export interface UserDetailsInterface {
   userData: UserDataInterface;
 }
+
+export interface LoginForm {
+  email: string;
+  otp: string | null;
+}

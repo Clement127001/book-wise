@@ -16,6 +16,7 @@ export interface CommonInputProps<T extends FieldValues> {
   disabled?: boolean;
   wrapperClassName?: string;
   inputClassName?: string;
+  labelClassName?: string;
   showError?: boolean;
   readOnly?: boolean;
 }
@@ -30,5 +31,6 @@ export interface OTPInputProps<T extends FieldValues> {
   placeholder?: string;
   disabled?: boolean;
   wrapperClassName?: string;
+  labelClassName?: string;
   inputClassName?: string;
 }

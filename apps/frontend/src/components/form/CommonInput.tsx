@@ -17,18 +17,21 @@ export function CommonInput<T extends FieldValues>({
   inputClassName = "",
   showError = true,
   readOnly = false,
+  labelClassName = "",
 }: CommonInputProps<T>) {
   const {
     register,
     formState: { errors },
   } = hForm;
 
+  console.log(errors);
+
   return (
     <section className={`w-full space-y-2 ${wrapperClassName}`}>
       {label && (
         <Label
           htmlFor={name}
-          className="text-app-black-300 dark:text-app-primary-300 capitalize text-[16px]"
+          className={`text-app-black-300 dark:text-app-primary-300 capitalize text-[16px] ${labelClassName}`}
         >
           {label}
           {registerOptions?.required ? (
@@ -44,7 +47,7 @@ export function CommonInput<T extends FieldValues>({
           type={type}
           placeholder={placeholder}
           disabled={disabled}
-          className={`min-h-[48px] w-full bg-white  placeholder:text-[14px] border-[#c1c1c1] text-app-primary-900 placeholder-app-gray-300 focus:ring-0  focus:border-app-gray-300 focus:bg-gray-50  hover:bg-gray-50  font-[500] 
+          className={`min-h-[48px] w-full bg-white  placeholder:text-[14px] border-[1px] border-[#c1c1c1] text-app-primary-900 placeholder-app-gray-300 focus:ring-0  focus:border-app-gray-300 focus:bg-gray-50  hover:bg-gray-50  font-[500] 
             placeholder:font-normal rounded-[12px] text-[16px] shadow-freelancer read-only:placeholder:text-app-black-300 read-only:placeholder:text-[16px] read-only:placeholder:font-normal pl-3 md:pl-4 ${inputClassName}`}
           readOnly={readOnly}
           {...register(name, registerOptions)}

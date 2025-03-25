@@ -153,6 +153,7 @@ img {
     --app-admin-link: 206 100% 47%;
 
     /* TODO: add user color palatte while doing the user panel */
+    --app-user-primary: 34 54% 73%;
 
     --app-black-100: 0 0% 20%;
     --app-black-200: 0 0% 13% 0;
@@ -242,6 +243,7 @@ img {
     --app-admin-link: 206 100% 47%;
 
     /* TODO: add user color palatte while doing the user panel */
+    --app-user-primary: 34 54% 73%;
 
     --app-black-100: 0 0% 20%;
     --app-black-200: 0 0% 13% 0;

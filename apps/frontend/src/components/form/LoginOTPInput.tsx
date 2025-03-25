@@ -13,7 +13,9 @@ export function LoginOTPInput<T extends FieldValues>({
   hForm,
   registerOptions,
   placeholder,
+  inputClassName,
   wrapperClassName = "",
+  labelClassName = "",
 }: OTPInputProps<T>) {
   const {
     control,
@@ -25,7 +27,7 @@ export function LoginOTPInput<T extends FieldValues>({
       {label && (
         <Label
           htmlFor={name}
-          className="text-app-black-300 dark:text-app-primary-300 capitalize text-[16px]"
+          className={`text-app-black-300 dark:text-app-primary-300 capitalize text-[16px] ${labelClassName}`}
         >
           {label}
         </Label>
@@ -44,12 +46,9 @@ export function LoginOTPInput<T extends FieldValues>({
               placeholder={placeholder}
             >
               <InputOTPGroup>
-                <InputOTPSlot index={0} />
-                <InputOTPSlot index={1} />
-                <InputOTPSlot index={2} />
-                <InputOTPSlot index={3} />
-                <InputOTPSlot index={4} />
-                <InputOTPSlot index={5} />
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <InputOTPSlot index={index} className={inputClassName} />
+                ))}
               </InputOTPGroup>
             </InputOTP>
           )}

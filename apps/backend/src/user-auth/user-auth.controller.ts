@@ -78,7 +78,7 @@ export class UserAuthController
     const { token } = await this.userAuthService.verifyUserLoginOTP(body);
 
     return {
-      status: 200 as const,
+      status: 201 as const,
       body: {
         success: true,
         message: 'OTP verified.',
