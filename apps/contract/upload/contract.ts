@@ -10,7 +10,7 @@ export const uploadContract = c.router(
       method: "POST",
       path: "/media",
       body: z.object({
-        files: z.custom<File[]>(),
+        file: z.custom<File>(),
       }),
       responses: {
         201: UploadMediaResultSchema,

@@ -9,5 +9,5 @@ export const UploadResultSchema = z.object({
 });
 
 export const UploadMediaResultSchema = z.object({
-  data: z.array(UploadResultSchema),
+  data: UploadResultSchema,
 });

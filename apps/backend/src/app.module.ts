@@ -10,6 +10,7 @@ import mikroOrmConfig from 'mikro-orm.config';
 import { AdminAuthModule } from '@/admin-auth/admin-auth.module';
 import { AuthModule } from '@/auth/auth.module';
 import { UserModule } from '@/user/user.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UserModule } from '@/user/user.module';
     UserAuthModule,
     AdminAuthModule,
     UserModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],
