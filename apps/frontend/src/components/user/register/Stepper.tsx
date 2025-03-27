@@ -28,7 +28,7 @@ const Stepper = ({
               stepValue={index + 1}
             />
             {index == 0 && (
-              <div className="min-w-12 h-1 bg-app-gray-100 rounded-full"></div>
+              <div className="min-w-12 h-[2px] bg-app-gray-100 rounded-full"></div>
             )}
           </Fragment>
         );

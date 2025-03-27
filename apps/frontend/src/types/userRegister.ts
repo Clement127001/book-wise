@@ -18,6 +18,6 @@ export type UserRegisterType = {
   firstName: string;
   lastName: string;
   avatarUrl: string | null;
-  identityCardUrl: string;
+  identityCardUrl: string | null;
   verificationId: string | null;
 };

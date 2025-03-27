@@ -15,7 +15,8 @@ export const userRegisterDefaultValues: UserRegisterType = {
   otp: null,
   firstName: "",
   lastName: "",
-  avatarUrl: null,
-  identityCardUrl: "",
+  avatarUrl:
+    "https://bookwisemedia.s3.us-east-1.amazonaws.com/clement_18-1743069631056.webp",
+  identityCardUrl: null,
   verificationId: null,
 };

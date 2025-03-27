@@ -1,27 +1,27 @@
-import { useRouter } from "next/router";
-import BackButton from "@/components/BackButton";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { LoginForm } from "@/types/common";
-import { defaultLoginFormValues } from "@/utils/admin/login";
-import { useApi } from "@/hooks/useApi";
-import { validateEmail, validateOTP } from "@/utils/common";
-import { getQueryClient } from "@/utils/api";
-import { useTimer } from "@/hooks/useTimer";
-import { toast } from "sonner";
 import Cookies from "js-cookie";
+import { toast } from "sonner";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { ChevronRight, RotateCw } from "lucide-react";
+import { useForm } from "react-hook-form";
+import BackButton from "@/components/BackButton";
 import { CommonInput } from "@/components/form/CommonInput";
 import { OTPInput } from "@/components/form/OTPInput";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, RotateCw } from "lucide-react";
-import Link from "next/link";
+import { useApi } from "@/hooks/useApi";
+import { useTimer } from "@/hooks/useTimer";
+import { defaultLoginFormValues } from "@/utils/admin/login";
+import { LoginType } from "@/types/common";
+import { validateEmail, validateOTP } from "@/utils/common";
+import { getQueryClient } from "@/utils/api";
 
 const UserLogin = () => {
   const router = useRouter();
   const { timer, setTimer } = useTimer();
 
   const [isEmailVerified, setIsEmailVerified] = useState<boolean>(false);
-  const userLoginForm = useForm<LoginForm>({
+  const userLoginForm = useForm<LoginType>({
     defaultValues: defaultLoginFormValues,
   });
 

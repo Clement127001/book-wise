@@ -13,13 +13,13 @@ import { useTimer } from "@/hooks/useTimer";
 import { getQueryClient } from "@/utils/api";
 import { validateEmail, validateOTP } from "@/utils/common";
 import { defaultLoginFormValues } from "@/utils/admin/login";
-import { LoginForm } from "@/types/common";
+import { LoginType } from "@/types/common";
 
 const AdminLogin = () => {
   const router = useRouter();
   const { timer, setTimer } = useTimer();
   const [isEmailVerified, setEmailVerified] = useState<boolean>(false);
-  const adminLoginForm = useForm<LoginForm>({
+  const adminLoginForm = useForm<LoginType>({
     defaultValues: defaultLoginFormValues,
   });
   const { makeApiCall } = useApi();
@@ -105,7 +105,7 @@ const AdminLogin = () => {
     });
   };
 
-  const onLogin: SubmitHandler<LoginForm> = () => {
+  const onLogin: SubmitHandler<LoginType> = () => {
     if (!isEmailVerified) {
       handleSendOTP();
       return;

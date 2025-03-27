@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { UploadMediaResultSchema } from "contract/upload/schema";
+
 export interface ErrorStatusInterface {
   message: string;
 }
@@ -50,7 +53,9 @@ export interface UserDetailsInterface {
   userData: UserDataInterface;
 }
 
-export interface LoginForm {
+export interface LoginType {
   email: string;
   otp: string | null;
 }
+
+export type UploadMediaResponseType = z.infer<typeof UploadMediaResultSchema>;

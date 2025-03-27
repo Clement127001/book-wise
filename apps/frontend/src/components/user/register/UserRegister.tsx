@@ -1,28 +1,29 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import BackButton from "@/components/BackButton";
 import Stepper from "@/components/user/register/Stepper";
 import RegisterEmailStep from "@/components/user/register/RegisterEmailStep";
+import ImageUpload from "@/components/ImageUpload";
 import { useTimer } from "@/hooks/useTimer";
+import { useApi } from "@/hooks/useApi";
 import {
   registerMaxSteps,
   registerSteps,
   userRegisterDefaultValues,
 } from "@/utils/user/register";
 import { StepValueType, UserRegisterType } from "@/types/userRegister";
-import { useApi } from "@/hooks/useApi";
 import { getQueryClient } from "@/utils/api";
-import { toast } from "sonner";
 
 const UserRegister = () => {
   const { timer, setTimer } = useTimer();
   const [isEmailVerified, setIsEmailVerified] = useState<boolean>(false);
   const router = useRouter();
   const [registerStepValues, setRegisterStepValues] = useState<StepValueType>({
-    activeStep: 1,
-    maxAllowedStep: 1,
+    activeStep: 2,
+    maxAllowedStep: 2,
   });
   const { makeApiCall } = useApi();
 
@@ -154,17 +155,22 @@ const UserRegister = () => {
                 stepValues={registerStepValues}
               />
             </div>
+            <FormProvider {...userRegisterForm}>
+              <form onSubmit={handleSubmit(onRegister)} className="space-y-8">
+                {registerStepValues.activeStep === 1 && (
+                  <RegisterEmailStep
+                    userRegisterForm={userRegisterForm}
+                    isEmailVerified={isEmailVerified}
+                    handleSendOTP={handleSendOTP}
+                    timer={timer}
+                  />
+                )}
 
-            <form onSubmit={handleSubmit(onRegister)} className="space-y-8">
-              {registerStepValues.activeStep === 1 && (
-                <RegisterEmailStep
-                  userRegisterForm={userRegisterForm}
-                  isEmailVerified={isEmailVerified}
-                  handleSendOTP={handleSendOTP}
-                  timer={timer}
-                />
-              )}
-            </form>
+                {registerStepValues.activeStep == 2 && (
+                  <ImageUpload name="avatarUrl" label="Avatar" />
+                )}
+              </form>
+            </FormProvider>
           </div>
 
           <p className="text-white self-start px-4">
