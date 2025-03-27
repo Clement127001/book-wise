@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import BackButton from "@/components/BackButton";
-import Stepper from "@/components/user/register/Stepper";
+import Stepper from "@/components/Stepper";
 import RegisterEmailStep from "@/components/user/register/RegisterEmailStep";
 import { useTimer } from "@/hooks/useTimer";
 import { useApi } from "@/hooks/useApi";

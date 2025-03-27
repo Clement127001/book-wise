@@ -1,6 +1,6 @@
-import { AdminLoginForm } from "@/types/admin/login";
+import { LoginType } from "@/types/common";
 
-export const defaultLoginFormValues: AdminLoginForm = {
+export const defaultLoginFormValues: LoginType = {
   email: "",
   otp: null,
 };
