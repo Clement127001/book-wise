@@ -15,7 +15,7 @@ const UserLoginPage = () => {
   return (
     <>
       <Head>
-        <title>BookWise | User | Login</title>
+        <title>BookWise | User - Login</title>
         <meta
           name="description"
           content="Access your account on Bookwise. Login to view books, and more."

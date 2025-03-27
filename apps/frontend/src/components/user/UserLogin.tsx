@@ -14,6 +14,7 @@ import { CommonInput } from "@/components/form/CommonInput";
 import { LoginOTPInput } from "@/components/form/LoginOTPInput";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, RotateCw } from "lucide-react";
+import Link from "next/link";
 
 const UserLogin = () => {
   const router = useRouter();
@@ -132,20 +133,19 @@ const UserLogin = () => {
         className={"text-black font-semibold bg-app-user-primary"}
       />
       <div className="min-h-[90vh] flex flex-col justify-center items-center">
-        <section className="min-w-[90%] sm:min-w-[480px] flex flex-col items-center justify-center p-4 pt-12 shadow-xl rounded-[20px] outline outline-[1.5px] bg-user-login-gradient">
+        <section className="min-w-[90%] sm:min-w-[480px] flex flex-col items-center justify-center p-4 py-[40px] shadow-xl rounded-[20px] outline outline-[1.5px] bg-user-login-gradient">
           <img
             src={"/assets/user/user-logo.svg"}
             alt={"logo"}
             className={"h-8 w-[192px]"}
           />
-          <div className="shadow-freelancer p-[24px] lg:p-[24px__16px]  rounded-[18px] w-full sm:max-w-[450px]">
+          <div className="p-[24px] lg:p-[24px__16px]  rounded-[18px] w-full sm:max-w-[450px]">
             <div className="flex flex-col gap-2 md:gap-[10px]">
               <h1 className="text-[24px] md:text-[28px] font-[600] text-white">
-                Create Your Library Account
+                Welcome Back to the BookWise
               </h1>
               <p className="text-app-gray-100 text-[14px] leading-5">
-                Please complete all fields and upload a valid university ID to
-                gain access to the library
+                Access the vast collection of resources, and stay updated
               </p>
             </div>
 
@@ -228,6 +228,16 @@ const UserLogin = () => {
               )}
             </form>
           </div>
+
+          <p className="text-white self-start px-4">
+            Don't have account?
+            <Link
+              href={"/user/register"}
+              className="text-app-user-primary ml-2"
+            >
+              register
+            </Link>
+          </p>
         </section>
       </div>
     </div>
