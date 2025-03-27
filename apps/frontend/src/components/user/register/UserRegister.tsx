@@ -1,16 +1,20 @@
-import BackButton from "@/components/BackButton";
+import { useState } from "react";
 import Link from "next/link";
-import { useTimer } from "@/hooks/useTimer";
 import { useRouter } from "next/router";
+import { SubmitHandler, useForm } from "react-hook-form";
+import BackButton from "@/components/BackButton";
 import Stepper from "@/components/user/register/Stepper";
+import RegisterEmailStep from "@/components/user/register/RegisterEmailStep";
+import { useTimer } from "@/hooks/useTimer";
 import {
   registerMaxSteps,
   registerSteps,
   userRegisterDefaultValues,
 } from "@/utils/user/register";
-import { useEffect, useState } from "react";
 import { StepValueType, UserRegisterType } from "@/types/userRegister";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useApi } from "@/hooks/useApi";
+import { getQueryClient } from "@/utils/api";
+import { toast } from "sonner";
 
 const UserRegister = () => {
   const { timer, setTimer } = useTimer();
@@ -20,22 +24,90 @@ const UserRegister = () => {
     activeStep: 1,
     maxAllowedStep: 1,
   });
+  const { makeApiCall } = useApi();
 
   const userRegisterForm = useForm<UserRegisterType>({
     mode: "onChange",
     defaultValues: userRegisterDefaultValues,
   });
 
-  const { handleSubmit, setFocus } = userRegisterForm;
+  const { handleSubmit, getValues, setFocus, setValue } = userRegisterForm;
 
-  const handleSendOTP = () => {};
+  const handleSendOTP = () => {
+    const email = getValues("email").toLowerCase();
 
-  const handleVerifyOTP = () => {};
+    makeApiCall({
+      fetcherFn: async () => {
+        return await getQueryClient().userAuth.generateUserEmailVerficationOTP.mutation(
+          {
+            body: { email },
+          }
+        );
+      },
+      successMsgProps: {
+        title: "OTP Sent",
+        description: "OTP sent to your email",
+        duration: 2000,
+      },
+      onSuccessFn: () => {
+        setIsEmailVerified(true);
+        setTimer(60);
+        setFocus("otp");
+      },
+    });
+  };
 
-  const handleRegister: SubmitHandler<UserRegisterType> = (data) => {
+  const handleVerifyOTP = () => {
+    const email = getValues("email").toLowerCase();
+    const otp = getValues("otp");
+
+    if (otp === null) {
+      toast.warning("Invalid OTP", {
+        description: "Please Enter a valid otp",
+        duration: 2000,
+        action: {
+          label: "close",
+          onClick: () => {
+            {
+            }
+          },
+        },
+      });
+      return;
+    }
+
+    makeApiCall({
+      fetcherFn: async () => {
+        return await getQueryClient().userAuth.verfiyUserEmailVerificationOTP.mutation(
+          {
+            body: {
+              email,
+              otp,
+            },
+          }
+        );
+      },
+      successMsgProps: {
+        title: "Email verified",
+        description: "Email verified successfully",
+        duration: 2000,
+      },
+      onSuccessFn: (res) => {
+        if (res.status == 201 && res.body.verificationId) {
+          setValue("verificationId", res.body.verificationId);
+          setRegisterStepValues({
+            activeStep: 2,
+            maxAllowedStep: 2,
+          });
+        }
+      },
+    });
+  };
+
+  const onRegister: SubmitHandler<UserRegisterType> = (data) => {
     const { otp } = data;
 
-    if (isEmailVerified && otp === null) {
+    if (!isEmailVerified && otp === null) {
       handleSendOTP();
       return;
     }
@@ -49,14 +121,6 @@ const UserRegister = () => {
   const handleBack = () => {
     router.back();
   };
-
-  useEffect(() => {
-    if (registerStepValues.activeStep === 1) {
-      setFocus("email");
-    } else {
-      setFocus("firstName");
-    }
-  }, [registerStepValues.activeStep]);
 
   return (
     <div className="min-h-screen flex justify-center  flex-col p-4 sm:p-6 md:p-8 bg-user-gradient">
@@ -83,7 +147,7 @@ const UserRegister = () => {
               </p>
             </div>
 
-            <div className="flex w-full justify-center my-6">
+            <div className="flex w-full justify-center m-[24px__0px__20px__0px]">
               <Stepper
                 maxStep={registerMaxSteps}
                 stepData={registerSteps}
@@ -91,10 +155,16 @@ const UserRegister = () => {
               />
             </div>
 
-            <form
-              onSubmit={handleSubmit(onRegister)}
-              className="space-y-8 mt-8 md:mt-10"
-            ></form>
+            <form onSubmit={handleSubmit(onRegister)} className="space-y-8">
+              {registerStepValues.activeStep === 1 && (
+                <RegisterEmailStep
+                  userRegisterForm={userRegisterForm}
+                  isEmailVerified={isEmailVerified}
+                  handleSendOTP={handleSendOTP}
+                  timer={timer}
+                />
+              )}
+            </form>
           </div>
 
           <p className="text-white self-start px-4">

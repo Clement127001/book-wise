@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/input-otp";
 import { OTPInputProps } from "@/types/form";
 
-export function LoginOTPInput<T extends FieldValues>({
+export function OTPInput<T extends FieldValues>({
   label,
   name,
   hForm,

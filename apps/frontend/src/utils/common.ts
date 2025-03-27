@@ -10,7 +10,7 @@ export const validateEmail = (email: string) => {
   return emailRegex.test(email);
 };
 
-export const validateLoginOTP = (otp: string | null) => {
+export const validateOTP = (otp: string | null) => {
   if (otp === null) return false;
   const otpRegex = /^\d{6}$/i;
   return otpRegex.test(otp);

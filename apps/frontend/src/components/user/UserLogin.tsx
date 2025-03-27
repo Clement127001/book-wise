@@ -5,13 +5,13 @@ import { useForm } from "react-hook-form";
 import { LoginForm } from "@/types/common";
 import { defaultLoginFormValues } from "@/utils/admin/login";
 import { useApi } from "@/hooks/useApi";
-import { validateEmail, validateLoginOTP } from "@/utils/common";
+import { validateEmail, validateOTP } from "@/utils/common";
 import { getQueryClient } from "@/utils/api";
 import { useTimer } from "@/hooks/useTimer";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
 import { CommonInput } from "@/components/form/CommonInput";
-import { LoginOTPInput } from "@/components/form/LoginOTPInput";
+import { OTPInput } from "@/components/form/OTPInput";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, RotateCw } from "lucide-react";
 import Link from "next/link";
@@ -32,7 +32,7 @@ const UserLogin = () => {
   const otp = watch("otp");
 
   const isEmailValid = validateEmail(email);
-  const isOTPValid = validateLoginOTP(otp);
+  const isOTPValid = validateOTP(otp);
 
   const handleBack = () => {
     router.replace("/");
@@ -181,15 +181,14 @@ const UserLogin = () => {
 
               {isEmailVerified && (
                 <div className="mt-4">
-                  <LoginOTPInput
+                  <OTPInput
                     label={"Enter OTP"}
                     name="otp"
                     hForm={userLoginForm}
                     registerOptions={{
                       required: "OTP is required",
                       validate: (value) =>
-                        (typeof value === "string" &&
-                          validateLoginOTP(value)) ||
+                        (typeof value === "string" && validateOTP(value)) ||
                         "Please enter a valid OTP",
                     }}
                     labelClassName="text-white"

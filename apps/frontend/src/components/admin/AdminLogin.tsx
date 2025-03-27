@@ -5,13 +5,13 @@ import Cookies from "js-cookie";
 import { ChevronRight, RotateCw } from "lucide-react";
 import { toast } from "sonner";
 import { CommonInput } from "@/components/form/CommonInput";
-import { LoginOTPInput } from "@/components/form/LoginOTPInput";
+import { OTPInput } from "@/components/form/OTPInput";
 import AdminPrimaryButton from "@/components/admin/AdminPrimaryButton";
 import BackButton from "@/components/BackButton";
 import { useApi } from "@/hooks/useApi";
 import { useTimer } from "@/hooks/useTimer";
 import { getQueryClient } from "@/utils/api";
-import { validateEmail, validateLoginOTP } from "@/utils/common";
+import { validateEmail, validateOTP } from "@/utils/common";
 import { defaultLoginFormValues } from "@/utils/admin/login";
 import { LoginForm } from "@/types/common";
 
@@ -29,7 +29,7 @@ const AdminLogin = () => {
   const otp = watch("otp");
 
   const isEmailValid = validateEmail(email);
-  const isOTPValid = validateLoginOTP(otp);
+  const isOTPValid = validateOTP(otp);
 
   const handleBack = () => {
     router.push("/");
@@ -167,15 +167,14 @@ const AdminLogin = () => {
 
               {isEmailVerified && (
                 <div className="mt-4">
-                  <LoginOTPInput
+                  <OTPInput
                     label={"Enter OTP"}
                     name="otp"
                     hForm={adminLoginForm}
                     registerOptions={{
                       required: "OTP is required",
                       validate: (value) =>
-                        (typeof value === "string" &&
-                          validateLoginOTP(value)) ||
+                        (typeof value === "string" && validateOTP(value)) ||
                         "Please enter a valid OTP",
                     }}
                   />

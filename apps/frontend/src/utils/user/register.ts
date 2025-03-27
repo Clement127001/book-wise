@@ -17,4 +17,5 @@ export const userRegisterDefaultValues: UserRegisterType = {
   lastName: "",
   avatarUrl: null,
   identityCardUrl: "",
+  verificationId: null,
 };
