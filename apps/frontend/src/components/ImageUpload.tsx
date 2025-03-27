@@ -1,10 +1,10 @@
-import { usePageLoader } from "@/context/pageLoaderProvider";
-import { uploadFile } from "@/utils/uploadFile";
-import { Label } from "@radix-ui/react-label";
-import { UploadCloud, X } from "lucide-react";
 import { ChangeEvent, useRef } from "react";
 import { useFormContext } from "react-hook-form";
+import { UploadCloud, X } from "lucide-react";
 import { toast } from "sonner";
+import { Label } from "@/components/ui/label";
+import { usePageLoader } from "@/context/pageLoaderProvider";
+import { uploadFile } from "@/utils/uploadFile";
 
 const ImageUpload = ({
   name,
@@ -102,7 +102,9 @@ const ImageUpload = ({
               onClick={handleUploadImage}
             >
               <UploadCloud color="#dfbf95" size={40} />
-              <p className="text-app-user-primary text-[14px]">Upload Image</p>
+              <p className="text-app-user-primary text-[14px]">
+                Upload {label}
+              </p>
             </div>
             <input
               type="file"

@@ -11,8 +11,8 @@ import { OTPInput } from "@/components/form/OTPInput";
 import { Button } from "@/components/ui/button";
 import { useApi } from "@/hooks/useApi";
 import { useTimer } from "@/hooks/useTimer";
-import { defaultLoginFormValues } from "@/utils/admin/login";
 import { LoginType } from "@/types/common";
+import { defaultLoginFormValues } from "@/utils/admin/login";
 import { validateEmail, validateOTP } from "@/utils/common";
 import { getQueryClient } from "@/utils/api";
 

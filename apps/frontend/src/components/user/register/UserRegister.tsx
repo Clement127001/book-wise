@@ -9,12 +9,12 @@ import RegisterEmailStep from "@/components/user/register/RegisterEmailStep";
 import ImageUpload from "@/components/ImageUpload";
 import { useTimer } from "@/hooks/useTimer";
 import { useApi } from "@/hooks/useApi";
+import { StepValueType, UserRegisterType } from "@/types/userRegister";
 import {
   registerMaxSteps,
   registerSteps,
   userRegisterDefaultValues,
 } from "@/utils/user/register";
-import { StepValueType, UserRegisterType } from "@/types/userRegister";
 import { getQueryClient } from "@/utils/api";
 
 const UserRegister = () => {
@@ -22,8 +22,8 @@ const UserRegister = () => {
   const [isEmailVerified, setIsEmailVerified] = useState<boolean>(false);
   const router = useRouter();
   const [registerStepValues, setRegisterStepValues] = useState<StepValueType>({
-    activeStep: 2,
-    maxAllowedStep: 2,
+    activeStep: 1,
+    maxAllowedStep: 1,
   });
   const { makeApiCall } = useApi();
 
@@ -117,6 +117,8 @@ const UserRegister = () => {
       handleVerifyOTP();
       return;
     }
+
+    //TODO: add register user
   };
 
   const handleBack = () => {
@@ -167,7 +169,7 @@ const UserRegister = () => {
                 )}
 
                 {registerStepValues.activeStep == 2 && (
-                  <ImageUpload name="avatarUrl" label="Avatar" />
+                  <ImageUpload name="avatarUrl" label="Avatar Image" required />
                 )}
               </form>
             </FormProvider>

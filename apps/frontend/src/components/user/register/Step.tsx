@@ -14,7 +14,7 @@ const Step = ({
   return (
     <div className={`flex gap-2 items-center group ${containerClassName}`}>
       <div
-        className={` flex items-center justify-center border border-1 rounded-full w-[24px] h-[24px] cursor-pointer  font-light border-app-gray-200  ${
+        className={` flex items-center justify-center border border-1 rounded-full w-[24px] h-[24px] cursor-pointer font-light border-app-gray-200  ${
           isStepCompleted
             ? "bg-app-user-primary text-black group-hover:scale-105 ease-linear transition-all border-0"
             : "bg-transparent text-app-gray-200  cursor-not-allowed"
