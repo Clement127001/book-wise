@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Link from "next/link";
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import BackButton from "@/components/BackButton";
 import Stepper from "@/components/user/register/Stepper";
 import RegisterEmailStep from "@/components/user/register/RegisterEmailStep";
-import ImageUpload from "@/components/ImageUpload";
 import { useTimer } from "@/hooks/useTimer";
 import { useApi } from "@/hooks/useApi";
 import { StepValueType, UserRegisterType } from "@/types/userRegister";
@@ -16,6 +16,8 @@ import {
   userRegisterDefaultValues,
 } from "@/utils/user/register";
 import { getQueryClient } from "@/utils/api";
+import { Button } from "@/components/ui/button";
+import RegisterDetailsStepForm from "./RegisterDetailsStepForm";
 
 const UserRegister = () => {
   const { timer, setTimer } = useTimer();
@@ -26,7 +28,6 @@ const UserRegister = () => {
     maxAllowedStep: 1,
   });
   const { makeApiCall } = useApi();
-
   const userRegisterForm = useForm<UserRegisterType>({
     mode: "onChange",
     defaultValues: userRegisterDefaultValues,
@@ -105,6 +106,58 @@ const UserRegister = () => {
     });
   };
 
+  const handleRegisterUser = (data: UserRegisterType) => {
+    const {
+      email,
+      verificationId,
+      avatarUrl,
+      identityCardUrl,
+      firstName,
+      lastName,
+    } = data;
+
+    if (verificationId === null || identityCardUrl === null) {
+      toast.warning("Required data is missing", {
+        description: "Please fill all data",
+        duration: 2000,
+        action: {
+          label: "close",
+          onClick: () => {
+            {
+            }
+          },
+        },
+      });
+      return;
+    }
+
+    makeApiCall({
+      fetcherFn: async () => {
+        return await getQueryClient().user.createUser.mutation({
+          body: {
+            email,
+            firstname: firstName,
+            lastname: lastName,
+            identityCardUrl,
+            verficationId: verificationId,
+            avatarUrl: avatarUrl ? avatarUrl : undefined,
+          },
+        });
+      },
+      successMsgProps: {
+        title: "Registration Successfull",
+        description: "User registered succcessfully!",
+        duration: 2000,
+      },
+      onSuccessFn: (res) => {
+        if (res.status === 201 && res.body) {
+          Cookies.set("userToken", res.body.token, { expires: 7 });
+        }
+        router.push("/user/home");
+      },
+    });
+  };
+
   const onRegister: SubmitHandler<UserRegisterType> = (data) => {
     const { otp } = data;
 
@@ -118,7 +171,7 @@ const UserRegister = () => {
       return;
     }
 
-    //TODO: add register user
+    handleRegisterUser(data);
   };
 
   const handleBack = () => {
@@ -133,13 +186,19 @@ const UserRegister = () => {
       />
 
       <div className="min-h-[90vh] flex flex-col justify-center items-center">
-        <section className="min-w-[90%] sm:min-w-[480px] flex flex-col items-center justify-center p-4 py-[40px] shadow-xl rounded-[20px] outline outline-[1.5px] bg-user-login-gradient">
+        <section
+          className={`min-w-[90%] sm:min-w-[480px] flex flex-col items-center justify-center p-4 py-[40px] shadow-xl rounded-[20px] outline outline-[1.5px] bg-user-login-gradient ${
+            registerStepValues.activeStep === 1
+              ? "sm:max-w-[520px]"
+              : "sm:max-w-[620px]"
+          }`}
+        >
           <img
             src={"/assets/user/user-logo.svg"}
             alt={"logo"}
             className={"h-8 w-[192px]"}
           />
-          <div className="p-[24px] lg:p-[24px__16px]  rounded-[18px] w-full sm:max-w-[450px]">
+          <div className="p-[24px] lg:p-[24px__16px]  rounded-[18px] w-full">
             <div className="flex flex-col gap-2 md:gap-[10px]">
               <h1 className="text-[24px] md:text-[28px] font-[600] text-white">
                 Create Your Library Account
@@ -158,7 +217,10 @@ const UserRegister = () => {
               />
             </div>
             <FormProvider {...userRegisterForm}>
-              <form onSubmit={handleSubmit(onRegister)} className="space-y-8">
+              <form
+                onSubmit={handleSubmit(onRegister)}
+                className="space-y-8 flex flex-col"
+              >
                 {registerStepValues.activeStep === 1 && (
                   <RegisterEmailStep
                     userRegisterForm={userRegisterForm}
@@ -169,14 +231,20 @@ const UserRegister = () => {
                 )}
 
                 {registerStepValues.activeStep == 2 && (
-                  <ImageUpload name="avatarUrl" label="Avatar Image" required />
+                  <RegisterDetailsStepForm
+                    userRegisterForm={userRegisterForm}
+                  />
+                )}
+
+                {registerStepValues.activeStep == 2 && (
+                  <Button className="self-end">Register</Button>
                 )}
               </form>
             </FormProvider>
           </div>
 
           <p className="text-white self-start px-4">
-            Have an account already?
+            Had an account already?
             <Link href={"/user/login"} className="text-app-user-primary ml-2">
               Login
             </Link>

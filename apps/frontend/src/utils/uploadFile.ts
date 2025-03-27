@@ -17,7 +17,7 @@ export const uploadFile = async (
     });
     const fileResponse: UploadMediaResponseType = await response.json();
     return fileResponse.data.url;
-  } catch (err) {
+  } catch (err: any) {
     return {
       errorTitle: "Error Occurred!",
       errorMessage: "Couldn't upload the file. Please upload it again.",

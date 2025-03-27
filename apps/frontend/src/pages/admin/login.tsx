@@ -9,7 +9,7 @@ const AdminLoginPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (isLoggedIn) router.replace("/");
+    if (isLoggedIn) router.push("/");
   }, [isLoggedIn]);
 
   return (

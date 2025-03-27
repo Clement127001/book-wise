@@ -82,7 +82,7 @@ const ImageUpload = ({
         </Label>
       )}
 
-      <div className="relative flex justify-center items-center rounded-md border-2 bg-app-user-primary/10  border-app-user-primary/60 border-dashed max-w-full h-[200px] cursor-pointer overflow-hidden p-2">
+      <div className="relative flex justify-center items-center rounded-md border-2 bg-app-user-primary/10  border-app-user-primary/60 border-dashed max-w-full h-[240px] cursor-pointer overflow-hidden p-2">
         {previewUrl ? (
           <>
             <img

@@ -45,7 +45,7 @@ export default function Home() {
     }
 
     delete query.ua;
-    router.replace("/");
+    router.push("/");
   }, [router.isReady, toast, isUnauthorised, query, router]);
 
   return (

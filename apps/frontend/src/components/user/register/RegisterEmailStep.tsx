@@ -82,7 +82,7 @@ const RegisterEmailStep = ({
             <ChevronRight className="group-hover:scale-[1.35] group-hover:translate-x-2 ease-linear transition-[300ms]" />
           </Button>
 
-          <div className="flex gap-3 font-normal text-[14px] mt-3">
+          <div className="flex gap-3 font-normal text-[14px] mt-3 text-white">
             <p> Didn’t receive OTP ?</p>
             <p
               className={`flex gap-1 items-center ${
