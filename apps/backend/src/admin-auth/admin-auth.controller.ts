@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import {
   nestControllerContract,
   NestControllerInterface,
@@ -50,6 +50,21 @@ export class AdminAuthController
         success: true,
         message: 'OTP verified.',
         token,
+      },
+    };
+  }
+
+  @TsRest(adminAuthContract.createAdmin)
+  async createAdmin(
+    @TsRestRequest()
+    { body }: AdminAuthRequestShape['createAdmin'],
+  ) {
+    await this.adminAuthService.createAdmin(body);
+    return {
+      status: 200 as const,
+      body: {
+        success: true,
+        message: 'Admin created successfully',
       },
     };
   }

@@ -4,7 +4,7 @@ import { BaseEntity } from 'base.entity';
 
 @Entity()
 export class AdminLoginOTP extends BaseEntity {
-  @ManyToOne({ nullable: true })
+  @ManyToOne(() => Admin, { nullable: true })
   admin?: Admin;
 
   @Property()

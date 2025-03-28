@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CreateUserSchema } from "./user/schema";
 
 export const SuccessSchema = z.object({
   success: z.boolean(),

@@ -1,6 +1,7 @@
 import { EntityManager, QueryOrder, wrap } from '@mikro-orm/postgresql';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Admin } from '@/admin/entities/admin.entity';
+import { Account } from '@/common/entities/account.entity';
 import { AdminLoginOTP } from '@/admin-auth/entities/adminLoginOTP.entity';
 import { AuthService } from '@/auth/auth.service';
 import { AdminAuthRequestShape } from '@/admin-auth/admin-auth.controller';
@@ -24,7 +25,7 @@ export class AdminAuthService {
       {
         user: { email, role: UserRoleEnum.ADMIN },
       },
-      { populate: ['id'] },
+      { populate: ['id', 'user.id'] },
     );
 
     if (!admin) {
@@ -36,7 +37,7 @@ export class AdminAuthService {
     const adminLoginOtp = new AdminLoginOTP({
       email,
       otp,
-      admin: this.em.getReference(Admin, admin.id),
+      admin,
     });
 
     await this.em.persistAndFlush(adminLoginOtp);
@@ -85,5 +86,30 @@ export class AdminAuthService {
     });
 
     return { token };
+  }
+
+  async createAdmin(data: AdminAuthRequestShape['createAdmin']['body']) {
+    const { firstname, lastname, email, avatarUrl } = data;
+
+    const admin = await this.em.findOne(Admin, { user: { email } });
+
+    if (admin)
+      throw new BadRequestException(
+        'User with give email is already exists, try to login instead',
+      );
+
+    const newAdminAccount = new Account({
+      firstname: firstname.trim(),
+      lastname: lastname.trim(),
+      email,
+      avatarUrl: avatarUrl ?? null,
+      role: UserRoleEnum.ADMIN,
+    });
+
+    const newAdmin = new Admin({
+      user: newAdminAccount,
+    });
+
+    this.em.persistAndFlush([newAdminAccount, newAdmin]);
   }
 }

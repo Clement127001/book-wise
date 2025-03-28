@@ -92,7 +92,7 @@ export class UserAuthService {
     const loginOTP = new UserLoginOTP({
       email: email,
       otp: otp,
-      user: this.em.getReference(User, user.id),
+      user,
     });
 
     await this.em.persistAndFlush(loginOTP);

@@ -55,7 +55,7 @@ export class UserService {
     this.em.persistAndFlush([newUserAccount, newUser]);
 
     const token = await this.authService.generateJWTToken({
-      id: newUser.id,
+      id: newUserAccount.id,
       email,
     });
 

@@ -7,4 +7,9 @@ export class Admin extends BaseEntity {
   @Unique()
   @OneToOne({ entity: () => Account, primary: true })
   user: Account;
+
+  constructor({ user }: { user: Account }) {
+    super();
+    this.user = user;
+  }
 }
