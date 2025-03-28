@@ -1,7 +1,7 @@
 import { EntityManager, QueryOrder, wrap } from '@mikro-orm/postgresql';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Admin } from '@/admin/entities/admin.entity';
-import { Account } from '@/common/entities/account.entity';
+import { Account } from '@/auth/entities/account.entity';
 import { AdminLoginOTP } from '@/admin-auth/entities/adminLoginOTP.entity';
 import { AuthService } from '@/auth/auth.service';
 import { AdminAuthRequestShape } from '@/admin-auth/admin-auth.controller';

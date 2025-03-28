@@ -4,7 +4,7 @@ import { UserRequestShape } from '@/user/user.controller';
 import { AuthService } from '@/auth/auth.service';
 import { User } from '@/user/entities/user.entity';
 import { EmailVerification } from '@/user-auth/entities/emailVerification.entity';
-import { Account } from '@/common/entities/account.entity';
+import { Account } from '@/auth/entities/account.entity';
 import { UserRoleEnum } from 'contract/enum';
 
 @Injectable()

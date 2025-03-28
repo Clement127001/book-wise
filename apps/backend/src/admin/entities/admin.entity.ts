@@ -1,5 +1,5 @@
-import { Account } from '@/common/entities/account.entity';
-import { Entity, OneToOne, Property, Unique } from '@mikro-orm/core';
+import { Account } from '@/auth/entities/account.entity';
+import { Entity, OneToOne, Unique } from '@mikro-orm/core';
 import { BaseEntity } from 'base.entity';
 
 @Entity()

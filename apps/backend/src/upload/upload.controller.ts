@@ -10,8 +10,8 @@ import {
   NestRequestShapes,
   TsRest,
 } from '@ts-rest/nest';
-import { uploadContract } from '../../../contract/upload/contract';
-import { UploadService } from './upload.service';
+import { uploadContract } from 'contract/upload/contract';
+import { UploadService } from '@/upload/upload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 const uploadController = nestControllerContract(uploadContract);

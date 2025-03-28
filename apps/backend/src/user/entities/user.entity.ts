@@ -1,4 +1,4 @@
-import { Account } from '@/common/entities/account.entity';
+import { Account } from '@/auth/entities/account.entity';
 import { Entity, Enum, OneToOne, Property, Unique } from '@mikro-orm/core';
 import { BaseEntity } from 'base.entity';
 import { UserAccountStatus } from 'contract/enum';
