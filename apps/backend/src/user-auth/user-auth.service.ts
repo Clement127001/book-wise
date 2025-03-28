@@ -7,6 +7,7 @@ import { RegisterOTP } from '@/user-auth/entities/registerOTP.entity';
 import { EmailVerification } from '@/user-auth/entities/emailVerification.entity';
 import { UserLoginOTP } from './entities/userLoginOTP.entity';
 import { AuthService } from '@/auth/auth.service';
+import { UserRoleEnum } from 'contract/enum';
 
 @Injectable()
 export class UserAuthService {
@@ -20,7 +21,9 @@ export class UserAuthService {
   ) {
     const { email } = data;
 
-    const user = await this.em.findOne(User, { email });
+    const user = await this.em.findOne(User, {
+      user: { email, role: UserRoleEnum.USER },
+    });
 
     if (user)
       throw new BadRequestException(
@@ -70,11 +73,18 @@ export class UserAuthService {
   ) {
     const { email } = data;
 
-    const user = await this.em.findOne(User, { email, isDeleted: false });
+    const user = await this.em.findOne(
+      User,
+      {
+        user: { email },
+        isDeleted: false,
+      },
+      { populate: ['id'] },
+    );
 
     if (!user)
       throw new BadRequestException(
-        'User with given mail not exist.Please register an account.',
+        `User with given mail isn't exist.Please register an account.`,
       );
 
     const otp = generateOTP();
@@ -93,11 +103,18 @@ export class UserAuthService {
   ) {
     const { email, otp } = data;
 
-    const user = await this.em.findOne(User, { email, isDeleted: false });
+    const userData = await this.em.findOne(
+      User,
+      {
+        user: { email },
+        isDeleted: false,
+      },
+      { populate: ['user.id'] },
+    );
 
-    if (!user)
+    if (!userData)
       throw new BadRequestException(
-        'User with given mail not exist.Please register an account.',
+        `User with given mail isn't exist.Please register an account.`,
       );
 
     const otpData = await this.em.findOne(
@@ -120,8 +137,8 @@ export class UserAuthService {
     await this.em.persistAndFlush(otpData);
 
     const token = await this.authService.generateJWTToken({
-      id: user.id,
-      email: user.email,
+      id: userData.user.id,
+      email,
     });
 
     return { token };

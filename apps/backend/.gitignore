@@ -4,7 +4,7 @@ uploads
 /dist
 /node_modules
 /build
-temp
+/temp
 
 # Logs
 logs

@@ -5,6 +5,7 @@ import { AdminLoginOTP } from '@/admin-auth/entities/adminLoginOTP.entity';
 import { AuthService } from '@/auth/auth.service';
 import { AdminAuthRequestShape } from '@/admin-auth/admin-auth.controller';
 import { checkOTPExpiration, generateOTP } from '@/utils';
+import { UserRoleEnum } from 'contract/enum';
 
 @Injectable()
 export class AdminAuthService {
@@ -18,9 +19,13 @@ export class AdminAuthService {
   ) {
     const { email } = data;
 
-    const admin = await this.em.findOne(Admin, {
-      email,
-    });
+    const admin = await this.em.findOne(
+      Admin,
+      {
+        user: { email, role: UserRoleEnum.ADMIN },
+      },
+      { populate: ['id'] },
+    );
 
     if (!admin) {
       throw new BadRequestException('Admin with given email not found');
@@ -42,9 +47,15 @@ export class AdminAuthService {
   ) {
     const { email, otp } = data;
 
-    const admin = await this.em.findOne(Admin, {
-      email,
-    });
+    const admin = await this.em.findOne(
+      Admin,
+      {
+        user: { email, role: UserRoleEnum.ADMIN },
+      },
+      {
+        populate: ['user.id'],
+      },
+    );
 
     if (!admin)
       throw new BadRequestException('Admin with given email is not found');
@@ -69,8 +80,8 @@ export class AdminAuthService {
     await this.em.persistAndFlush(otpData);
 
     const token = await this.authService.generateJWTToken({
-      id: admin.id,
-      email: admin.email,
+      id: admin.user.id,
+      email,
     });
 
     return { token };

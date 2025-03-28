@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { UploadMediaResultSchema } from "contract/upload/schema";
-
+import { UserRoleEnum } from "contract/enum";
 export interface ErrorStatusInterface {
   message: string;
 }
@@ -20,11 +20,6 @@ export interface MakeApiCallFunctionProps<T> {
   showLoader?: boolean;
   showFailureMsg?: boolean;
   finallyFn?: () => void;
-}
-
-export enum UserRoleEnum {
-  ADMIN = "Admin",
-  USER = "User",
 }
 
 export enum TrueFalseEnum {

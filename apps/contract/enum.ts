@@ -3,3 +3,8 @@ export enum UserAccountStatus {
   DENIED = "Denied",
   VERFIED = "Verified",
 }
+
+export enum UserRoleEnum {
+  ADMIN = "Admin",
+  USER = "User",
+}

@@ -4,6 +4,8 @@ import { UserRequestShape } from '@/user/user.controller';
 import { AuthService } from '@/auth/auth.service';
 import { User } from '@/user/entities/user.entity';
 import { EmailVerification } from '@/user-auth/entities/emailVerification.entity';
+import { Account } from '@/common/entities/account.entity';
+import { UserRoleEnum } from 'contract/enum';
 
 @Injectable()
 export class UserService {
@@ -22,7 +24,7 @@ export class UserService {
       avatarUrl,
     } = data;
 
-    const user = await this.em.findOne(User, { email });
+    const user = await this.em.findOne(User, { user: { email } });
 
     if (user)
       throw new BadRequestException(
@@ -37,19 +39,24 @@ export class UserService {
     if (!isEmailVerified)
       throw new BadRequestException('Email is not verified.');
 
-    const newUser = new User({
-      email,
+    const newUserAccount = new Account({
       firstname: firstname.trim(),
       lastname: lastname.trim(),
+      email,
       avatarUrl: avatarUrl || null,
+      role: UserRoleEnum.USER,
+    });
+
+    const newUser = new User({
+      user: newUserAccount,
       identityCardUrl,
     });
 
-    await this.em.persistAndFlush(newUser);
+    this.em.persistAndFlush([newUserAccount, newUser]);
 
     const token = await this.authService.generateJWTToken({
       id: newUser.id,
-      email: newUser.email,
+      email,
     });
 
     return { token };

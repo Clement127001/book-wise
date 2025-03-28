@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { UserRoleEnum } from "@/types/common";
+import { UserRoleEnum } from "contract/enum";
 
 const LoggedInUserHomePageAction = ({ role }: { role: UserRoleEnum }) => {
   return (

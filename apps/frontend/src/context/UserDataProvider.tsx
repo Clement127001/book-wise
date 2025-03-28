@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext } from "react";
-import { UserDetailsInterface, UserRoleEnum } from "@/types/common";
+import { UserDetailsInterface } from "@/types/common";
 import { UseLogin } from "@/context/LoginProvider";
+import { UserRoleEnum } from "contract/enum";
 import { useRouter } from "next/router";
 import { loginPages } from "@/utils/common";
 

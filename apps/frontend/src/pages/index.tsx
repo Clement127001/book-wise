@@ -1,10 +1,10 @@
 import LoggedInUserHomePageAction from "@/components/homePage/LoggedInUserHomePageAction";
 import PublicUserHomePageAction from "@/components/homePage/PublicUserHomePageAction";
 import { UseLogin } from "@/context/LoginProvider";
-import { UserRoleEnum } from "@/types/common";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { UserRoleEnum } from "contract/enum";
 
 export default function Home() {
   const { isLoggedIn } = UseLogin();
