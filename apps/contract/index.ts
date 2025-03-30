@@ -3,6 +3,7 @@ import { adminAuthContract } from "./adminAuth/contract";
 import { userAuthContract } from "./userAuth/contract";
 import { userContract } from "./user/contract";
 import { uploadContract } from "./upload/contract";
+import { accountContract } from "./account/contract";
 
 const c = initContract();
 
@@ -11,4 +12,5 @@ export const contract = c.router({
   userAuth: userAuthContract,
   user: userContract,
   upload: uploadContract,
+  account: accountContract,
 });

@@ -9,14 +9,18 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: true, // Todo: Refresh token and then make it false
+      ignoreExpiration: true,
       secretOrKey: JWTConstant.secret,
     });
   }
 
   async validate(payload: { id: string; email: string }) {
-    const account = await this.authService.validateAccount(payload.id);
-    if (!account) throw new UnauthorizedException();
-    return { userId: account.id, email: account.email };
+    try {
+      const account = await this.authService.validateAccount(payload.id);
+      if (!account) throw new UnauthorizedException();
+      return account;
+    } catch (err) {
+      return null;
+    }
   }
 }

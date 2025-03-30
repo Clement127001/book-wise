@@ -27,7 +27,6 @@ export const adminAuthContract = c.router(
         201: LoginOTPVerifiedSuccessSchema,
       },
     },
-
     createAdmin: {
       method: "POST",
       path: "/create",

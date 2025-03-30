@@ -13,14 +13,18 @@ import { OptionalJWTAuthGuard } from '@/auth/optional.guard';
 
 export const ROLES_KEY = 'roles';
 
-export const user = createParamDecorator(
+export const account = createParamDecorator(
   (_data, ctx: ExecutionContext): Account => {
     const request = ctx.switchToHttp().getRequest();
-    return request.account;
+    return request.user;
   },
 );
 
-export const getAccountFromToken = user;
+export const getAccountFromToken = account;
+
+export const Auth = () => {
+  return applyDecorators(UseGuards(JWTAuthGuard));
+};
 
 export const AdminOnlyAuth = () => {
   return applyDecorators(
