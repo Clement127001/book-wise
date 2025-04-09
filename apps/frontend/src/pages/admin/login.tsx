@@ -1,17 +1,7 @@
 import AdminLogin from "@/components/admin/AdminLogin";
-import { UseLogin } from "@/context/LoginProvider";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 const AdminLoginPage = () => {
-  const { isLoggedIn } = UseLogin();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (isLoggedIn) router.push("/");
-  }, [isLoggedIn]);
-
   return (
     <>
       <Head>
