@@ -23,6 +23,7 @@ const UserLogin = () => {
   const [isEmailVerified, setIsEmailVerified] = useState<boolean>(false);
   const userLoginForm = useForm<LoginType>({
     defaultValues: defaultLoginFormValues,
+    mode: "onSubmit",
   });
 
   const { makeApiCall } = useApi();
@@ -33,10 +34,6 @@ const UserLogin = () => {
 
   const isEmailValid = validateEmail(email);
   const isOTPValid = validateOTP(otp);
-
-  const handleBack = () => {
-    router.push("/");
-  };
 
   const handleSendOTP = () => {
     const email = getValues("email");
@@ -129,7 +126,7 @@ const UserLogin = () => {
   return (
     <div className="min-h-screen flex justify-center  flex-col p-4 sm:p-6 md:p-8 bg-user-gradient">
       <BackButton
-        handleBack={handleBack}
+        url="/"
         className={"text-black font-semibold bg-app-user-primary"}
       />
       <div className="min-h-[90vh] flex flex-col justify-center items-center">

@@ -44,7 +44,7 @@ export default function Home() {
 
     delete query.ua;
     router.push("/");
-  }, [router.isReady, toast, isUnauthorised, query, router]);
+  }, [router.isReady, isUnauthorised, query]);
 
   return (
     <div className="grid grid-cols-2 w-full gap-5 h-screen px-40 py-32 bg-user-gradient">
@@ -55,7 +55,7 @@ export default function Home() {
       />
       <div className="flex flex-col self-center gap-4">
         <div className="flex max-h-20 items-center gap-4">
-          <img className="w-20" src="assets/admin/admin-logo.svg" />
+          <img className="w-20" src="assets/admin/logo.svg" />
           <h1 className="text-[52px] font-semibold text-white">BookWise</h1>
         </div>
         <p className="text-app-gray-200 text-md tracking-normal leading-6">

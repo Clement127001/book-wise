@@ -21,7 +21,7 @@ const LoginContext = createContext<LoginContextInterface>({
 
 export const LoginProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
-  const path = router.asPath;
+  const path = router.pathname;
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isLogInChecked, setIsLogInChecked] = useState<boolean>(false);
@@ -40,7 +40,6 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
     if (!router.isReady) return;
 
     if (!token && loginRestrictedPages.includes(path)) {
-      setIsLogInChecked(true);
       router.push("/?ua=" + true);
       return;
     } else if (token && loginPages.includes(path)) {
@@ -48,7 +47,7 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
     } else {
       refreshLoginState();
     }
-  }, [router.isReady, path]);
+  }, [router.isReady, router, path]);
 
   if (!isLogInChecked) {
     return <div className="w-[100vw] h-[100vh] bg-app-gray-700"></div>;

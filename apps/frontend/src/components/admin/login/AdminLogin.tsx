@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { useRouter } from "next/router";
-import { SubmitHandler, useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 import { ChevronRight, RotateCw } from "lucide-react";
-import { toast } from "sonner";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { CommonInput } from "@/components/form/CommonInput";
 import { OTPInput } from "@/components/form/OTPInput";
 import AdminPrimaryButton from "@/components/admin/AdminPrimaryButton";
@@ -21,6 +21,7 @@ const AdminLogin = () => {
   const [isEmailVerified, setEmailVerified] = useState<boolean>(false);
   const adminLoginForm = useForm<LoginType>({
     defaultValues: defaultLoginFormValues,
+    mode: "onSubmit",
   });
   const { makeApiCall } = useApi();
   const { handleSubmit, setFocus, getValues, watch } = adminLoginForm;
@@ -30,10 +31,6 @@ const AdminLogin = () => {
 
   const isEmailValid = validateEmail(email);
   const isOTPValid = validateOTP(otp);
-
-  const handleBack = () => {
-    router.push("/");
-  };
 
   const handleSendOTP = () => {
     const email = getValues("email");
@@ -125,11 +122,11 @@ const AdminLogin = () => {
 
   return (
     <div className="min-h-screen flex justify-center  flex-col p-4 sm:p-6 md:p-8">
-      <BackButton handleBack={handleBack} />
+      <BackButton url="/" />
       <div className="min-h-[90vh] flex flex-col justify-center items-center">
         <section className="min-w-[90%] sm:min-w-[480px] flex flex-col items-center justify-center p-4 pt-12 shadow-xl rounded-xl outline outline-[1.5px] outline-app-gray-100">
           <img
-            src={"/assets/admin/admin-logo.svg"}
+            src={"/assets/admin/logo.svg"}
             alt={"logo"}
             className={"h-12 w-[192px]"}
           />

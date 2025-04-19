@@ -1,5 +1,8 @@
+import Dashboard from "@/components/admin/dashboard/Dashboard";
+import AdminLayout from "@/components/layout/AdminLayout";
+
 const dashboard = () => {
-  return <div>dashboard</div>;
+  return <AdminLayout MainComponent={Dashboard} />;
 };
 
 export default dashboard;

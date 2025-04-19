@@ -47,7 +47,11 @@ export function OTPInput<T extends FieldValues>({
             >
               <InputOTPGroup>
                 {Array.from({ length: 6 }).map((_, index) => (
-                  <InputOTPSlot index={index} className={inputClassName} />
+                  <InputOTPSlot
+                    index={index}
+                    className={inputClassName}
+                    key={index}
+                  />
                 ))}
               </InputOTPGroup>
             </InputOTP>
