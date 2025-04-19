@@ -44,7 +44,7 @@ export default function Home() {
 
     delete query.ua;
     router.push("/");
-  }, [router.isReady, toast, isUnauthorised, query, router]);
+  }, [router.isReady, isUnauthorised, query]);
 
   return (
     <div className="grid grid-cols-2 w-full gap-5 h-screen px-40 py-32 bg-user-gradient">

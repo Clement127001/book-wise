@@ -21,3 +21,7 @@ export const validateOTP = (otp: string | null) => {
 export const logout = () => {
   Cookies.remove("userToken");
 };
+
+export const getFullName = (firstname: string, lastname: string) => {
+  return firstname + " " + lastname;
+};

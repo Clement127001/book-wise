@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { accountSchema } from "contract/account/schema";
 import { UploadMediaResultSchema } from "contract/upload/schema";
 import { UserRoleEnum } from "contract/enum";
 export interface ErrorStatusInterface {
@@ -14,6 +15,10 @@ interface ToastMessageProps {
 export interface PageLoaderProps {
   isPageLoaderVisible: boolean;
 }
+
+export type UserDetailsType = {
+  userData: z.infer<typeof accountSchema>;
+};
 
 export interface MakeApiCallFunctionProps<T> {
   fetcherFn: () => Promise<T>;

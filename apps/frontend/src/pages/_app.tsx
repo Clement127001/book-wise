@@ -45,6 +45,7 @@ export default function App({ Component, pageProps }: AppProps) {
         book finds its place! 📚✨"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/assets/admin/logo.svg" type="image/svg" />
       </Head>
       <Toaster />
       <QueryClientProvider client={queryClient}>

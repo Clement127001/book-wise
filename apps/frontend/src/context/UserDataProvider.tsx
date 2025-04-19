@@ -1,15 +1,10 @@
 import { createContext, ReactNode, useContext } from "react";
-import { UseLogin } from "@/context/LoginProvider";
 import { useRouter } from "next/router";
+import { UseLogin } from "@/context/LoginProvider";
 import { loginPages } from "@/utils/common";
 import { getQueryClient } from "@/utils/api";
 import { contract } from "contract";
-import { accountSchema } from "contract/account/schema";
-import { z } from "zod";
-
-type UserDetailsType = {
-  userData: z.infer<typeof accountSchema>;
-};
+import { UserDetailsType } from "@/types/common";
 
 const UserContext = createContext<UserDetailsType>({} as UserDetailsType);
 
@@ -19,6 +14,8 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
       contract.account.getAccountDetail.path,
     ]);
 
+  //TODO: fix the error while logging in and redirection
+
   if (isLoading) return <div>loading...</div>;
 
   if (error) return <div>error occurred</div>;
@@ -26,8 +23,6 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
   if (!data) return <div>no user found</div>;
 
   const userData = data.body;
-
-  console.log(userData);
 
   return (
     <UserContext.Provider value={{ userData: userData }}>

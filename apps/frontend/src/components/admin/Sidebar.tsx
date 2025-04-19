@@ -5,7 +5,7 @@ import SidebarLink from "@/components/admin/SidebarLink";
 import UserAvatar from "@/components/common/UserAvatar";
 import { useUserData } from "@/context/UserDataProvider";
 import { adminSidebarLinks } from "@/utils/admin/common";
-import { logout } from "@/utils/common";
+import { getFullName, logout } from "@/utils/common";
 import { useRouter } from "next/router";
 
 const LogoutConfirmationModal = dynamic(
@@ -19,7 +19,7 @@ const Sidebar = () => {
   const router = useRouter();
   const { userData } = useUserData();
   const { firstname, lastname, avatarUrl, email } = userData;
-  const fullName = firstname + " " + lastname;
+  const fullName = getFullName(firstname, lastname);
 
   const handleCloseLogoutConfirmationModal = () => {
     setLogoutConfirmationModalOpened(false);
@@ -32,7 +32,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <aside className="flex flex-col gap-4 justify-between p-4 h-screen">
+      <section className="flex flex-col gap-4 justify-between p-4 h-screen">
         <section aria-description="admin sidebar" className="space-y-5">
           <div className="flex max-h-20 items-center gap-2 py-5 border-b-[1px] border-dashed border-app-gray-200">
             <img className="w-10" src="/assets/admin/logo.svg" />
@@ -64,14 +64,15 @@ const Sidebar = () => {
           </div>
 
           <LogOut
-            className="text-red-500 p-1 hover:bg-app-gray-100 rounded-full"
+            size={32}
+            className="text-red-500 p-2 hover:bg-app-gray-100 rounded-full"
             strokeWidth={2.4}
             onClick={() => {
               setLogoutConfirmationModalOpened(true);
             }}
           />
         </section>
-      </aside>
+      </section>
 
       {logoutConfirmationModalOpened && (
         <LogoutConfirmationModal
