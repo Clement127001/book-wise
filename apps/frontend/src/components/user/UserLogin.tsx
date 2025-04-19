@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChevronRight, RotateCw } from "lucide-react";
 import { useForm } from "react-hook-form";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/common/BackButton";
 import { CommonInput } from "@/components/form/CommonInput";
 import { OTPInput } from "@/components/form/OTPInput";
 import { Button } from "@/components/ui/button";

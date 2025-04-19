@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { CommonInput } from "@/components/form/CommonInput";
 import { OTPInput } from "@/components/form/OTPInput";
 import AdminPrimaryButton from "@/components/admin/AdminPrimaryButton";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/common/BackButton";
 import { useApi } from "@/hooks/useApi";
 import { useTimer } from "@/hooks/useTimer";
 import { getQueryClient } from "@/utils/api";

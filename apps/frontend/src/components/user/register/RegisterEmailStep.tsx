@@ -1,11 +1,11 @@
+import { useEffect } from "react";
+import { UseFormReturn } from "react-hook-form";
+import { ChevronRight, RotateCw } from "lucide-react";
 import { CommonInput } from "@/components/form/CommonInput";
 import { OTPInput } from "@/components/form/OTPInput";
 import { Button } from "@/components/ui/button";
 import { UserRegisterType } from "@/types/userRegister";
 import { validateEmail, validateOTP } from "@/utils/common";
-import { ChevronRight, RotateCw } from "lucide-react";
-import { useEffect } from "react";
-import { UseFormReturn } from "react-hook-form";
 
 const RegisterEmailStep = ({
   userRegisterForm,

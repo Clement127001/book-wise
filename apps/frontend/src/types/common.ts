@@ -11,6 +11,10 @@ interface ToastMessageProps {
   duration: number;
 }
 
+export interface PageLoaderProps {
+  isPageLoaderVisible: boolean;
+}
+
 export interface MakeApiCallFunctionProps<T> {
   fetcherFn: () => Promise<T>;
   onSuccessFn?: (response: T) => void;

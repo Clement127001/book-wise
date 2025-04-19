@@ -2,8 +2,9 @@ import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useUserData } from "@/context/UserDataProvider";
 import { UserRoleEnum } from "contract/enum";
+import { UseLogin } from "@/context/LoginProvider";
 
-const PageRestrictionProvider = ({ children }: { children: ReactNode }) => {
+const PageRestriction = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const { userData } = useUserData();
   const path = router.asPath;
@@ -23,6 +24,16 @@ const PageRestrictionProvider = ({ children }: { children: ReactNode }) => {
   }, [router]);
 
   return <>{children}</>;
+};
+
+const PageRestrictionProvider = ({ children }: { children: ReactNode }) => {
+  const { isLoggedIn } = UseLogin();
+
+  if (!isLoggedIn) {
+    return children;
+  }
+
+  return <PageRestriction>{children}</PageRestriction>;
 };
 
 export default PageRestrictionProvider;

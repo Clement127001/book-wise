@@ -1,8 +1,4 @@
-import React from "react";
-
-interface PageLoaderProps {
-  isPageLoaderVisible: boolean;
-}
+import { PageLoaderProps } from "@/types/common";
 
 const PageLoader: React.FC<PageLoaderProps> = ({ isPageLoaderVisible }) => {
   if (!isPageLoaderVisible) return null;

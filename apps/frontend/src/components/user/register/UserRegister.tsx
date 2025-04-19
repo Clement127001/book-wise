@@ -4,9 +4,11 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import BackButton from "@/components/BackButton";
-import Stepper from "@/components/Stepper";
+import BackButton from "@/components/common/BackButton";
+import Stepper from "@/components/common/Stepper";
 import RegisterEmailStep from "@/components/user/register/RegisterEmailStep";
+import { Button } from "@/components/ui/button";
+import RegisterDetailsStepForm from "@/components/user/register/RegisterDetailsStepForm";
 import { useTimer } from "@/hooks/useTimer";
 import { useApi } from "@/hooks/useApi";
 import { StepValueType, UserRegisterType } from "@/types/userRegister";
@@ -16,8 +18,6 @@ import {
   userRegisterDefaultValues,
 } from "@/utils/user/register";
 import { getQueryClient } from "@/utils/api";
-import { Button } from "@/components/ui/button";
-import RegisterDetailsStepForm from "@/components/user/register/RegisterDetailsStepForm";
 
 const UserRegister = () => {
   const { timer, setTimer } = useTimer();
