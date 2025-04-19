@@ -30,6 +30,7 @@ const SidebarLink = ({
         className={` ${
           isActive ? "text-white" : "text-app-gray-300 group-hover:text-black"
         }`}
+        strokeWidth={1.7}
       />
       <p
         className={`capitalize font-medium ${

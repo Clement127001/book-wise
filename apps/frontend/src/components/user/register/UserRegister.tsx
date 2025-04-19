@@ -174,16 +174,9 @@ const UserRegister = () => {
     handleRegisterUser(data);
   };
 
-  const handleBack = () => {
-    router.back();
-  };
-
   return (
     <div className="min-h-screen flex justify-center  flex-col p-4 sm:p-6 md:p-8 bg-user-gradient">
-      <BackButton
-        handleBack={handleBack}
-        className={"text-black font-semibold bg-app-user-primary"}
-      />
+      <BackButton className={"text-black font-semibold bg-app-user-primary"} />
 
       <div className="min-h-[90vh] flex flex-col justify-center items-center">
         <section

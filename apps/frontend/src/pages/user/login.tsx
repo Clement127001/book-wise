@@ -1,5 +1,5 @@
 import Head from "next/head";
-import UserLogin from "@/components/user/UserLogin";
+import UserLogin from "@/components/user/login/UserLogin";
 
 const UserLoginPage = () => {
   return (

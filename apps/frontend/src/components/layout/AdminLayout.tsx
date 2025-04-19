@@ -1,5 +1,5 @@
-import Sidebar from "@/components/admin/Sidebar";
-import WrapperWithSearch from "../admin/WrapperWithSearch";
+import Sidebar from "@/components/admin/sidebar/Sidebar";
+import WrapperWithSearch from "@/components/admin/WrapperWithSearch";
 import { AdminLayoutProps } from "@/types/admin";
 
 const AdminLayout = ({ MainComponent }: AdminLayoutProps) => {

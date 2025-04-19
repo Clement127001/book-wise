@@ -1,12 +1,24 @@
 import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/router";
 
 const BackButton = ({
   className,
-  handleBack,
+  url,
 }: {
   className?: string;
-  handleBack: () => void;
+  url?: string;
 }) => {
+  const router = useRouter();
+
+  const handleBack = () => {
+    if (url) {
+      router.push(url);
+      return;
+    }
+
+    router.back();
+  };
+
   return (
     <div
       onClick={handleBack}

@@ -1,12 +1,13 @@
 import { Fragment, useState } from "react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import { LogOut } from "lucide-react";
-import SidebarLink from "@/components/admin/SidebarLink";
+import SidebarLink from "@/components/admin/sidebar/SidebarLink";
 import UserAvatar from "@/components/common/UserAvatar";
 import { useUserData } from "@/context/UserDataProvider";
 import { adminSidebarLinks } from "@/utils/admin/common";
 import { getFullName, logout } from "@/utils/common";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 const LogoutConfirmationModal = dynamic(
   import("@/components/common/ConfirmationModal").then((mod) => mod.default),
@@ -34,14 +35,17 @@ const Sidebar = () => {
     <>
       <section className="flex flex-col gap-4 justify-between p-4 h-screen">
         <section aria-description="admin sidebar" className="space-y-5">
-          <div className="flex max-h-20 items-center gap-2 py-5 border-b-[1px] border-dashed border-app-gray-200">
+          <Link
+            href={"/admin/dashboard"}
+            className="flex max-h-20 items-center gap-2 py-5 border-b-[1px] border-dashed border-app-gray-200 cursor-pointer"
+          >
             <img className="w-10" src="/assets/admin/logo.svg" />
             <h1 className="text-[24px] font-semibold text-app-admin-primary-700">
               BookWise
             </h1>
-          </div>
+          </Link>
 
-          <nav className="space-y-2">
+          <nav className="space-y-3">
             {adminSidebarLinks.map((linkData) => (
               <Fragment key={linkData.label}>
                 <SidebarLink {...linkData} />

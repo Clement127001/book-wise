@@ -1,6 +1,6 @@
 import { UseFormReturn } from "react-hook-form";
 import { CommonInput } from "@/components/form/CommonInput";
-import ImageUpload from "@/components/common/ImageUpload";
+import ImageUpload from "@/components/form/ImageUpload";
 import { UserRegisterType } from "@/types/userRegister";
 
 const RegisterDetailsStepForm = ({
