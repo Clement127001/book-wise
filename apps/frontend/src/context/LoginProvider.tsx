@@ -41,7 +41,7 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
 
     if (!token && loginRestrictedPages.includes(path)) {
       setIsLogInChecked(true);
-      router.push("/login/?ua=" + true);
+      router.push("/?ua=" + true);
       return;
     } else if (token && loginPages.includes(path)) {
       router.push("/jobs");

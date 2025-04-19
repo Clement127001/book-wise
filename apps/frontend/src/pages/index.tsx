@@ -1,14 +1,12 @@
-import LoggedInUserHomePageAction from "@/components/homePage/LoggedInUserHomePageAction";
-import PublicUserHomePageAction from "@/components/homePage/PublicUserHomePageAction";
+import LoggedInUserHomePageAction from "@/components/HomePage/LoggedInUserHomePageAction";
+import PublicUserHomePageAction from "@/components/HomePage/PublicUserHomePageAction";
 import { UseLogin } from "@/context/LoginProvider";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { UserRoleEnum } from "contract/enum";
 
 export default function Home() {
   const { isLoggedIn } = UseLogin();
-  const role = UserRoleEnum.ADMIN;
 
   const router = useRouter();
   const query = router.query;
@@ -70,7 +68,7 @@ export default function Home() {
           every book finds its place! 📚✨
         </p>
         {isLoggedIn ? (
-          <LoggedInUserHomePageAction role={role} />
+          <LoggedInUserHomePageAction />
         ) : (
           <PublicUserHomePageAction />
         )}

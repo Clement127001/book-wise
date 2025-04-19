@@ -14,7 +14,6 @@ const queryClient = new QueryClient({
     queries: {
       retry: (_, err: unknown) => {
         const error = err as responseType;
-
         if (error) {
           if (
             (error.response && error.response.status >= 500) ||
