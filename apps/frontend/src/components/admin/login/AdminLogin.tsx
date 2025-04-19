@@ -21,6 +21,7 @@ const AdminLogin = () => {
   const [isEmailVerified, setEmailVerified] = useState<boolean>(false);
   const adminLoginForm = useForm<LoginType>({
     defaultValues: defaultLoginFormValues,
+    mode: "onSubmit",
   });
   const { makeApiCall } = useApi();
   const { handleSubmit, setFocus, getValues, watch } = adminLoginForm;

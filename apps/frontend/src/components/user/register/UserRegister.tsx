@@ -29,7 +29,7 @@ const UserRegister = () => {
   });
   const { makeApiCall } = useApi();
   const userRegisterForm = useForm<UserRegisterType>({
-    mode: "onChange",
+    mode: "onSubmit",
     defaultValues: userRegisterDefaultValues,
   });
 

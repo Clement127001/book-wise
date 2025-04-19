@@ -23,6 +23,7 @@ const UserLogin = () => {
   const [isEmailVerified, setIsEmailVerified] = useState<boolean>(false);
   const userLoginForm = useForm<LoginType>({
     defaultValues: defaultLoginFormValues,
+    mode: "onSubmit",
   });
 
   const { makeApiCall } = useApi();
