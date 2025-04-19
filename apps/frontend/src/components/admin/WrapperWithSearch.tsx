@@ -23,7 +23,7 @@ const WrapperWithSearch = ({ MainComponent }: AdminLayoutProps) => {
     <div className="rounded-l-[14px] shadow-md p-6 border-[1.5px] border-app-gray-100  col-span-9 h-full">
       <div className="w-full flex justify-between">
         <div>
-          <h1 className="text-app-black-300 font-medium text-xl">
+          <h1 className="text-app-black-300 font-semibold text-xl leading-5">
             Welcome, {fullName}
           </h1>
           <p className="text-sm text-app-gray-300 leading-loose">
@@ -33,7 +33,7 @@ const WrapperWithSearch = ({ MainComponent }: AdminLayoutProps) => {
 
         <Input
           placeholder="Search users, books by title, author, or genre."
-          className=" max-w-[50%] min-h-[48px] bg-white placeholder:text-[14px] placeholder:font-normal border-app-gray-200 shadow-freelancer rounded-lg text-[16px]  focus:ring-0 focus:border-app-gray-300 focus:bg-gray-50 pl-3 md:pl-4"
+          className=" max-w-[50%] min-h-[48px] bg-gray-50 placeholder:text-[14px] placeholder:font-normal border-app-gray-200 shadow-freelancer rounded-lg text-[16px]  focus:ring-0 focus:border-app-gray-300 focus:bg-gray-50 pl-3 md:pl-4"
           onChange={(e) => {
             setSearchText({
               searchText: e.target.value,

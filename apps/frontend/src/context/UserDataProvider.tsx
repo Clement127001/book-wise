@@ -14,8 +14,6 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
       contract.account.getAccountDetail.path,
     ]);
 
-  //TODO: fix the error while logging in and redirection
-
   if (isLoading) return <div>loading...</div>;
 
   if (error) return <div>error occurred</div>;
