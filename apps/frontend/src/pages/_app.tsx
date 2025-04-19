@@ -6,6 +6,7 @@ import { PageLoaderProvider } from "@/context/pageLoaderProvider";
 import "@/styles/globals.css";
 import { LoginProvider } from "@/context/LoginProvider";
 import { UserDataProvider } from "@/context/UserDataProvider";
+import PageRestrictionProvider from "@/context/PageRestrictionProvider";
 
 type responseType = { response: { status: number } };
 
@@ -50,7 +51,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <PageLoaderProvider>
           <LoginProvider>
             <UserDataProvider>
-              <Component {...pageProps} />
+              <PageRestrictionProvider>
+                <Component {...pageProps} />
+              </PageRestrictionProvider>
             </UserDataProvider>
           </LoginProvider>
         </PageLoaderProvider>

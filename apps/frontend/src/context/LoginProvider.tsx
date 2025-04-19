@@ -44,7 +44,7 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
       router.push("/?ua=" + true);
       return;
     } else if (token && loginPages.includes(path)) {
-      router.push("/jobs");
+      router.push("/");
     } else {
       refreshLoginState();
     }

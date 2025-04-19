@@ -17,7 +17,7 @@ import {
 } from "@/utils/user/register";
 import { getQueryClient } from "@/utils/api";
 import { Button } from "@/components/ui/button";
-import RegisterDetailsStepForm from "./RegisterDetailsStepForm";
+import RegisterDetailsStepForm from "@/components/user/register/RegisterDetailsStepForm";
 
 const UserRegister = () => {
   const { timer, setTimer } = useTimer();
