@@ -129,7 +129,7 @@ const AdminLogin = () => {
       <div className="min-h-[90vh] flex flex-col justify-center items-center">
         <section className="min-w-[90%] sm:min-w-[480px] flex flex-col items-center justify-center p-4 pt-12 shadow-xl rounded-xl outline outline-[1.5px] outline-app-gray-100">
           <img
-            src={"/assets/admin/admin-logo.svg"}
+            src={"/assets/admin/logo.svg"}
             alt={"logo"}
             className={"h-12 w-[192px]"}
           />

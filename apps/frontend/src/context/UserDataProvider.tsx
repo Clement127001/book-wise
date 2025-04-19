@@ -27,6 +27,8 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const userData = data.body;
 
+  console.log(userData);
+
   return (
     <UserContext.Provider value={{ userData: userData }}>
       {children}
