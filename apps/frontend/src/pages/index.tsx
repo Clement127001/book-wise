@@ -60,7 +60,7 @@ export default function Home() {
         </div>
         <p className="text-app-gray-200 text-md tracking-normal leading-6">
           Book Wise is your smart companion for discovering, organizing, and
-          tracking books effortlessly. Whether you're an avid reader or just
+          tracking books effortlessly. Whether {"you're"} an avid reader or just
           getting started, it helps you explore recommendations and manage your
           personal library with ease. With intuitive features and a sleek
           interface, finding and keeping track of your favorite books has never
