@@ -148,6 +148,8 @@ export default {
           "linear-gradient(to bottom right, hsl(229, 58%, 30%), black 30%, black)",
         "user-login-gradient":
           "linear-gradient(180deg,#12141D 0%,#12151F 100%)",
+        "dashboard-gradient":
+          "linear-gradient(to bottom, hsla(0, 0%, 100%, 0), white)",
       },
     },
   },

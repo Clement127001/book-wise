@@ -4,8 +4,8 @@
 
 ## the todo that are need to be checked are:
 
-- [ ] admin auth
-- [ ] user auth
+- [x] admin auth
+- [x] user auth
 - [ ] admin dashboard
 - [ ] add books
 - [ ] view book details and edit books
@@ -16,9 +16,9 @@
 - [x] api design -> api routes are almost done
 - [x] project setup for backend
 - [x] Start backend
-- [ ] do auth part
+- [x] do auth part
+- [x] frontend for auth part with the email verification
 - [ ] project setup for frontend with the colors -> no need for mobile responsiveness for v 1.0
-- [ ] frontend for auth part with the email verification
 - [ ] admin panel routes
 - [ ] frontend for admin panel
 - [ ] user panel routes
