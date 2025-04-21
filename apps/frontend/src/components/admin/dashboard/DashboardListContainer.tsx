@@ -12,7 +12,7 @@ const DashboardListContainer = ({
   children: ReactNode;
 }) => {
   return (
-    <div className="p-4 relative space-y-3">
+    <div className="py-4 relative space-y-3">
       <div className="flex justify-between items-center">
         <h4 className="font-semibold capitalize text[20px]">{title}</h4>
         <Link href={redirectLink}>
