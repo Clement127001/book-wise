@@ -2,14 +2,22 @@ import { useUserData } from "@/context/UserDataProvider";
 import { getFullName } from "@/utils/common";
 import { ReactNode } from "react";
 
-const Wrapper = ({ children }: { children: ReactNode }) => {
+const Wrapper = ({
+  className,
+  children,
+}: {
+  className?: string;
+  children: ReactNode;
+}) => {
   const { userData } = useUserData();
   const { firstname, lastname } = userData;
 
   const fullName = getFullName(firstname, lastname);
 
   return (
-    <div className="rounded-l-[14px] shadow-md p-6 border-[1.5px] border-app-gray-100  col-span-9 h-full">
+    <div
+      className={`rounded-l-[14px] h-full shadow-md p-6 border-[1.5px] border-app-gray-100  col-span-9 ${className}`}
+    >
       <div className="w-full flex justify-between">
         <div>
           <h1 className="text-app-black-300 font-semibold text-xl leading-5">
