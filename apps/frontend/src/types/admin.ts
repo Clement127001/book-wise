@@ -1,3 +1,8 @@
+import { z } from "zod";
+import { BaseBookSchema } from "contract/book/schema";
+
+export type BookFormType = z.infer<typeof BaseBookSchema>;
+
 import { MemoExoticComponent } from "react";
 
 export type AdminLayoutProps = {

@@ -16,7 +16,7 @@ const Wrapper = ({
 
   return (
     <div
-      className={`rounded-l-[14px] h-full shadow-md p-6 border-[1.5px] border-app-gray-100  col-span-9 ${className}`}
+      className={`rounded-l-[14px] h-full shadow-md p-6 border-[1.5px] border-app-gray-100 ${className}`}
     >
       <div className="w-full flex justify-between">
         <div>
