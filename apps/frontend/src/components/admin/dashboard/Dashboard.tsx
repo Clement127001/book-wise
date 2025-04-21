@@ -1,7 +1,9 @@
 import { memo } from "react";
 import StatsList from "@/components/admin/dashboard/StatsList";
-import Header from "@/components/admin/dashboard/Header";
 import { dummyDashboardData } from "@/utils/admin/dashboard";
+import DashboardListContainer from "./DashboardListContainer";
+import { Plus } from "lucide-react";
+import Link from "next/link";
 
 const Dashboard = memo(({ searchText }: { searchText: string }) => {
   const { barrowRequests, recentBooks, accountRequests } = dummyDashboardData;
@@ -11,12 +13,11 @@ const Dashboard = memo(({ searchText }: { searchText: string }) => {
       <StatsList />
       <div className="grid grid-cols-2 h-full pt-4">
         <div className="col-span-1 grid grid-rows-2">
-          <div className="p-4 relative space-y-2">
-            <Header
-              title="books request"
-              redirectLink="/admin/borrow-request"
-            />
-            <ul className="space-y-3 relative h-[30vh] overflow-scroll">
+          <DashboardListContainer
+            title="books request"
+            redirectLink="/admin/borrow-request"
+          >
+            <ul className="space-y-2 relative h-[24vh] overflow-scroll">
               {barrowRequests.map((borrowRequest, idx) => {
                 const { id, title } = borrowRequest;
 
@@ -24,7 +25,7 @@ const Dashboard = memo(({ searchText }: { searchText: string }) => {
                 return (
                   <li
                     key={id}
-                    className={`min-h-[80px] bg-app-admin-bg rounded-md ${
+                    className={`min-h-[80px] bg-app-admin-bg border-app-admin-primary-100/20 rounded-md ${
                       isLastItem ? "mb-30" : ""
                     }`}
                   >
@@ -33,21 +34,64 @@ const Dashboard = memo(({ searchText }: { searchText: string }) => {
                 );
               })}
             </ul>
+          </DashboardListContainer>
 
-            <div className="absolute bottom-0 left-0 right-0 h-20 bg-dashboard-gradient" />
-          </div>
-          <div className="p-4">
-            <Header
-              title="account request"
-              redirectLink="/admin/account-request"
-            />
-          </div>
+          <DashboardListContainer
+            title="account request"
+            redirectLink="/admin/account-request"
+          >
+            <ul className="space-y-2 relative h-[24vh] overflow-scroll">
+              {barrowRequests.map((borrowRequest, idx) => {
+                const { id, title } = borrowRequest;
+
+                const isLastItem = idx === barrowRequests.length - 1;
+                return (
+                  <li
+                    key={id}
+                    className={`min-h-[80px] bg-app-admin-bg border-[1px] border-app-admin-primary-100/20 rounded-md ${
+                      isLastItem ? "mb-30" : ""
+                    }`}
+                  >
+                    {title}
+                  </li>
+                );
+              })}
+            </ul>
+          </DashboardListContainer>
         </div>
-        <div className="col-span-1  p-4">
-          <Header
+
+        <div className="col-span-1  p-4  relative">
+          <DashboardListContainer
             title="recently added request"
             redirectLink="/admin/all-books"
-          />
+          >
+            <Link href={"/admin/book/create"}>
+              <button className="bg-app-admin-bg w-full p-4 rounded-md cursor-pointer">
+                <Plus
+                  className="bg-white p-1 rounded-full"
+                  size={32}
+                  strokeWidth={1.5}
+                />
+              </button>
+            </Link>
+            <ul className="space-y-2 relative h-[50vh] overflow-scroll">
+              {barrowRequests.map((borrowRequest, idx) => {
+                const { id, title } = borrowRequest;
+
+                const isLastItem = idx === barrowRequests.length - 1;
+                return (
+                  <li
+                    key={id}
+                    className={`min-h-[80px] bg-app-admin-bg border-[1px] border-app-admin-primary-100/20 rounded-md ${
+                      isLastItem ? "mb-30" : ""
+                    }`}
+                  >
+                    {title}
+                  </li>
+                );
+              })}
+            </ul>
+          </DashboardListContainer>
         </div>
       </div>
     </div>

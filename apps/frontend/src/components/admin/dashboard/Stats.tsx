@@ -13,7 +13,7 @@ const Stats = ({
   const showChange = changeInCount != 0;
 
   return (
-    <div className="bg-app-admin-bg p-4 rounded-[10px] w-full shadow-sm space-y-3">
+    <div className="bg-app-admin-bg border-app-admin-primary-100/20 p-4 rounded-[10px] w-full shadow-sm space-y-3">
       <div className="flex items-center gap-3">
         <h3 className="font-medium text-md text-app-gray-800 capitalize">
           {title}
