@@ -2,27 +2,27 @@ import { BookCheck, BookCopy, Home, User, Users } from "lucide-react";
 
 export const adminSidebarLinks = [
   {
-    path: "/admin/dashboard",
+    redirectLink: "/admin/dashboard",
     Icon: Home,
     label: "home",
   },
   {
-    path: "/admin/all-users",
+    redirectLink: "/admin/all-users",
     Icon: Users,
     label: "all users",
   },
   {
-    path: "/admin/all-books",
+    redirectLink: "/admin/all-books",
     Icon: BookCopy,
     label: "all books",
   },
   {
-    path: "/admin/borrow-request",
+    redirectLink: "/admin/borrow-request",
     Icon: BookCheck,
     label: "borrow requests",
   },
   {
-    path: "/admin/account-request",
+    redirectLink: "/admin/account-request",
     Icon: User,
     label: "account requests",
   },

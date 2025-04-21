@@ -1,14 +1,13 @@
 import Sidebar from "@/components/admin/sidebar/Sidebar";
-import WrapperWithSearch from "@/components/admin/WrapperWithSearch";
-import { AdminLayoutProps } from "@/types/admin";
+import { ReactNode } from "react";
 
-const AdminLayout = ({ MainComponent }: AdminLayoutProps) => {
+const AdminLayout = ({ children }: { children: ReactNode }) => {
   return (
     <main className="grid grid-cols-11">
       <aside className="col-span-2">
         <Sidebar />
       </aside>
-      <WrapperWithSearch MainComponent={MainComponent} />
+      {children}
     </main>
   );
 };

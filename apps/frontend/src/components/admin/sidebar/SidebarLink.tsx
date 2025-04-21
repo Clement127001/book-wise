@@ -6,20 +6,20 @@ import { useRouter } from "next/router";
 const SidebarLink = ({
   Icon,
   label,
-  path,
+  redirectLink,
 }: {
   Icon: ForwardRefExoticComponent<
     Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
   >;
   label: string;
-  path: string;
+  redirectLink: string;
 }) => {
   const router = useRouter();
-  const isActive = router.asPath.includes(path);
+  const isActive = router.asPath.includes(redirectLink);
 
   return (
     <Link
-      href={path}
+      href={redirectLink}
       className={`p-3 flex items-center gap-4  ${
         isActive
           ? "hover:bg-app-admin-primary-700 bg-app-admin-primary-700"
