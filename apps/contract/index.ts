@@ -5,6 +5,7 @@ import { userContract } from "./user/contract";
 import { uploadContract } from "./upload/contract";
 import { accountContract } from "./account/contract";
 import { genreContract } from "./genre/contract";
+import { bookContract } from "./book/contract";
 
 const c = initContract();
 
@@ -15,4 +16,5 @@ export const contract = c.router({
   upload: uploadContract,
   account: accountContract,
   genre: genreContract,
+  book: bookContract,
 });

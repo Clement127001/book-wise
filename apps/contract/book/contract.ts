@@ -1,5 +1,5 @@
 import { initContract } from "@ts-rest/core";
-import { BaseBookSchema, BookQuerySchema } from "./schema";
+import { BaseBookSchema, BookDetailsSchema, BookQuerySchema } from "./schema";
 import { SuccessSchema } from "../common";
 import { createPaginatedResponseSchema } from "../utils";
 
@@ -15,32 +15,32 @@ export const bookContract = c.router(
         201: SuccessSchema,
       },
     },
-    editBook: {
-      method: "PATCH",
-      path: "/edit",
-      query: BookQuerySchema,
-      body: BaseBookSchema,
-      responses: { 200: SuccessSchema },
-    },
-    getBookDetail: {
+    // editBook: {
+    //   method: "PATCH",
+    //   path: "/edit",
+    //   query: BookQuerySchema,
+    //   body: BaseBookSchema,
+    //   responses: { 200: SuccessSchema },
+    // },
+    getBookDetails: {
       method: "GET",
       path: "/details",
       query: BookQuerySchema,
       responses: {
-        200: BaseBookSchema,
+        200: BookDetailsSchema,
       },
     },
-    getAllBooks: {
-      method: "GET",
-      path: "/allBooks",
-      responses: { 200: createPaginatedResponseSchema(BaseBookSchema) },
-    },
-    deleteBook: {
-      method: "DELETE",
-      path: "/delete",
-      query: BookQuerySchema,
-      responses: { 200: SuccessSchema },
-    },
+    // getAllBooks: {
+    //   method: "GET",
+    //   path: "/allBooks",
+    //   responses: { 200: createPaginatedResponseSchema(BaseBookSchema) },
+    // },
+    // deleteBook: {
+    //   method: "DELETE",
+    //   path: "/delete",
+    //   query: BookQuerySchema,
+    //   responses: { 200: SuccessSchema },
+    // },
   },
   { pathPrefix: "/book" }
 );

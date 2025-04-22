@@ -12,6 +12,7 @@ import { AuthModule } from '@/auth/auth.module';
 import { UserModule } from '@/user/user.module';
 import { UploadModule } from './upload/upload.module';
 import { GenreModule } from './genre/genre.module';
+import { BookModule } from './book/book.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { GenreModule } from './genre/genre.module';
     UserModule,
     UploadModule,
     GenreModule,
+    BookModule,
   ],
   controllers: [AppController],
   providers: [AppService],
