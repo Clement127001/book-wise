@@ -8,6 +8,12 @@ import {
 } from '@ts-rest/nest';
 import { bookContract } from 'contract/book/contract';
 import { BookService } from '@/book/book.service';
+import {
+  AdminOnlyAuth,
+  Auth,
+  getAccountFromToken,
+} from '@/auth/decorators/auth.decorator';
+import { Account } from '@/auth/entities/account.entity';
 
 const bookController = nestControllerContract(bookContract);
 export type BookRequestShape = NestRequestShapes<typeof bookController>;
@@ -18,6 +24,7 @@ export class BookController
 {
   constructor(private readonly bookService: BookService) {}
 
+  @AdminOnlyAuth()
   @TsRest(bookContract.createBook)
   async createBook(@TsRestRequest() { body }: BookRequestShape['createBook']) {
     await this.bookService.createBook(body);
@@ -31,11 +38,13 @@ export class BookController
     };
   }
 
+  @Auth()
   @TsRest(bookContract.getBookDetails)
   async getBookDetails(
     @TsRestRequest() { query }: BookRequestShape['getBookDetails'],
+    @getAccountFromToken() account: Account,
   ) {
-    const data = await this.bookService.getBookDetails(query.id);
+    const data = await this.bookService.getBookDetails(query.id, account);
 
     return {
       status: 200 as const,
@@ -43,6 +52,7 @@ export class BookController
     };
   }
 
+  @AdminOnlyAuth()
   @TsRest(bookContract.editBook)
   async editBook(
     @TsRestRequest() { body, query }: BookRequestShape['editBook'],
@@ -64,6 +74,7 @@ export class BookController
   //   await this.bookService.getAllBooks(query);
   // }
 
+  @AdminOnlyAuth()
   @TsRest(bookContract.deleteBook)
   async deleteBook(@TsRestRequest() { query }: BookRequestShape['deleteBook']) {
     await this.bookService.deleteBook(query.id);

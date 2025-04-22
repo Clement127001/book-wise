@@ -16,7 +16,11 @@ export class AuthService {
   }
 
   async validateAccount(id: string) {
-    const account = await this.em.findOne(Account, { id });
+    const account = await this.em.findOne(
+      Account,
+      { id },
+      { populate: ['user', 'admin'] },
+    );
     return account;
   }
 }

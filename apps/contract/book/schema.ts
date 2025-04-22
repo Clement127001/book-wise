@@ -20,15 +20,17 @@ export const BaseBookSchema = z.object({
   summary: z
     .string()
     .trim()
-    .min(10, { message: "Summary should have atleast 10 character atleast" })
+    .min(10, { message: "Summary should have at least 10 character at least" })
     .max(2000, {
-      message: "Summary should have atleast 2000 character atmost",
+      message: "Summary should have at least 2000 character at most",
     }),
 });
 
 export const BookDetailsSchema = BaseBookSchema.omit({ genreId: true }).extend({
   available: z.number(),
   genre: z.string(),
+  canBorrowBook: z.boolean().optional(),
+  canDeleteBook: z.boolean().optional(),
 });
 
 export const BookQuerySchema = z.object({ id: z.string() });
