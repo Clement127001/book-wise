@@ -74,4 +74,10 @@ export class BookService {
       available,
     };
   }
+
+  async editBookDetails(data: BookRequestShape['editBook']['body']) {}
+
+  async getAllBooks(query: BookRequestShape['getAllBooks']['query']) {}
+
+  async deleteBook(query: BookRequestShape['deleteBook']['query']) {}
 }

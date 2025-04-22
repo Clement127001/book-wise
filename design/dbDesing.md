@@ -127,10 +127,9 @@ BorrowedBooks[icon:hand,color:white]{
   actualReturn      DateTime?
   fineAmount        Float @default(0.0)
   Book              @relation(fields: [bookId], references:[id])
-  status            enum["pending","borrowed","returned","late return"] @default("pending")
+  status            enum["borrowed","returned","late return"] @default("pending")
 
-  borrowedAt        DateTime       @default(now())
-  createdAt         DateTime       @default(now())
+  createdAt         DateTime       @default(now()) // borrowed at
   updatedAt         DateTime       @updatedAt
 
   @@index([bookId]) // for borrowed books
@@ -151,11 +150,14 @@ BorrowRequest[icon:bookmark,color:orange]{
   id                  String @id @default(uuid())
   userId              String
   bookId              String
-  status              enum["pending","accepted","rejected","expired"] @default("pending")
-  expectedBorrowDate  DateTime?
+  status              enum["pending","accepted","borrowed","rejected","expired"] @default("pending")
+  borrowRequestExpiresAt DateTime?
+  borrowBookExpiresAt DateTime?
   coolDownExpiresAt   DateTime?
+  reasonForRejection String?
   User                User @relation(fields:[userId],references:[id]);
   Book                Book @relation(fields:[bookId],references:[bookId])
+
 
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
