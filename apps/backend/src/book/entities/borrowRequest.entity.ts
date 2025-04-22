@@ -1,24 +1,33 @@
 import { User } from '@/user/entities/user.entity';
-import { Entity, Enum, Index, Property } from '@mikro-orm/core';
+import {
+  Entity,
+  Enum,
+  Index,
+  ManyToMany,
+  ManyToOne,
+  OneToOne,
+  PrimaryKey,
+  Property,
+} from '@mikro-orm/core';
 import { BaseEntity } from 'base.entity';
 import { Book } from '@/book/entities/book.entity';
 import { BorrowRequestStatusEnum } from 'contract/enum';
 
 @Entity()
 export class BorrowRequest extends BaseEntity {
-  @Property()
+  @ManyToOne(() => User)
   @Index()
-  user: User;
+  user!: User;
 
-  @Property()
+  @ManyToOne(() => Book)
   @Index()
-  book: Book;
+  book!: Book;
 
   @Enum({ items: () => BorrowRequestStatusEnum })
   status: BorrowRequestStatusEnum = BorrowRequestStatusEnum.PENDING;
 
   @Property()
-  borrowReuqestExpiresAt?: Date;
+  borrowRequestExpiresAt?: Date;
 
   @Property()
   borrowBookExpiresAt?: Date;

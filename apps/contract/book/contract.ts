@@ -30,12 +30,12 @@ export const bookContract = c.router(
         200: BookDetailsSchema,
       },
     },
-    getAllBooks: {
-      method: "GET",
-      path: "/allBooks",
-      query: PaginatedRequestSchema,
-      responses: { 200: createPaginatedResponseSchema(BaseBookSchema) },
-    },
+    // getAllBooks: {
+    //   method: "GET",
+    //   path: "/allBooks",
+    //   query: PaginatedRequestSchema,
+    //   responses: { 200: createPaginatedResponseSchema(BaseBookSchema) },
+    // },
     deleteBook: {
       method: "DELETE",
       path: "/delete",

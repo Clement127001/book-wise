@@ -1,24 +1,24 @@
 import { User } from '@/user/entities/user.entity';
-import { Entity, Enum, Index, Property } from '@mikro-orm/core';
+import { Entity, Enum, Index, ManyToOne, Property } from '@mikro-orm/core';
 import { BaseEntity } from 'base.entity';
 import { Book } from '@/book/entities/book.entity';
 import { BorrowedBookStatusEnum } from 'contract/enum';
 
 @Entity()
 export class BorrowedBook extends BaseEntity {
-  @Property()
+  @ManyToOne(() => User)
   @Index()
-  user: User;
+  user!: User;
 
-  @Property()
+  @ManyToOne(() => Book)
   @Index()
-  book: Book;
+  book!: Book;
 
   @Property({ default: 0 })
   fineAmount: number;
 
   @Property()
-  exptectedReturn?: Date;
+  expectedReturn?: Date;
 
   @Property()
   actualReturn?: Date;

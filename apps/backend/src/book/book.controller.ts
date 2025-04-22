@@ -44,8 +44,10 @@ export class BookController
   }
 
   @TsRest(bookContract.editBook)
-  async editBook(@TsRestRequest() { body }: BookRequestShape['editBook']) {
-    await this.bookService.editBookDetails(body);
+  async editBook(
+    @TsRestRequest() { body, query }: BookRequestShape['editBook'],
+  ) {
+    await this.bookService.editBookDetails(body, query.id);
     return {
       status: 200 as const,
       body: {
@@ -55,16 +57,16 @@ export class BookController
     };
   }
 
-  @TsRest(bookContract.getAllBooks)
-  async getAllBooks(
-    @TsRestRequest() { query }: BookRequestShape['getAllBooks'],
-  ) {
-    await this.bookService.getAllBooks(query);
-  }
+  // @TsRest(bookContract.getAllBooks)
+  // async getAllBooks(
+  //   @TsRestRequest() { query }: BookRequestShape['getAllBooks'],
+  // ) {
+  //   await this.bookService.getAllBooks(query);
+  // }
 
   @TsRest(bookContract.deleteBook)
   async deleteBook(@TsRestRequest() { query }: BookRequestShape['deleteBook']) {
-    await this.bookService.deleteBook(query);
+    await this.bookService.deleteBook(query.id);
     return {
       status: 200 as const,
       body: {

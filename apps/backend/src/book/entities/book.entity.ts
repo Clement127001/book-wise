@@ -1,6 +1,15 @@
 import { Genre } from '@/genre/entities/genre.entity';
-import { Entity, ManyToOne, Property, Unique } from '@mikro-orm/core';
+import {
+  Collection,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  Property,
+  Unique,
+} from '@mikro-orm/core';
 import { BaseEntity } from 'base.entity';
+import { BorrowRequest } from '@/book/entities/borrowRequest.entity';
+import { BorrowedBook } from '@/book/entities/borrowedBook.entity';
 
 @Unique({ properties: ['author', 'title'] })
 @Entity()
@@ -26,8 +35,17 @@ export class Book extends BaseEntity {
   @ManyToOne(() => Genre)
   genre: Genre;
 
+  @OneToMany(() => BorrowRequest, (request) => request.book)
+  borrowRequests = new Collection<BorrowRequest>(this);
+
+  @OneToMany(() => BorrowedBook, (request) => request.book)
+  borrowedBooks = new Collection<BorrowedBook>(this);
+
   @Property({ default: 0 })
   rating: number;
+
+  @Property({ default: false })
+  isDeleted: boolean;
 
   constructor({
     title,
@@ -53,5 +71,7 @@ export class Book extends BaseEntity {
     this.total = total;
     this.available = total;
     this.imageUrl = imageUrl;
+    this.rating = 0;
+    this.isDeleted = false;
   }
 }
