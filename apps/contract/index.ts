@@ -4,6 +4,7 @@ import { userAuthContract } from "./userAuth/contract";
 import { userContract } from "./user/contract";
 import { uploadContract } from "./upload/contract";
 import { accountContract } from "./account/contract";
+import { genreContract } from "./genre/contract";
 
 const c = initContract();
 
@@ -13,4 +14,5 @@ export const contract = c.router({
   user: userContract,
   upload: uploadContract,
   account: accountContract,
+  genre: genreContract,
 });

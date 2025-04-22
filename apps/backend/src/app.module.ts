@@ -11,6 +11,7 @@ import { AdminAuthModule } from '@/admin-auth/admin-auth.module';
 import { AuthModule } from '@/auth/auth.module';
 import { UserModule } from '@/user/user.module';
 import { UploadModule } from './upload/upload.module';
+import { GenreModule } from './genre/genre.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UploadModule } from './upload/upload.module';
     AdminAuthModule,
     UserModule,
     UploadModule,
+    GenreModule,
   ],
   controllers: [AppController],
   providers: [AppService],

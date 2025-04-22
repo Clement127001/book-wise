@@ -11,7 +11,10 @@ export const genreContract = c.router(
       method: "POST",
       path: "/create",
       body: z.object({
-        genre: z.string(),
+        title: z
+          .string()
+          .trim()
+          .min(4, { message: "Genre title should have 4 character alteast" }),
       }),
       responses: {
         200: SuccessSchema,
