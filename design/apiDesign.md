@@ -1,6 +1,6 @@
 # API design
 
-- maintain the borrow requrest, is the most important thing
+- maintain the borrow request, is the most important thing
 
 ## User flow
 
@@ -36,7 +36,7 @@
 
   - A:Title
   - B:author
-  - C:Genred
+  - C:GenreId
   - D:Summary
 
 ### Book Detail page

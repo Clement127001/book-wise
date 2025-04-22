@@ -143,7 +143,6 @@ export class BookService {
     await this.em.flush();
   }
 
-  //TODO: add extra details like canBuyBook for user, can delete book for admin
   async getBookDetails(id: string, account: Account) {
     const { role } = account;
 
