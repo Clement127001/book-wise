@@ -15,16 +15,13 @@ const CreateBook = () => {
     defaultValues: defaultBookValues,
   });
 
-  const {
-    handleSubmit,
-    formState: { isValid },
-  } = bookForm;
+  const { handleSubmit } = bookForm;
 
   const onSubmitForm: SubmitHandler<BookFormType> = (data) => {
     console.log(data);
   };
 
-  const getGenreOptions = async (searchText: string) => {
+  const getGenreOptions = async (_: string) => {
     try {
       const response = await fetch(
         getApiUrl() + contract.genre.getAllGenres.path
@@ -41,7 +38,7 @@ const CreateBook = () => {
   };
 
   return (
-    <section className="pt-10 w-full">
+    <section className="pt-10 w-full px-4">
       <BackButton className="mb-3" />
       <div className="max-h-[80vh] overflow-y-scroll">
         <form
@@ -56,17 +53,33 @@ const CreateBook = () => {
             placeholder="Enter the book title"
             registerOptions={{
               required: "Book title is required",
+              minLength: {
+                value: 4,
+                message: "Title should have 4 character at least",
+              },
+              maxLength: {
+                value: 40,
+                message: "Title should have 40 character at most",
+              },
             }}
             inputClassName="rounded-md"
           />
           <CommonInput
             hForm={bookForm}
             label="author"
-            name="title"
+            name="author"
             showError
             placeholder="Enter the author name"
             registerOptions={{
               required: "Book title is required",
+              minLength: {
+                value: 4,
+                message: "Author name should have 4 character at least",
+              },
+              maxLength: {
+                value: 40,
+                message: "Author name  should have 40 character at most",
+              },
             }}
             inputClassName="rounded-md"
           />
@@ -88,7 +101,7 @@ const CreateBook = () => {
             hForm={bookForm}
             type="number"
             label="total number of books"
-            name="genreId"
+            name="total"
             showError
             placeholder="Enter the number between 1 to 100"
             registerOptions={{
@@ -124,11 +137,7 @@ const CreateBook = () => {
             inputClassName="rounded-md"
           />
 
-          <AdminPrimaryButton
-            disabled={!isValid}
-            type="submit"
-            className="w-full group mt-20"
-          >
+          <AdminPrimaryButton type="submit" className="w-full group mt-20">
             <Plus
               strokeWidth={3}
               className="group-hover:scale-125 transition-transform duration-200 ease-in-out"

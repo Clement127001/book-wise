@@ -12,10 +12,7 @@ export const BaseBookSchema = z.object({
     .min(4, { message: "Author name should have 4 character at least" })
     .max(40, { message: "Author name  should have 40 character at most" }),
   genreId: z.string(),
-  total: z
-    .number()
-    .min(1, { message: "Books count should be more than 0" })
-    .max(100, { message: "Books count should be less than 100" }),
+  total: z.number(),
   imageUrl: z.string(),
   summary: z
     .string()

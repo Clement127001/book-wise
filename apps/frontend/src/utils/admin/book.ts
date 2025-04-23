@@ -3,7 +3,7 @@ import { BookFormType } from "@/types/admin";
 export const defaultBookValues: BookFormType = {
   title: "",
   author: "",
-  genreId: "",
+  genreId: null,
   total: 0,
   imageUrl: "",
   summary: "",
