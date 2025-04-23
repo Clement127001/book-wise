@@ -18,9 +18,6 @@ export const LoginOTPVerifiedSuccessSchema = SuccessSchema.extend({
 });
 
 export const PaginatedRequestSchema = z.object({
-  searchText: z.string(),
-  locations: z.string().transform((val) => val.split(",")),
-  roles: z.string().transform((val) => val.split("|")), // using | instead of , since some of the values themselves contains ,
   pageNumber: z.string().transform(Number),
   pageSize: z.string().transform(Number),
 });

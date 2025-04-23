@@ -85,6 +85,45 @@ export class BookService {
     );
   }
 
+  private async transformBookData(account: Account, bookDetails: Book) {
+    const { role } = account;
+
+    const {
+      id,
+      title,
+      author,
+      genre,
+      rating,
+      summary,
+      imageUrl,
+      total,
+      available,
+    } = bookDetails;
+
+    if (!genre) {
+      throw new BadRequestException('Genre of the given book is not found');
+    }
+
+    const data = {
+      title,
+      author,
+      genre: genre.title,
+      rating,
+      summary,
+      imageUrl,
+      total,
+      available,
+    };
+
+    if (role === UserRoleEnum.ADMIN) {
+      const canDeleteBook = await this.canDeleteBookByAdmin(id);
+      return { ...data, canDeleteBook: canDeleteBook };
+    } else {
+      const canBorrowBook = await this.canBorrowBookByUser(id, account);
+      return { ...data, canBorrowBook };
+    }
+  }
+
   async createBook(data: BookRequestShape['createBook']['body']) {
     const { title, author, genreId, total, imageUrl, summary } = data;
 
@@ -155,47 +194,13 @@ export class BookService {
   }
 
   async getBookDetails(id: string, account: Account) {
-    const { role } = account;
-
     const bookDetails = await this.em.findOneOrFail(
       Book,
       { id, isDeleted: false },
       { populate: ['genre.title'] },
     );
 
-    const {
-      title,
-      author,
-      genre,
-      rating,
-      summary,
-      imageUrl,
-      total,
-      available,
-    } = bookDetails;
-
-    if (!genre) {
-      throw new BadRequestException('Genre of the given book is not found');
-    }
-
-    const data = {
-      title,
-      author,
-      genre: genre.title,
-      rating,
-      summary,
-      imageUrl,
-      total,
-      available,
-    };
-
-    if (role === UserRoleEnum.ADMIN) {
-      const canDeleteBook = await this.canDeleteBookByAdmin(id);
-      return { ...data, canDeleteBook: canDeleteBook };
-    } else {
-      const canBorrowBook = await this.canBorrowBookByUser(id, account);
-      return { ...data, canBorrowBook };
-    }
+    return await this.transformBookData(account, bookDetails);
   }
 
   async deleteBook(id: string) {
@@ -214,6 +219,26 @@ export class BookService {
     await this.em.flush();
   }
 
-  //TODO: add extra details like canBuyBook for user, can delete book for admin
-  // async getAllBooks(query: BookRequestShape['getAllBooks']['query']) {}
+  async getAllBooks(
+    query: BookRequestShape['getAllBooks']['query'],
+    account: Account,
+  ) {
+    const { pageNumber, pageSize } = query;
+
+    const [books, count] = await this.em.findAndCount(
+      Book,
+      {},
+      {
+        limit: pageSize,
+        offset: (pageNumber - 1) * pageSize,
+        populate: ['genre.title'],
+      },
+    );
+
+    const booksResult = await Promise.all(
+      books.map(async (book) => await this.transformBookData(account, book)),
+    );
+
+    return { count, booksResult };
+  }
 }

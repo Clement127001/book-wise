@@ -67,12 +67,28 @@ export class BookController
     };
   }
 
-  // @TsRest(bookContract.getAllBooks)
-  // async getAllBooks(
-  //   @TsRestRequest() { query }: BookRequestShape['getAllBooks'],
-  // ) {
-  //   await this.bookService.getAllBooks(query);
-  // }
+  @Auth()
+  @TsRest(bookContract.getAllBooks)
+  async getAllBooks(
+    @TsRestRequest() { query }: BookRequestShape['getAllBooks'],
+    @getAccountFromToken() account: Account,
+  ) {
+    const { count, booksResult } = await this.bookService.getAllBooks(
+      query,
+      account,
+    );
+
+    return {
+      status: 200 as const,
+      body: {
+        currentPageNumber: query.pageNumber,
+        currentPageSize: query.pageSize,
+        totalItems: count,
+        totalPages: Math.ceil(count / query.pageSize),
+        results: booksResult,
+      },
+    };
+  }
 
   @AdminOnlyAuth()
   @TsRest(bookContract.deleteBook)
