@@ -92,8 +92,8 @@ export class BookController
 
   @AdminOnlyAuth()
   @TsRest(bookContract.deleteBook)
-  async deleteBook(@TsRestRequest() { query }: BookRequestShape['deleteBook']) {
-    await this.bookService.deleteBook(query.id);
+  async deleteBook(@TsRestRequest() { body }: BookRequestShape['deleteBook']) {
+    await this.bookService.deleteBook(body.id);
     return {
       status: 200 as const,
       body: {

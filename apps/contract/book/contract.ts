@@ -39,7 +39,7 @@ export const bookContract = c.router(
     deleteBook: {
       method: "DELETE",
       path: "/delete",
-      query: BookQuerySchema,
+      body: BookQuerySchema,
       responses: { 200: SuccessSchema },
     },
   },

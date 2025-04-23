@@ -11,7 +11,7 @@ export interface CommonInputProps<T extends FieldValues> {
   hForm: UseFormReturn<T>;
   registerOptions?: RegisterOptions<T, Path<T>>;
   icon?: React.ReactNode;
-  type?: string;
+  type?: React.HTMLInputTypeAttribute;
   placeholder?: string;
   disabled?: boolean;
   wrapperClassName?: string;

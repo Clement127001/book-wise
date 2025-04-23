@@ -8,7 +8,7 @@ const AdminPrimaryButton = ({
   disabled,
 }: {
   children: ReactNode;
-  className: string;
+  className?: string;
   type: "button" | "submit" | "reset" | undefined;
   disabled?: boolean;
 }) => {
