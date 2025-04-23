@@ -6,6 +6,9 @@ import { CommonInput } from "@/components/form/CommonInput";
 import { CommonTextArea } from "@/components/form/CommonTextArea";
 import { BookFormType } from "@/types/admin";
 import { defaultBookValues } from "@/utils/admin/book";
+import { contract } from "contract";
+import AsyncSearchSelectField from "@/components/form/AsyncSearchSelectField/AsyncSearchSelectField";
+import { getApiUrl } from "@/utils/env";
 
 const CreateBook = () => {
   const bookForm = useForm<BookFormType>({
@@ -19,6 +22,22 @@ const CreateBook = () => {
 
   const onSubmitForm: SubmitHandler<BookFormType> = (data) => {
     console.log(data);
+  };
+
+  const getGenreOptions = async (searchText: string) => {
+    try {
+      const response = await fetch(
+        getApiUrl() + contract.genre.getAllGenres.path
+      );
+      const data = await response.json();
+      return data.genres.map((genre: { id: string; title: string }) => ({
+        value: genre.id,
+        label: genre.title,
+      }));
+    } catch (err) {
+      console.error("Error fetching genres", err);
+      return [];
+    }
   };
 
   return (
@@ -51,16 +70,19 @@ const CreateBook = () => {
             }}
             inputClassName="rounded-md"
           />
-          <CommonInput
+          <AsyncSearchSelectField
             hForm={bookForm}
-            label="genre"
-            name="genreId"
-            showError
-            placeholder="Enter the genre"
-            registerOptions={{
+            rules={{
               required: "Genre is required",
             }}
-            inputClassName="rounded-md"
+            name={"genreId"}
+            label="Genre"
+            getOptions={getGenreOptions}
+            isSearchable
+            isMulti={false}
+            instanceId="genre"
+            isClearable
+            placeholder="Enter the genre"
           />
           <CommonInput
             hForm={bookForm}
