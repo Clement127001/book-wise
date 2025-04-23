@@ -6,7 +6,7 @@
 
 take look at this link for more details : https://app.eraser.io/workspace/e8fx0ybLIw4hAng5GGR4?origin=share
 
-> **_Desgin_:** figma
+> **_Design_:** figma
 > take the look at this figma
 > https://www.figma.com/design/GtXhGy4Tmx1PesvcZfnIEB/Library-Management-System-(Copy)?node-id=2-2
 
@@ -32,7 +32,7 @@ User[icon:user, color: White]{
 ### Admin
 
 - for now we are only considering the single library as the source.
-- future advancement add college or univerysity, assign admin, then the user will belongs to single university
+- future advancement add college or university, assign admin, then the user will belongs to single university
 
 ```
 Admin[icon:gcp-administration,color:blue]
@@ -50,7 +50,7 @@ Admin[icon:gcp-administration,color:blue]
 
 ### Books
 
-- books that are availble in the single library
+- books that are available in the single library
 
 ```
 Book[icon:book,color:cyan]
@@ -62,20 +62,20 @@ Book[icon:book,color:cyan]
   total        Number
   available    Number
   isDeleted    Boolean   @default(false)
-  genredId     String
-  Genre        Genre @relation(fields: [genredId], references: [id])
-  rating       Float @deafult(0.0)
+  genreId     String
+  Genre        Genre @relation(fields: [genreId], references: [id])
+  rating       Float @default(0.0)
 
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
 }
-Book.genredId - Genre.id
+Book.genreId - Genre.id
 ```
 
 ### BookRating
 
 - for rating and average rating
-- one user can give atmost 1 review to 1 book
+- one user can give at most 1 review to 1 book
 
 ```
 BookRating[icon:star,color:yellow]
@@ -115,7 +115,7 @@ Genre[icon:cloud-snow,color:red]
 
 ### BorrowedBooks
 
-- for maitaining the borrowed books list
+- for maintaining the borrowed books list
 
 ```
 BorrowedBooks[icon:hand,color:white]{
@@ -127,10 +127,9 @@ BorrowedBooks[icon:hand,color:white]{
   actualReturn      DateTime?
   fineAmount        Float @default(0.0)
   Book              @relation(fields: [bookId], references:[id])
-  status            enum["pending","borrowed","returned","late return"] @default("pending")
+  status            enum["borrowed","returned","late return"] @default("pending")
 
-  borrowedAt        DateTime       @default(now())
-  createdAt         DateTime       @default(now())
+  createdAt         DateTime       @default(now()) // borrowed at
   updatedAt         DateTime       @updatedAt
 
   @@index([bookId]) // for borrowed books
@@ -141,9 +140,9 @@ BorrowedBooks.userId - User.id
 BorrowedBooks.bookId - Book.id
 ```
 
-### BorrowReqeust
+### BorrowRequest
 
-- maintaint borrow request in separte table so that it will be easy to query and manage
+- maintain borrow request in separate table so that it will be easy to query and manage
 - having expiry and cool down for [rejected, expired]
 
 ```
@@ -151,11 +150,14 @@ BorrowRequest[icon:bookmark,color:orange]{
   id                  String @id @default(uuid())
   userId              String
   bookId              String
-  status              enum["pending","accepted","rejected","expired"] @default("pending")
-  expectedBorrowDate  DateTime?
+  status              enum["pending","accepted","borrowed","rejected","expired"] @default("pending")
+  borrowRequestExpiresAt DateTime?
+  borrowBookExpiresAt DateTime?
   coolDownExpiresAt   DateTime?
+  reasonForRejection String?
   User                User @relation(fields:[userId],references:[id]);
   Book                Book @relation(fields:[bookId],references:[bookId])
+
 
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
@@ -163,7 +165,7 @@ BorrowRequest[icon:bookmark,color:orange]{
   @@index([userId,bookId])
 }
 BorrowRequest.userId - User.id;
-BorrowRequest.bookid - Book.id;
+BorrowRequest.bookId - Book.id;
 ```
 
 ### LoginOTP

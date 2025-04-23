@@ -20,7 +20,7 @@ const WrapperWithSearch = ({ MainComponent }: AdminLayoutProps) => {
   const fullName = getFullName(firstname, lastname);
 
   return (
-    <div className="rounded-l-[14px] shadow-md p-6 border-[1.5px] border-app-gray-100  col-span-9 h-full">
+    <div className="rounded-l-[14px] shadow-md p-6 border-[1.5px] border-app-gray-100 h-full">
       <div className="w-full flex justify-between">
         <div>
           <h1 className="text-app-black-300 font-semibold text-xl leading-5">

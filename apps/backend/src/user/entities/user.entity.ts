@@ -1,5 +1,15 @@
 import { Account } from '@/auth/entities/account.entity';
-import { Entity, Enum, OneToOne, Property, Unique } from '@mikro-orm/core';
+import { BorrowedBook } from '@/book/entities/borrowedBook.entity';
+import { BorrowRequest } from '@/book/entities/borrowRequest.entity';
+import {
+  Collection,
+  Entity,
+  Enum,
+  OneToMany,
+  OneToOne,
+  Property,
+  Unique,
+} from '@mikro-orm/core';
 import { BaseEntity } from 'base.entity';
 import { UserAccountStatus } from 'contract/enum';
 
@@ -18,6 +28,12 @@ export class User extends BaseEntity {
 
   @Enum({ items: () => UserAccountStatus, default: UserAccountStatus.PENDING })
   verificationStatus: UserAccountStatus;
+
+  @OneToMany(() => BorrowRequest, (request) => request.user)
+  borrowRequests = new Collection<BorrowRequest>(this);
+
+  @OneToMany(() => BorrowedBook, (request) => request.user)
+  borrowedBooks = new Collection<BorrowedBook>(this);
 
   constructor({
     user,
