@@ -11,10 +11,79 @@ import {
 } from 'contract/enum';
 import { BorrowedBook } from './entities/borrowedBook.entity';
 import { Account } from '@/auth/entities/account.entity';
+import { getMonthStartAndEndDate } from '@/utils';
+import { MaxAllowedBookPerMonth } from '@/constants';
 
 @Injectable()
 export class BookService {
   constructor(private em: EntityManager) {}
+
+  private async canDeleteBookByAdmin(id: string) {
+    const [borrowedBook, borrowRequest] = await Promise.all([
+      this.em.findOne(BorrowedBook, {
+        book: id,
+        status: BorrowedBookStatusEnum.BORROWED,
+      }),
+      this.em.findOne(BorrowRequest, {
+        book: id,
+        $or: [
+          { status: BorrowRequestStatusEnum.PENDING },
+          { status: BorrowRequestStatusEnum.ACCEPTED },
+        ],
+      }),
+    ]);
+
+    return !(borrowRequest || borrowedBook);
+  }
+
+  private async canBorrowBookByUser(id: string, account: Account) {
+    if (!account.user) {
+      throw new BadRequestException('User not found');
+    }
+
+    const { startDate, endDate } = getMonthStartAndEndDate();
+
+    const [
+      borrowRequest,
+      borrowedBook,
+      activeBorrowedBooksCount,
+      activeBorrowRequestCount,
+    ] = await Promise.all([
+      this.em.findOne(BorrowRequest, {
+        book: id,
+        user: account.user.id,
+        $or: [
+          { status: BorrowRequestStatusEnum.EXPIRED },
+          { status: BorrowRequestStatusEnum.REJECTED },
+        ],
+        coolDownExpiresAt: { $gte: new Date() },
+      }),
+      this.em.findOne(BorrowedBook, {
+        book: id,
+        user: account.user.id,
+        status: BorrowedBookStatusEnum.BORROWED,
+      }),
+      this.em.count(BorrowedBook, {
+        user: account.user.id,
+        createdAt: { $gte: startDate, $lt: endDate },
+      }),
+      this.em.count(BorrowRequest, {
+        user: account.user.id,
+        $or: [
+          { status: BorrowRequestStatusEnum.ACCEPTED },
+          { status: BorrowRequestStatusEnum.PENDING },
+        ],
+        createdAt: { $gte: startDate, $lt: endDate },
+      }),
+    ]);
+
+    const activeBookCount = activeBorrowRequestCount + activeBorrowedBooksCount;
+
+    return (
+      !(borrowRequest || borrowedBook) &&
+      activeBookCount < MaxAllowedBookPerMonth
+    );
+  }
 
   async createBook(data: BookRequestShape['createBook']['body']) {
     const { title, author, genreId, total, imageUrl, summary } = data;
@@ -85,71 +154,13 @@ export class BookService {
     await this.em.flush();
   }
 
-  private async canDeleteBookByAdmin(id: string) {
-    const [borrowedBook, borrowRequest] = await Promise.all([
-      this.em.findOne(BorrowedBook, {
-        book: id,
-        status: BorrowedBookStatusEnum.BORROWED,
-      }),
-      this.em.findOne(BorrowRequest, {
-        book: id,
-        $or: [
-          { status: BorrowRequestStatusEnum.PENDING },
-          { status: BorrowRequestStatusEnum.ACCEPTED },
-        ],
-      }),
-    ]);
-
-    return !(borrowRequest || borrowedBook);
-  }
-
-  private async canBorrowBookByUser(id: string, account: Account) {
-    if (!account.user) {
-      throw new BadRequestException('User not found');
-    }
-    const [borrowRequest, borrowedBook] = await Promise.all([
-      this.em.findOne(BorrowRequest, {
-        book: id,
-        user: account.user.id,
-        $or: [
-          { status: BorrowRequestStatusEnum.EXPIRED },
-          { status: BorrowRequestStatusEnum.REJECTED },
-        ],
-        coolDownExpiresAt: { $gte: new Date() },
-      }),
-      this.em.findOne(BorrowedBook, {
-        book: id,
-        user: account.user.id,
-        status: BorrowedBookStatusEnum.BORROWED,
-      }),
-    ]);
-
-    return !(borrowRequest || borrowedBook);
-  }
-
-  async deleteBook(id: string) {
-    const book = await this.em.findOneOrFail(Book, { id, isDeleted: false });
-
-    const canDeleteBook = await this.canDeleteBookByAdmin(id);
-
-    if (!canDeleteBook) {
-      throw new BadRequestException(
-        'Book cannot be deleted because it is currently borrowed or has pending/accepted borrow requests.',
-      );
-    }
-
-    wrap(book).assign({ isDeleted: true });
-
-    await this.em.flush();
-  }
-
   async getBookDetails(id: string, account: Account) {
     const { role } = account;
 
     const bookDetails = await this.em.findOneOrFail(
       Book,
       { id, isDeleted: false },
-      { populate: ['genre'] },
+      { populate: ['genre.title'] },
     );
 
     const {
@@ -185,6 +196,22 @@ export class BookService {
       const canBorrowBook = await this.canBorrowBookByUser(id, account);
       return { ...data, canBorrowBook };
     }
+  }
+
+  async deleteBook(id: string) {
+    const book = await this.em.findOneOrFail(Book, { id, isDeleted: false });
+
+    const canDeleteBook = await this.canDeleteBookByAdmin(id);
+
+    if (!canDeleteBook) {
+      throw new BadRequestException(
+        'Book cannot be deleted because it is currently borrowed or has pending/accepted borrow requests.',
+      );
+    }
+
+    wrap(book).assign({ isDeleted: true });
+
+    await this.em.flush();
   }
 
   //TODO: add extra details like canBuyBook for user, can delete book for admin
