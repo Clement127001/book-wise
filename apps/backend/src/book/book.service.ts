@@ -98,6 +98,8 @@ export class BookService {
       imageUrl,
       total,
       available,
+      createdAt,
+      updatedAt,
     } = bookDetails;
 
     if (!genre) {
@@ -105,6 +107,7 @@ export class BookService {
     }
 
     const data = {
+      id,
       title,
       author,
       genre: genre.title,
@@ -113,6 +116,8 @@ export class BookService {
       imageUrl,
       total,
       available,
+      createdAt,
+      updatedAt,
     };
 
     if (role === UserRoleEnum.ADMIN) {
@@ -227,7 +232,7 @@ export class BookService {
 
     const [books, count] = await this.em.findAndCount(
       Book,
-      {},
+      { isDeleted: false },
       {
         limit: pageSize,
         offset: (pageNumber - 1) * pageSize,

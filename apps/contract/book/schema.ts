@@ -24,10 +24,13 @@ export const BaseBookSchema = z.object({
 });
 
 export const BookDetailsSchema = BaseBookSchema.omit({ genreId: true }).extend({
+  id: z.string(),
   available: z.number(),
   genre: z.string(),
   canBorrowBook: z.boolean().optional(),
   canDeleteBook: z.boolean().optional(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
 });
 
 export const BookQuerySchema = z.object({ id: z.string() });
