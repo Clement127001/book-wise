@@ -2,12 +2,15 @@ import AllBooks from "@/components/admin/all-books/AllBooks";
 import WrapperWithSearch from "@/components/admin/WrapperWithSearch";
 import AdminLayout from "@/components/layout/AdminLayout";
 
-const AllBoooksPage = () => {
+const AllBooksPage = () => {
   return (
     <AdminLayout>
-      <WrapperWithSearch MainComponent={AllBooks} />
+      <WrapperWithSearch
+        className={"bg-app-admin-bg/90"}
+        MainComponent={AllBooks}
+      />
     </AdminLayout>
   );
 };
 
-export default AllBoooksPage;
+export default AllBooksPage;

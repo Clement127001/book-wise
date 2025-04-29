@@ -7,7 +7,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
       <aside className="col-span-2">
         <Sidebar />
       </aside>
-      <div className="col-span-9 h-screen">{children}</div>
+      <div className="col-span-9 min-h-screen">{children}</div>
     </main>
   );
 };

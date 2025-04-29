@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
 import { usePageLoader } from "@/context/pageLoaderProvider";
 import { uploadFile } from "@/utils/uploadFile";
+import { useUserData } from "@/context/UserDataProvider";
+import { UserRoleEnum } from "contract/enum";
 
 const ImageUpload = ({
   name,
@@ -15,9 +17,13 @@ const ImageUpload = ({
   label: string;
   required?: boolean;
 }) => {
+  const { userData } = useUserData();
   const { setValue, watch } = useFormContext();
   const fileUploadInputRef = useRef<HTMLInputElement | null>(null);
   const previewUrl = watch(name);
+
+  const { role } = userData;
+  const isAdmin = role === UserRoleEnum.ADMIN;
 
   const { showPageLoader, hidePageLoader } = usePageLoader();
 
@@ -71,7 +77,9 @@ const ImageUpload = ({
       {label && (
         <Label
           htmlFor={name}
-          className={`text-white dark:text-app-primary-300 capitalize text-[16px]`}
+          className={` dark:text-app-primary-300 capitalize text-[16px] ${
+            isAdmin ? "text-black" : "text-white"
+          }`}
         >
           {label}
           {required ? (
@@ -82,13 +90,16 @@ const ImageUpload = ({
         </Label>
       )}
 
-      <div className="relative flex justify-center items-center rounded-md border-2 bg-app-user-primary/10  border-app-user-primary/60 border-dashed max-w-full h-[240px] cursor-pointer overflow-hidden p-2">
+      <div
+        className={`relative flex justify-center items-center rounded-md border-2  border-dashed max-w-full h-[240px] cursor-pointer overflow-hidden p-2 ${
+          isAdmin
+            ? "bg-app-admin-primary-700/10 border-app-admin-primary-700/50"
+            : "bg-app-user-primary/10  border-app-user-primary/60"
+        }`}
+      >
         {previewUrl ? (
           <>
-            <img
-              src={previewUrl}
-              className="w-full h-full object-fit rounded-sm"
-            />
+            <img src={previewUrl} className="object-fit rounded-sm" />
             <X
               strokeWidth={3}
               className="absolute top-3 right-3 z-10 bg-red-500 text-white rounded-sm p-1"
@@ -98,13 +109,13 @@ const ImageUpload = ({
         ) : (
           <>
             <div
-              className="w-full h-full flex flex-col justify-center items-center gap-2 outline-2"
+              className={`w-full h-full flex flex-col justify-center items-center gap-2 outline-2 ${
+                isAdmin ? "text-app-admin-primary-700" : "text-app-user-primary"
+              }`}
               onClick={handleUploadImage}
             >
-              <UploadCloud color="#dfbf95" size={40} />
-              <p className="text-app-user-primary text-[14px]">
-                Upload {label}
-              </p>
+              <UploadCloud size={40} />
+              <p className="text-[16px]">Upload {label}</p>
             </div>
             <input
               type="file"
