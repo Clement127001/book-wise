@@ -33,3 +33,20 @@ export function get(obj: any, path: any, defaultValue?: any) {
 
   return result === undefined ? defaultValue : result;
 }
+
+export const getErrorMessage = (error: {
+  status: number;
+  body: unknown;
+}): string => {
+  const isErrorResponse = (object: unknown): object is any => {
+    return typeof object === "object" && object !== null && "message" in object;
+  };
+  if (error.status === 404 && isErrorResponse(error.body)) {
+    return error.body.message ?? "Not found";
+  }
+
+  if (isErrorResponse(error.body)) {
+    return error.body.message ?? "An error occurred";
+  }
+  return "An error occurred";
+};

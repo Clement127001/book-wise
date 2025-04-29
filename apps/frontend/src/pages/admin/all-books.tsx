@@ -5,7 +5,10 @@ import AdminLayout from "@/components/layout/AdminLayout";
 const AllBooksPage = () => {
   return (
     <AdminLayout>
-      <WrapperWithSearch MainComponent={AllBooks} />
+      <WrapperWithSearch
+        className={"bg-app-admin-bg/90"}
+        MainComponent={AllBooks}
+      />
     </AdminLayout>
   );
 };

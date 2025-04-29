@@ -5,7 +5,7 @@ import { useUserData } from "@/context/UserDataProvider";
 import { getFullName } from "@/utils/common";
 import { AdminGlobalSearchText, AdminLayoutProps } from "@/types/admin";
 
-const WrapperWithSearch = ({ MainComponent }: AdminLayoutProps) => {
+const WrapperWithSearch = ({ MainComponent, className }: AdminLayoutProps) => {
   const { userData } = useUserData();
 
   const [searchText, setSearchText] = useQueryState<AdminGlobalSearchText>(
@@ -20,7 +20,9 @@ const WrapperWithSearch = ({ MainComponent }: AdminLayoutProps) => {
   const fullName = getFullName(firstname, lastname);
 
   return (
-    <div className="rounded-l-[14px] shadow-md p-6 border-[1.5px] border-app-gray-100 h-full">
+    <div
+      className={`rounded-l-[14px] shadow-md p-6 border-[1.5px] border-app-gray-100 h-full ${className}`}
+    >
       <div className="w-full flex justify-between">
         <div>
           <h1 className="text-app-black-300 font-semibold text-xl leading-5">
