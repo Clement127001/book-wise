@@ -23,7 +23,7 @@ export const BaseBookSchema = z.object({
     }),
 });
 
-export const BookDetailsSchema = BaseBookSchema.omit({ genreId: true }).extend({
+export const BookDetailsSchema = BaseBookSchema.extend({
   id: z.string(),
   available: z.number(),
   genre: z.string(),

@@ -37,7 +37,7 @@ const AllBooks = memo(({ searchText }: { searchText: string }) => {
           </Button>
           <Link href={"/admin/book/create"}>
             <AdminPrimaryButton type="button" className="h-[44px] rounded-md">
-              <Plus />
+              <Plus strokeWidth={2.5} />
               Create New Book
             </AdminPrimaryButton>
           </Link>

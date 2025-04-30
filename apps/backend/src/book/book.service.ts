@@ -111,6 +111,7 @@ export class BookService {
       title,
       author,
       genre: genre.title,
+      genreId: genre.id,
       rating,
       summary,
       imageUrl,
@@ -191,6 +192,8 @@ export class BookService {
       title,
       author,
       genre: genreId,
+      total,
+      available: total,
       summary,
       imageUrl,
     });
@@ -202,7 +205,7 @@ export class BookService {
     const bookDetails = await this.em.findOneOrFail(
       Book,
       { id, isDeleted: false },
-      { populate: ['genre.title'] },
+      { populate: ['genre.title', 'genre.id'] },
     );
 
     return await this.transformBookData(account, bookDetails);
@@ -236,7 +239,7 @@ export class BookService {
       {
         limit: pageSize,
         offset: (pageNumber - 1) * pageSize,
-        populate: ['genre.title'],
+        populate: ['genre.title', 'genre.id'],
       },
     );
 
