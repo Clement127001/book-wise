@@ -1,10 +1,10 @@
 import { memo } from "react";
-import BooksTable from "@/components/admin/all-books/BooksTable";
-import { useQueryState } from "@/hooks/useQueryState";
-import { Button } from "@/components/ui/button";
-import { ArrowUpDown, Plus } from "lucide-react";
-import AdminPrimaryButton from "../AdminPrimaryButton";
 import Link from "next/link";
+import { ArrowUpDown, Plus } from "lucide-react";
+import BooksTable from "@/components/admin/all-books/BooksTable";
+import { Button } from "@/components/ui/button";
+import AdminPrimaryButton from "@/components/admin/AdminPrimaryButton";
+import { useQueryState } from "@/hooks/useQueryState";
 
 const AllBooks = memo(({ searchText }: { searchText: string }) => {
   const [allBooksSearchQuery, setAllBookSearchQuery] = useQueryState<{
@@ -24,7 +24,7 @@ const AllBooks = memo(({ searchText }: { searchText: string }) => {
   };
 
   return (
-    <section className="bg-white p-4 my-6 rounded-xl">
+    <section className="bg-white p-4 mt-6 rounded-xl min-h-[85vh]">
       <div className="flex items-center justify-between">
         <h3 className="font-medium text-[20px]">All Books</h3>
         <div className="space-x-3 flex">
