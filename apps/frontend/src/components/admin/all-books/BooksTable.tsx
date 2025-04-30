@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useQueryClient } from "@tanstack/react-query";
 import Pagination from "@/components/common/Pagination";
 import TableWithCardSkeleton from "@/components/common/TableWithCardSkeleton";
-import ErrorMessage from "@/components/ErrorMessage";
+import ErrorMessage from "@/components/common/ErrorMessage";
 import {
   Table,
   TableBody,

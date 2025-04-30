@@ -4,7 +4,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useQueryClient } from "@tanstack/react-query";
-import ErrorMessage from "@/components/ErrorMessage";
+import ErrorMessage from "@/components/common/ErrorMessage";
 import { getQueryClient } from "@/utils/api";
 import AdminPrimaryButton from "@/components/admin/AdminPrimaryButton";
 import { Button } from "@/components/ui/button";

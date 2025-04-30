@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import ErrorMessage from "@/components/ErrorMessage";
+import ErrorMessage from "@/components/common/ErrorMessage";
 import EditBookForm from "@/components/admin/books/EditBookForm";
 import { getQueryClient } from "@/utils/api";
 import { contract } from "contract";
