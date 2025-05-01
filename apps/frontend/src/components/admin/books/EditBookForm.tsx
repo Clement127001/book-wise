@@ -9,7 +9,6 @@ import { getQueryClient } from "@/utils/api";
 
 const EditBookForm = ({ data }: { data: BookDetailsType }) => {
   const { id, title, author, genre, genreId, total, imageUrl, summary } = data;
-
   const selectedGenre: CustomSelectOption = { value: genreId, label: genre };
 
   const router = useRouter();

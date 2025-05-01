@@ -1,6 +1,11 @@
 import { initContract } from "@ts-rest/core";
-import { BaseBookSchema, BookDetailsSchema, BookQuerySchema } from "./schema";
-import { PaginatedRequestSchema, SuccessSchema } from "../common";
+import {
+  BaseBookSchema,
+  BookDetailsSchema,
+  BookQuerySchema,
+  GetAllBooksQuerySchema,
+} from "./schema";
+import { SuccessSchema } from "../common";
 import { createPaginatedResponseSchema } from "../utils";
 
 const c = initContract();
@@ -33,7 +38,7 @@ export const bookContract = c.router(
     getAllBooks: {
       method: "GET",
       path: "/allBooks",
-      query: PaginatedRequestSchema,
+      query: GetAllBooksQuerySchema,
       responses: { 200: createPaginatedResponseSchema(BookDetailsSchema) },
     },
     deleteBook: {

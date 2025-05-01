@@ -5,6 +5,7 @@ import BooksTable from "@/components/admin/all-books/BooksTable";
 import { Button } from "@/components/ui/button";
 import AdminPrimaryButton from "@/components/admin/AdminPrimaryButton";
 import { useQueryState } from "@/hooks/useQueryState";
+import DeleteBookWrapper from "../../../hooks/useDeleteBook";
 
 const AllBooks = memo(({ searchText }: { searchText: string }) => {
   const [allBooksSearchQuery, setAllBookSearchQuery] = useQueryState<{
@@ -44,10 +45,15 @@ const AllBooks = memo(({ searchText }: { searchText: string }) => {
         </div>
       </div>
 
-      <BooksTable
-        searchText={searchText}
-        allBooksSearchQuery={allBooksSearchQuery}
-        handlePageNumberChange={handlePageNumberChange}
+      <DeleteBookWrapper
+        BookMainComponent={
+          <BooksTable
+            handleOpenBookDeleteModal={(_: string) => {}}
+            searchText={searchText}
+            allBooksSearchQuery={allBooksSearchQuery}
+            handlePageNumberChange={handlePageNumberChange}
+          />
+        }
       />
     </section>
   );

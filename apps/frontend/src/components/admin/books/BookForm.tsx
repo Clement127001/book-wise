@@ -18,16 +18,21 @@ const BookForm = ({
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   isEdit?: boolean;
 }) => {
-  const getGenreOptions = async (_: string) => {
+  const getGenreOptions = async (val: string) => {
     try {
       const response = await fetch(
         getApiUrl() + contract.genre.getAllGenres.path
       );
       const data = await response.json();
-      return data.genres.map((genre: { id: string; title: string }) => ({
-        value: genre.id,
-        label: genre.title,
-      }));
+
+      return data.genres
+        .filter((genre: { id: string; title: string }) =>
+          genre.title.toLowerCase().includes(val)
+        )
+        .map((genre: { id: string; title: string }) => ({
+          value: genre.id,
+          label: genre.title,
+        }));
     } catch (err) {
       console.error("Error fetching genres", err);
       return [];

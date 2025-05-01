@@ -1,4 +1,5 @@
-import { z } from "zod";
+import { PaginatedRequestSchema } from "../common";
+import { boolean, z } from "zod";
 
 export const BaseBookSchema = z.object({
   title: z
@@ -34,3 +35,8 @@ export const BookDetailsSchema = BaseBookSchema.extend({
 });
 
 export const BookQuerySchema = z.object({ id: z.string() });
+
+export const GetAllBooksQuerySchema = PaginatedRequestSchema.extend({
+  sortByTitle: z.string(),
+  searchText: z.string(),
+});

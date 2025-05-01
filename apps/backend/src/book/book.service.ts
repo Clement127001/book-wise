@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { BookRequestShape } from '@/book/book.controller';
 import { Book } from '@/book/entities/book.entity';
-import { EntityManager, wrap } from '@mikro-orm/postgresql';
+import { EntityManager, QueryOrder, wrap } from '@mikro-orm/postgresql';
 import { Genre } from '@/genre/entities/genre.entity';
 import { BorrowRequest } from './entities/borrowRequest.entity';
 import {
@@ -231,8 +231,9 @@ export class BookService {
     query: BookRequestShape['getAllBooks']['query'],
     account: Account,
   ) {
-    const { pageNumber, pageSize } = query;
+    const { pageNumber, pageSize, searchText, sortByTitle } = query;
 
+    //TODO: fix the search text $ilike or whatever ( string matching algo)
     const [books, count] = await this.em.findAndCount(
       Book,
       { isDeleted: false },
@@ -240,6 +241,9 @@ export class BookService {
         limit: pageSize,
         offset: (pageNumber - 1) * pageSize,
         populate: ['genre.title', 'genre.id'],
+        orderBy: {
+          title: sortByTitle === 'true' ? QueryOrder.asc : QueryOrder.desc,
+        },
       },
     );
 

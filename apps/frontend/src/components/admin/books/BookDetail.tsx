@@ -1,14 +1,12 @@
-import { useState } from "react";
 import { Calendar, Edit, Trash } from "lucide-react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useQueryClient } from "@tanstack/react-query";
 import ErrorMessage from "@/components/common/ErrorMessage";
-import { getQueryClient } from "@/utils/api";
 import AdminPrimaryButton from "@/components/admin/AdminPrimaryButton";
 import { Button } from "@/components/ui/button";
-import { useApi } from "@/hooks/useApi";
+import useDeleteBook from "@/hooks/useDeleteBook";
+import { getQueryClient } from "@/utils/api";
 import { contract } from "contract";
 
 const DeleteConfirmationModal = dynamic(
@@ -16,14 +14,15 @@ const DeleteConfirmationModal = dynamic(
   { ssr: false }
 );
 
-const BookDetail = () => {
-  const [deleteBookModalOpened, setDeleteBookModalOpened] =
-    useState<boolean>(false);
-  const [deleteBookId, setDeleteBookId] = useState<string | null>(null);
-
+const BookDetail = ({}: {}) => {
   const router = useRouter();
-  const invalidationQueryClient = useQueryClient();
-  const { makeApiCall } = useApi();
+  const {
+    deleteBookId,
+    deleteBookModalOpened,
+    handleCloseDeleteModal,
+    handleDeleteBook,
+    handleOpenBookDeleteModal,
+  } = useDeleteBook();
 
   const { id } = router.query;
   const bookId = (Array.isArray(id) ? id[0] : id) as string;
@@ -51,45 +50,6 @@ const BookDetail = () => {
   } = data.body;
 
   const availabilityPercentage = Math.round((available / total) * 100);
-
-  const handleOpenBookDeleteModal = (id: string) => {
-    setDeleteBookId(id);
-    setDeleteBookModalOpened(true);
-  };
-
-  const handleCloseDeleteModal = () => {
-    setDeleteBookId(null);
-    setDeleteBookModalOpened(false);
-  };
-
-  const handleDeleteBook = () => {
-    if (!deleteBookId) return;
-
-    makeApiCall({
-      fetcherFn: async () => {
-        return await getQueryClient().book.deleteBook.mutation({
-          body: { id: deleteBookId },
-        });
-      },
-      successMsgProps: {
-        title: "Book Deleted",
-        description: "Book deleted successfully",
-        duration: 3000,
-      },
-      failureMsgProps: {
-        title: "Delete failed",
-        description: "Failed to delete book!",
-        duration: 3000,
-      },
-      onSuccessFn: () => {
-        invalidationQueryClient.invalidateQueries({
-          queryKey: [contract.book.getAllBooks.path],
-        });
-        handleCloseDeleteModal();
-        router.push("/admin/all-books");
-      },
-    });
-  };
 
   return (
     <>
