@@ -13,7 +13,6 @@ import { BorrowedBook } from './entities/borrowedBook.entity';
 import { Account } from '@/auth/entities/account.entity';
 import { getMonthStartAndEndDate } from '@/utils';
 import { MaxAllowedBookPerMonth } from '@/constants';
-import { title } from 'process';
 
 @Injectable()
 export class BookService {
@@ -245,7 +244,6 @@ export class BookService {
       filterQuery.title = { $ilike: `${convertedSearchText}%` };
     }
 
-    //TODO: fix the search text $ilike or whatever ( string matching algo)
     const [books, count] = await this.em.findAndCount(Book, filterQuery, {
       limit: pageSize,
       offset: (pageNumber - 1) * pageSize,

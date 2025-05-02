@@ -1,7 +1,13 @@
 import { z } from "zod";
-import { LoginOTPVerifiedSuccessSchema } from "../common";
+import {
+  BaseResponseSchema,
+  LoginOTPVerifiedSuccessSchema,
+  PaginatedRequestSchema,
+} from "../common";
+import { createPaginatedResponseSchema } from "../utils";
+import { UserAccountStatus } from "../enum";
 
-export const CreateUserSchema = z.object({
+export const UserBaseSchema = z.object({
   firstname: z
     .string()
     .min(4, { message: "User first name should have 4 character atleast" })
@@ -23,3 +29,20 @@ export const CreateUserSchema = z.object({
 });
 
 export const CreateUserSuccessSchema = LoginOTPVerifiedSuccessSchema;
+
+export const UserDetailsSchema = UserBaseSchema.merge(BaseResponseSchema);
+
+export const GetAllUserDetailsQuerySchema = PaginatedRequestSchema.extend({
+  searchText: z.string(),
+  sortByCreatedTime: z.string(),
+});
+
+export const GetAllUserSchema =
+  createPaginatedResponseSchema(UserDetailsSchema);
+
+export const GetAllAccountRequestSchema = GetAllUserSchema;
+
+export const ChangeStatusRequestSchema = z.object({
+  id: z.string(),
+  status: z.nativeEnum(UserAccountStatus),
+});
