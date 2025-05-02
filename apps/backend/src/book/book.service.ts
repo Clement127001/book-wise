@@ -13,6 +13,7 @@ import { BorrowedBook } from './entities/borrowedBook.entity';
 import { Account } from '@/auth/entities/account.entity';
 import { getMonthStartAndEndDate } from '@/utils';
 import { MaxAllowedBookPerMonth } from '@/constants';
+import { title } from 'process';
 
 @Injectable()
 export class BookService {
@@ -233,19 +234,26 @@ export class BookService {
   ) {
     const { pageNumber, pageSize, searchText, sortByTitle } = query;
 
+    const filterQuery = {
+      isDeleted: false,
+      title: {},
+    };
+
+    const convertedSearchText = searchText.trim();
+
+    if (convertedSearchText) {
+      filterQuery.title = { $ilike: `${convertedSearchText}%` };
+    }
+
     //TODO: fix the search text $ilike or whatever ( string matching algo)
-    const [books, count] = await this.em.findAndCount(
-      Book,
-      { isDeleted: false },
-      {
-        limit: pageSize,
-        offset: (pageNumber - 1) * pageSize,
-        populate: ['genre.title', 'genre.id'],
-        orderBy: {
-          title: sortByTitle === 'true' ? QueryOrder.asc : QueryOrder.desc,
-        },
+    const [books, count] = await this.em.findAndCount(Book, filterQuery, {
+      limit: pageSize,
+      offset: (pageNumber - 1) * pageSize,
+      populate: ['genre.title', 'genre.id'],
+      orderBy: {
+        title: sortByTitle === 'true' ? QueryOrder.asc : QueryOrder.desc,
       },
-    );
+    });
 
     const booksResult = await Promise.all(
       books.map(async (book) => await this.transformBookData(account, book)),

@@ -39,7 +39,7 @@ const BookDetail = ({}: {}) => {
 
   const {
     title,
-    // createdAt,
+    createdAt,
     author,
     available,
     summary,
@@ -50,6 +50,7 @@ const BookDetail = ({}: {}) => {
   } = data.body;
 
   const availabilityPercentage = Math.round((available / total) * 100);
+  const modifiedDate = new Date(createdAt).toLocaleString();
 
   return (
     <>
@@ -67,7 +68,7 @@ const BookDetail = ({}: {}) => {
               <div className="flex items-center gap-2">
                 <span className="text-app-gray-500">Created At :</span>
                 <Calendar />
-                <p>date</p>
+                <p>{modifiedDate}</p>
               </div>
               <h3 className="capitalize text-2xl tracking-wide font-semibold">
                 {title}

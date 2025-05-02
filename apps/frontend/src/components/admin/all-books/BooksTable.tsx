@@ -68,6 +68,8 @@ const BooksTable = memo(
 
     const { results, totalPages } = data.body;
 
+    const showBookList = results.length > 0;
+
     return (
       <>
         <div className="pt-6">
@@ -85,71 +87,81 @@ const BooksTable = memo(
                 </TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              <TableRow className="h-6 border-t-0 border-b-0" />
+            {showBookList && (
+              <TableBody>
+                <TableRow className="h-6 border-t-0 border-b-0" />
 
-              {results.map((book, index) => {
-                const {
-                  id,
-                  title,
-                  imageUrl,
-                  author,
-                  genre,
-                  // createdAt,
-                  canDeleteBook,
-                } = book;
+                {results.map((book, index) => {
+                  const {
+                    id,
+                    title,
+                    imageUrl,
+                    author,
+                    genre,
+                    createdAt,
+                    canDeleteBook,
+                  } = book;
 
-                return (
-                  <Fragment key={index}>
-                    <TableRow
-                      className="text-[16px] font-normal hover:bg-gray-100"
-                      onClick={() => {
-                        router.push("/admin/book/" + id);
-                      }}
-                    >
-                      <TableCell className="px-4 text-[#110F43]">
-                        <div className="flex items-center gap-3">
-                          <img
-                            src={imageUrl}
-                            className="w-14 h-14 object-cover rounded-sm shadow-sm"
-                          />
-                          <p className="font-medium line-clamp-1">{title}</p>
-                        </div>
-                      </TableCell>
-                      <TableCell>{author}</TableCell>
-                      <TableCell>{genre}</TableCell>
-                      <TableCell>{"date"}</TableCell>
-                      <TableCell>
-                        <div
-                          className="flex gap-2"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                          }}
-                        >
-                          <Link
-                            href={"/admin/book/edit/" + id}
-                            className="p-[6px__4px] hover:bg-white rounded-sm cursor-pointer"
+                  const modifiedDate = new Date(createdAt).toLocaleString();
+
+                  return (
+                    <Fragment key={index}>
+                      <TableRow
+                        className="text-[16px] font-normal hover:bg-gray-100"
+                        onClick={() => {
+                          router.push("/admin/book/" + id);
+                        }}
+                      >
+                        <TableCell className="px-4 text-[#110F43]">
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={imageUrl}
+                              className="w-14 h-14 object-cover rounded-sm shadow-sm"
+                            />
+                            <p className="font-medium line-clamp-1">{title}</p>
+                          </div>
+                        </TableCell>
+                        <TableCell>{author}</TableCell>
+                        <TableCell>{genre}</TableCell>
+                        <TableCell>{modifiedDate}</TableCell>
+                        <TableCell>
+                          <div
+                            className="flex gap-2"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
                           >
-                            <Edit className="h-5 text-app-admin-primary-500" />
-                          </Link>
-                          {canDeleteBook && (
-                            <div
+                            <Link
+                              href={"/admin/book/edit/" + id}
                               className="p-[6px__4px] hover:bg-white rounded-sm cursor-pointer"
-                              onClick={() => {
-                                handleOpenBookDeleteModal(id);
-                              }}
                             >
-                              <Trash className="h-5 text-app-accent-error-500" />
-                            </div>
-                          )}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  </Fragment>
-                );
-              })}
-            </TableBody>
+                              <Edit className="h-5 text-app-admin-primary-500" />
+                            </Link>
+                            {canDeleteBook && (
+                              <div
+                                className="p-[6px__4px] hover:bg-white rounded-sm cursor-pointer"
+                                onClick={() => {
+                                  handleOpenBookDeleteModal(id);
+                                }}
+                              >
+                                <Trash className="h-5 text-app-accent-error-500" />
+                              </div>
+                            )}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    </Fragment>
+                  );
+                })}
+              </TableBody>
+            )}
           </Table>
+
+          {!showBookList && (
+            <p className="w-full text-center font-medium text-app-accent-error-500 py-10">
+              No books found for given filters
+            </p>
+          )}
 
           <Pagination
             currentPage={currentPage}
