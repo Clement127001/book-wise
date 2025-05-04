@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { BookRequestShape } from '@/book/book.controller';
 import { Book } from '@/book/entities/book.entity';
-import { EntityManager, wrap } from '@mikro-orm/postgresql';
+import { EntityManager, QueryOrder, wrap } from '@mikro-orm/postgresql';
 import { Genre } from '@/genre/entities/genre.entity';
 import { BorrowRequest } from './entities/borrowRequest.entity';
 import {
@@ -13,6 +13,7 @@ import { BorrowedBook } from './entities/borrowedBook.entity';
 import { Account } from '@/auth/entities/account.entity';
 import { getMonthStartAndEndDate } from '@/utils';
 import { MaxAllowedBookPerMonth } from '@/constants';
+import { title } from 'process';
 
 @Injectable()
 export class BookService {
@@ -98,6 +99,8 @@ export class BookService {
       imageUrl,
       total,
       available,
+      createdAt,
+      updatedAt,
     } = bookDetails;
 
     if (!genre) {
@@ -105,14 +108,18 @@ export class BookService {
     }
 
     const data = {
+      id,
       title,
       author,
       genre: genre.title,
+      genreId: genre.id,
       rating,
       summary,
       imageUrl,
       total,
       available,
+      createdAt,
+      updatedAt,
     };
 
     if (role === UserRoleEnum.ADMIN) {
@@ -186,6 +193,8 @@ export class BookService {
       title,
       author,
       genre: genreId,
+      total,
+      available: total,
       summary,
       imageUrl,
     });
@@ -197,7 +206,7 @@ export class BookService {
     const bookDetails = await this.em.findOneOrFail(
       Book,
       { id, isDeleted: false },
-      { populate: ['genre.title'] },
+      { populate: ['genre.title', 'genre.id'] },
     );
 
     return await this.transformBookData(account, bookDetails);
@@ -223,17 +232,28 @@ export class BookService {
     query: BookRequestShape['getAllBooks']['query'],
     account: Account,
   ) {
-    const { pageNumber, pageSize } = query;
+    const { pageNumber, pageSize, searchText, sortByTitle } = query;
 
-    const [books, count] = await this.em.findAndCount(
-      Book,
-      {},
-      {
-        limit: pageSize,
-        offset: (pageNumber - 1) * pageSize,
-        populate: ['genre.title'],
+    const filterQuery = {
+      isDeleted: false,
+      title: {},
+    };
+
+    const convertedSearchText = searchText.trim();
+
+    if (convertedSearchText) {
+      filterQuery.title = { $ilike: `${convertedSearchText}%` };
+    }
+
+    //TODO: fix the search text $ilike or whatever ( string matching algo)
+    const [books, count] = await this.em.findAndCount(Book, filterQuery, {
+      limit: pageSize,
+      offset: (pageNumber - 1) * pageSize,
+      populate: ['genre.title', 'genre.id'],
+      orderBy: {
+        title: sortByTitle === 'true' ? QueryOrder.asc : QueryOrder.desc,
       },
-    );
+    });
 
     const booksResult = await Promise.all(
       books.map(async (book) => await this.transformBookData(account, book)),

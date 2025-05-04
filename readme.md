@@ -7,8 +7,8 @@
 - [x] admin auth
 - [x] user auth
 - [ ] admin dashboard
-- [ ] add books
-- [ ] view book details and edit books
+- [x] add books
+- [x] view book details and edit books
 
 ### the following things are need to be done before tuesday (14/03):
 

@@ -23,7 +23,7 @@ const Wrapper = ({
           <h1 className="text-app-black-300 font-semibold text-xl leading-5">
             Welcome, {fullName}
           </h1>
-          <p className="text-sm text-app-gray-300 leading-loose">
+          <p className="text-sm text-app-gray-500 leading-loose">
             Monitor all of your projects and tasks here
           </p>
         </div>

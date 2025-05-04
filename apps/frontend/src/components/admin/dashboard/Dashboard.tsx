@@ -2,8 +2,8 @@ import { memo } from "react";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import StatsList from "@/components/admin/dashboard/StatsList";
-import { dummyDashboardData } from "@/utils/admin/dashboard";
 import DashboardListContainer from "@/components/admin/dashboard/DashboardListContainer";
+import { dummyDashboardData } from "@/utils/admin/dashboard";
 
 const Dashboard = memo(() => {
   //TODO: for now the data is dummy, need to integrate with the api
