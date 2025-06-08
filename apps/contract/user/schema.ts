@@ -36,14 +36,25 @@ export const UserDetailsSchema = UserBaseSchema.omit({
   .extend({ verificationStatus: z.nativeEnum(UserAccountStatus) })
   .merge(BaseResponseSchema);
 
-export const GetAllAccountQuerySchema = PaginatedRequestSchema.extend({
-  searchText: z.string().trim(),
-  sortByCreatedTime: z.string(),
-});
+export const GetBorrowedBooks = createPaginatedResponseSchema(
+  z.object({
+    id: z.string(),
+    imageUrl: z.string(),
+    title: z.string(),
+    genre: z.string(),
+    borrowedDate: z.date(),
+    status: z.nativeEnum(BorrowedBookStatusEnum),
+  })
+);
 
 export const GetAllUserDetailsQuerySchema = PaginatedRequestSchema.extend({
   searchText: z.string().trim(),
   sortByAlphabeticOrder: z.string(),
+});
+
+export const GetAllAccountQuerySchema = PaginatedRequestSchema.extend({
+  searchText: z.string().trim(),
+  sortByCreatedTime: z.string(),
 });
 
 const GetAllUsersBaseSchema = UserDetailsSchema.omit({
@@ -57,17 +68,6 @@ export const GetAllAccountRequestSchema = createPaginatedResponseSchema(
 export const GetAllUserSchema = createPaginatedResponseSchema(
   GetAllUsersBaseSchema.extend({
     borrowedBooksCount: z.number(),
-  })
-);
-
-export const GetBorrowedBooks = createPaginatedResponseSchema(
-  z.object({
-    id: z.string(),
-    imageUrl: z.string(),
-    title: z.string(),
-    genre: z.string(),
-    borrowedDate: z.date(),
-    status: z.nativeEnum(BorrowedBookStatusEnum),
   })
 );
 

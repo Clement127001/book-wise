@@ -55,7 +55,7 @@ export const userContract = c.router(
     },
     getAllUsers: {
       method: "GET",
-      path: "allUser",
+      path: "/allUsers",
       query: GetAllUserDetailsQuerySchema,
       responses: { 200: GetAllUserSchema },
     },

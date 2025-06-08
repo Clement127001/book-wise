@@ -4,9 +4,9 @@ import { UserRequestShape } from '@/user/user.controller';
 import { AuthService } from '@/auth/auth.service';
 import { User } from '@/user/entities/user.entity';
 import { EmailVerification } from '@/user-auth/entities/emailVerification.entity';
+import { BorrowedBook } from '@/book/entities/borrowedBook.entity';
 import { Account } from '@/auth/entities/account.entity';
 import { UserAccountStatus, UserRoleEnum } from 'contract/enum';
-import { BorrowedBook } from '@/book/entities/borrowedBook.entity';
 
 @Injectable()
 export class UserService {
@@ -150,10 +150,13 @@ export class UserService {
   async getAllUsers(query: UserRequestShape['getAllUsers']['query']) {
     const { pageNumber, pageSize, searchText, sortByAlphabeticOrder } = query;
 
-    const filterQuery = { isDeleted: false, account: { firstname: {} } };
+    const filterQuery: any = { isDeleted: false };
 
     if (searchText) {
-      filterQuery.account.firstname = { $ilike: searchText };
+      filterQuery.$or = [
+        { user: { firstname: { $ilike: `${searchText}%` } } },
+        { user: { lastname: { $ilike: `${searchText}%` } } },
+      ];
     }
 
     const [verifiedUsers, verifiedUserCount] = await this.em.findAndCount(
@@ -212,10 +215,13 @@ export class UserService {
   ) {
     const { pageNumber, pageSize, searchText, sortByCreatedTime } = query;
 
-    const filterQuery = { isDeleted: false, account: { firstname: {} } };
+    const filterQuery: any = { isDeleted: false };
 
-    if (searchText) {
-      filterQuery.account.firstname = { $ilike: searchText };
+    if (searchText && searchText.length > 0) {
+      filterQuery.$or = [
+        { user: { firstname: { $ilike: `${searchText}%` } } },
+        { user: { lastname: { $ilike: `${searchText}%` } } },
+      ];
     }
 
     const [userAccountRequests, accountRequestsCount] =
@@ -246,8 +252,7 @@ export class UserService {
       );
 
     const accountRequests = userAccountRequests.map((item) => {
-      const { id, borrowedBooks, createdAt, updatedAt, identityCardUrl, user } =
-        item;
+      const { id, createdAt, updatedAt, identityCardUrl, user } = item;
 
       return {
         id,
@@ -268,7 +273,7 @@ export class UserService {
     data: UserRequestShape['changeAccountStatus']['body'],
   ) {
     const { id, status } = data;
-    const user = await this.em.findOne(User, { id });
+    const user = await this.em.findOne(User, { id, isDeleted: false });
 
     if (!user) {
       throw new BadRequestException('User with given id not found');

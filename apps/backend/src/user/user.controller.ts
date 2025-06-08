@@ -6,6 +6,7 @@ import {
   TsRest,
   TsRestRequest,
 } from '@ts-rest/nest';
+import { Account } from '@/auth/entities/account.entity';
 import { userContract } from 'contract/user/contract';
 import { UserService } from '@/user/user.service';
 import {
@@ -13,7 +14,6 @@ import {
   getAccountFromToken,
   UserOnlyAuth,
 } from '@/auth/decorators/auth.decorator';
-import { Account } from '@/auth/entities/account.entity';
 
 const userController = nestControllerContract(userContract);
 
@@ -36,7 +36,7 @@ export class UserController
       status: 201 as const,
       body: {
         success: true,
-        message: 'User Created.',
+        message: 'User Created Successfully!',
         token,
       },
     };
@@ -46,13 +46,14 @@ export class UserController
   @TsRest(userContract.getUserDetails)
   async getUserDetails(@getAccountFromToken() account: Account) {
     const userDetails = await this.userService.getUserDetails(account);
+
     return {
       status: 200 as const,
 
       body: {
         ...userDetails,
         success: true,
-        message: '',
+        message: 'User details retrieved successfully!',
       },
     };
   }
@@ -91,7 +92,7 @@ export class UserController
       status: 200 as const,
       body: {
         success: true,
-        message: 'User details updated successfully',
+        message: 'User details updated successfully!',
       },
     };
   }
