@@ -78,13 +78,15 @@ export class BookController
       account,
     );
 
+    const { pageNumber, pageSize } = query;
+
     return {
       status: 200 as const,
       body: {
-        currentPageNumber: query.pageNumber,
-        currentPageSize: query.pageSize,
+        currentPageNumber: pageNumber,
+        currentPageSize: pageSize,
         totalItems: count,
-        totalPages: Math.ceil(count / query.pageSize),
+        totalPages: Math.ceil(count / pageSize),
         results: booksResult,
       },
     };

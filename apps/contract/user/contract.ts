@@ -5,10 +5,12 @@ import {
   UserDetailsSchema,
   GetAllUserDetailsQuerySchema,
   GetAllUserSchema,
-  GetAllAccountRequestSchema,
   ChangeStatusRequestSchema,
+  GetBorrowedBooks,
+  GetAllAccountQuerySchema,
+  GetAllAccountRequestSchema,
 } from "../user/schema";
-import { SuccessSchema } from "../common";
+import { PaginatedRequestSchema, SuccessSchema } from "../common";
 
 const c = initContract();
 
@@ -29,6 +31,12 @@ export const userContract = c.router(
         200: UserDetailsSchema,
       },
     },
+    getBorrowedBooks: {
+      method: "GET",
+      path: "/getBorrowedBooks",
+      query: PaginatedRequestSchema,
+      responses: { 200: GetBorrowedBooks },
+    },
     updateUserDetails: {
       method: "PATCH",
       path: "/updateUser",
@@ -40,7 +48,7 @@ export const userContract = c.router(
     getAllAccountRequest: {
       method: "GET",
       path: "/allAccountRequest",
-      query: GetAllUserDetailsQuerySchema,
+      query: GetAllAccountQuerySchema,
       responses: {
         200: GetAllAccountRequestSchema,
       },

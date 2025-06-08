@@ -10,6 +10,7 @@ export default function Home() {
 
   const router = useRouter();
   const query = router.query;
+  const path = router.pathname;
 
   const isUnauthorised = String(query.ua ?? "");
 
@@ -43,7 +44,7 @@ export default function Home() {
     }
 
     delete query.ua;
-    router.push("/");
+    router.replace(path, undefined, { shallow: true });
   }, [router.isReady, isUnauthorised, query]);
 
   return (
