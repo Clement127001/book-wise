@@ -18,3 +18,8 @@ export type AdminLayoutProps = {
 export type AdminGlobalSearchText = {
   searchText: string;
 };
+
+export type AccountRequestQuery = {
+  sortInAsc: boolean;
+  currentPage: number;
+};
