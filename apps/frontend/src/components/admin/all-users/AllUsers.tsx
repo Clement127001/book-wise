@@ -1,9 +1,9 @@
+import { memo } from "react";
+import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import AllUsersTable from "@/components/admin/all-users/AllUsersTable";
 import { useQueryState } from "@/hooks/useQueryState";
 import { UserAccountListType } from "@/types/admin";
-import { ArrowUpDown } from "lucide-react";
-import { memo } from "react";
-import AllUsersTable from "./AllUsersTable";
 
 const AllUsers = memo(({ searchText }: { searchText: string }) => {
   const [allUserQuery, setAllUserQuery] = useQueryState<UserAccountListType>(

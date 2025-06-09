@@ -16,11 +16,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useApi } from "@/hooks/useApi";
+import usePreviewIdCard from "@/hooks/admin/usePreviewIdCard";
 import { UserAccountListType, ChangeStatusModalType } from "@/types/admin";
 import { getQueryClient } from "@/utils/api";
 import { contract } from "contract";
 import { UserAccountStatus } from "contract/enum";
-import usePreviewIdCard from "@/hooks/admin/usePreviewIdCard";
 
 const IdCardPreviewModal = dynamic(
   import("@/components/admin/account-request/IdCardPreviewModal").then(
@@ -184,17 +184,17 @@ const AccountRequestTable = memo(
                         <TableCell className="px-4 text-[#110F43]">
                           {modifiedDate}
                         </TableCell>
-                        <TableCell
-                          className="px-4 text-[#110F43] cursor-pointer"
-                          onClick={() => {
-                            openIdPreview({
-                              idCardUrl: identityCardUrl,
-                              fullName,
-                            });
-                          }}
-                        >
+                        <TableCell className="px-4 text-[#110F43] cursor-pointer">
                           {identityCardUrl ? (
-                            <p className="text-app-admin-primary-500 hover:text-app-admin-primary-700 flex gap-2 items-center">
+                            <p
+                              className="text-app-admin-primary-500 hover:text-app-admin-primary-700 flex gap-2 items-center"
+                              onClick={() => {
+                                openIdPreview({
+                                  idCardUrl: identityCardUrl,
+                                  fullName,
+                                });
+                              }}
+                            >
                               <Eye />
                               View ID Card
                             </p>
@@ -251,6 +251,7 @@ const AccountRequestTable = memo(
             handleChangePageNumber={handlePageNumberChange}
           />
         </div>
+
         {activeIdCardData && (
           <IdCardPreviewModal
             data={activeIdCardData}
@@ -258,6 +259,7 @@ const AccountRequestTable = memo(
             onClose={hideIdPreviewModal}
           />
         )}
+
         {showApproveAccountModal && (
           <ChangeStatusModal
             opened={showApproveAccountModal}
@@ -271,6 +273,7 @@ const AccountRequestTable = memo(
             }
           />
         )}
+
         {showRejectAccountModal && (
           <ChangeStatusModal
             opened={showRejectAccountModal}

@@ -1,8 +1,12 @@
+import { Fragment, memo, useState } from "react";
+import dynamic from "next/dynamic";
+import { Eye, Trash } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import TableWithCardSkeleton from "@/components/common/TableWithCardSkeleton";
-import usePreviewIdCard from "@/hooks/admin/usePreviewIdCard";
-import { useApi } from "@/hooks/useApi";
-import { UserAccountListType } from "@/types/admin";
+import Pagination from "@/components/common/Pagination";
+import UserAvatar from "@/components/common/UserAvatar";
+
 import {
   Table,
   TableBody,
@@ -11,14 +15,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import usePreviewIdCard from "@/hooks/admin/usePreviewIdCard";
+import { useApi } from "@/hooks/useApi";
+import { UserAccountListType } from "@/types/admin";
 import { getQueryClient } from "@/utils/api";
-import { useQueryClient } from "@tanstack/react-query";
 import { contract } from "contract";
-import dynamic from "next/dynamic";
-import { Fragment, memo, useState } from "react";
-import Pagination from "@/components/common/Pagination";
-import { Eye, Trash } from "lucide-react";
-import UserAvatar from "@/components/common/UserAvatar";
 
 const IdCardPreviewModal = dynamic(
   import("@/components/admin/account-request/IdCardPreviewModal").then(
@@ -163,17 +164,17 @@ const AllUsersTable = memo(
                         <TableCell className="px-4 text-[#110F43]">
                           {modifiedDate}
                         </TableCell>
-                        <TableCell
-                          className="px-4 text-[#110F43] cursor-pointer"
-                          onClick={() => {
-                            openIdPreview({
-                              idCardUrl: identityCardUrl,
-                              fullName,
-                            });
-                          }}
-                        >
+                        <TableCell className="px-4 text-[#110F43] cursor-pointer">
                           {identityCardUrl ? (
-                            <p className="text-app-admin-primary-500 hover:text-app-admin-primary-700 flex gap-2 items-center">
+                            <p
+                              className="text-app-admin-primary-500 hover:text-app-admin-primary-700 flex gap-2 items-center"
+                              onClick={() => {
+                                openIdPreview({
+                                  idCardUrl: identityCardUrl,
+                                  fullName,
+                                });
+                              }}
+                            >
                               <Eye />
                               View ID Card
                             </p>
