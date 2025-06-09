@@ -155,4 +155,17 @@ export class UserController
       },
     };
   }
+
+  @AdminOnlyAuth()
+  @TsRest(userContract.deleteUser)
+  async deleteUser(@TsRestRequest() { body }: UserRequestShape['deleteUser']) {
+    await this.userService.deleteUser(body);
+    return {
+      status: 200 as const,
+      body: {
+        success: true,
+        message: 'User deleted successfully!',
+      },
+    };
+  }
 }

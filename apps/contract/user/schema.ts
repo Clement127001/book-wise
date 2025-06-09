@@ -68,6 +68,7 @@ export const GetAllAccountRequestSchema = createPaginatedResponseSchema(
 export const GetAllUserSchema = createPaginatedResponseSchema(
   GetAllUsersBaseSchema.extend({
     borrowedBooksCount: z.number(),
+    canDeleteByAdmin: z.boolean(),
   })
 );
 
