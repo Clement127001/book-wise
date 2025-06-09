@@ -162,7 +162,7 @@ export class UserService {
     const [verifiedUsers, verifiedUserCount] = await this.em.findAndCount(
       User,
       {
-        verificationStatus: UserAccountStatus.VERFIED,
+        verificationStatus: UserAccountStatus.VERIFIED,
         ...filterQuery,
       },
       {

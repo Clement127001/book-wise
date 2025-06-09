@@ -1,9 +1,9 @@
+import { memo } from "react";
+import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import AccountRequestTable from "@/components/admin/account-request/AccountRequestTable";
 import { useQueryState } from "@/hooks/useQueryState";
 import { AccountRequestQuery } from "@/types/admin";
-import { ArrowUpDown } from "lucide-react";
-import { memo } from "react";
-import AccountRequestTable from "./AccountRequestTable";
 
 const AccountRequest = memo(({ searchText }: { searchText: string }) => {
   const [accountRequestQuery, setAccountRequestQuery] =

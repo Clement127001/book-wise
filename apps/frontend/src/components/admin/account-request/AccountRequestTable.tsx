@@ -1,3 +1,7 @@
+import { Fragment, memo, useState } from "react";
+import dynamic from "next/dynamic";
+import { Eye, XCircle } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import Pagination from "@/components/common/Pagination";
 import TableWithCardSkeleton from "@/components/common/TableWithCardSkeleton";
@@ -11,11 +15,27 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { AccountRequestQuery } from "@/types/admin";
+import { useApi } from "@/hooks/useApi";
+import {
+  AccountRequestQuery,
+  IdPreviewDataType,
+  ChangeStatusModalType,
+} from "@/types/admin";
 import { getQueryClient } from "@/utils/api";
 import { contract } from "contract";
-import { Eye, Trash, XCircle } from "lucide-react";
-import { Fragment, memo } from "react";
+import { UserAccountStatus } from "contract/enum";
+
+const IdCardPreviewModal = dynamic(
+  import("@/components/admin/account-request/IdCardPreviewModal").then(
+    (mod) => mod.default
+  ),
+  { ssr: false }
+);
+
+const ChangeStatusModal = dynamic(
+  import("@/components/common/ConfirmationModal").then((mod) => mod.default),
+  { ssr: false }
+);
 
 const AccountRequestTable = memo(
   ({
@@ -27,6 +47,14 @@ const AccountRequestTable = memo(
     handlePageNumberChange: (val: number) => void;
     accountRequestQuery: AccountRequestQuery;
   }) => {
+    const [activeStatusWithId, setActiveStatusWithId] =
+      useState<ChangeStatusModalType | null>(null);
+    const [activeIdCardData, setActiveIdCardData] =
+      useState<IdPreviewDataType | null>(null);
+
+    const { makeApiCall } = useApi();
+    const invaldationQueryClient = useQueryClient();
+
     const { currentPage, sortInAsc } = accountRequestQuery;
 
     const { data, isLoading, error } =
@@ -55,8 +83,70 @@ const AccountRequestTable = memo(
 
     const { results, totalPages } = data.body;
 
-    console.log(totalPages);
-    const showAccountRequest = results.length > ~~0;
+    const showAccountRequest = results.length > 0;
+
+    const showIdPreview = activeIdCardData !== null;
+
+    const changeStatusActive = activeStatusWithId;
+    const showApproveAccountModal =
+      changeStatusActive &&
+      activeStatusWithId.status === UserAccountStatus.VERIFIED;
+    const showRejectAccountModal =
+      changeStatusActive &&
+      activeStatusWithId.status === UserAccountStatus.DENIED;
+
+    const openIdPreview = (data: IdPreviewDataType) => {
+      setActiveIdCardData(data);
+    };
+
+    const hideIdPreviewModal = () => {
+      setActiveIdCardData(null);
+    };
+
+    const handleOpenChangeStatusModal = (data: ChangeStatusModalType) => {
+      setActiveStatusWithId(data);
+    };
+
+    const handleChangeStatus = () => {
+      if (!activeStatusWithId) return;
+
+      const { id, status } = activeStatusWithId;
+      const isAccepted = status === UserAccountStatus.VERIFIED;
+
+      makeApiCall({
+        fetcherFn: async () => {
+          return await getQueryClient().user.changeAccountStatus.mutation({
+            body: {
+              id: id,
+              status: status,
+            },
+          });
+        },
+        successMsgProps: {
+          title: "Status Changed",
+          description: `Account ${
+            isAccepted ? "accepted" : "rejected"
+          } successfully`,
+          duration: 3000,
+        },
+        failureMsgProps: {
+          title: "Error occurred",
+          description: "Failed to change status",
+          duration: 3000,
+        },
+
+        onSuccessFn: () => {
+          invaldationQueryClient.invalidateQueries({
+            queryKey: [contract.user.getAllAccountRequest.path],
+          });
+          setActiveStatusWithId(null);
+        },
+      });
+    };
+
+    const handleCloseChangeStatusModal = () => {
+      setActiveStatusWithId(null);
+    };
 
     return (
       <>
@@ -105,7 +195,15 @@ const AccountRequestTable = memo(
                         <TableCell className="px-4 text-[#110F43]">
                           {modifiedDate}
                         </TableCell>
-                        <TableCell className="px-4 text-[#110F43]">
+                        <TableCell
+                          className="px-4 text-[#110F43] cursor-pointer"
+                          onClick={() => {
+                            openIdPreview({
+                              idCardUrl: identityCardUrl,
+                              fullName,
+                            });
+                          }}
+                        >
                           {identityCardUrl ? (
                             <p className="text-app-admin-primary-500 flex gap-2 items-center">
                               <Eye />
@@ -123,12 +221,23 @@ const AccountRequestTable = memo(
                             className={
                               "bg-app-accent-success-200 text-app-accent-success-600 hover:bg-app-accent-success-400 hover:text-app-accent-success-700"
                             }
+                            onClick={() => {
+                              handleOpenChangeStatusModal({
+                                id,
+                                status: UserAccountStatus.VERIFIED,
+                              });
+                            }}
                           >
                             Approve Account
                           </Button>
                           <div
                             className="p-[6px__4px] hover:bg-white rounded-sm cursor-pointer"
-                            onClick={() => {}}
+                            onClick={() => {
+                              handleOpenChangeStatusModal({
+                                id,
+                                status: UserAccountStatus.DENIED,
+                              });
+                            }}
                           >
                             <XCircle className="h-5 text-app-accent-error-500" />
                           </div>
@@ -143,7 +252,7 @@ const AccountRequestTable = memo(
 
           {!showAccountRequest && (
             <p className="w-full text-center font-medium text-app-accent-error-500 py-10">
-              No account request found for given filters
+              No account request found
             </p>
           )}
 
@@ -153,6 +262,36 @@ const AccountRequestTable = memo(
             handleChangePageNumber={handlePageNumberChange}
           />
         </div>
+        {activeIdCardData && (
+          <IdCardPreviewModal
+            data={activeIdCardData}
+            opened={showIdPreview}
+            onClose={hideIdPreviewModal}
+          />
+        )}
+        {showApproveAccountModal && (
+          <ChangeStatusModal
+            opened={showApproveAccountModal}
+            onClose={handleCloseChangeStatusModal}
+            title="Approve account"
+            description="Approve the student’s account request and grant access. A confirmation email will be sent upon approval."
+            confirmText="Yes, Approve"
+            onClickConfirm={handleChangeStatus}
+            confirmClassname={
+              "bg-app-accent-success-200 border-app-accent-success-200 text-app-accent-success-600 hover:bg-app-accent-success-400 hover:text-app-accent-success-700"
+            }
+          />
+        )}
+        {showRejectAccountModal && (
+          <ChangeStatusModal
+            opened={showRejectAccountModal}
+            onClose={handleCloseChangeStatusModal}
+            title="Reject account"
+            description="Denying this request will notify the student they’re not eligible due to unsuccessful ID card verification."
+            confirmText="Yes, Reject"
+            onClickConfirm={handleChangeStatus}
+          />
+        )}
       </>
     );
   }

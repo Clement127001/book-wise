@@ -1,6 +1,7 @@
-import { z } from "zod";
 import { MemoExoticComponent } from "react";
+import { z } from "zod";
 import { BaseBookSchema, BookDetailsSchema } from "contract/book/schema";
+import { UserAccountStatus } from "contract/enum";
 
 export type BookFormType = Omit<z.infer<typeof BaseBookSchema>, "genreId"> & {
   genreId: { value: string; label: string } | null;
@@ -23,3 +24,7 @@ export type AccountRequestQuery = {
   sortInAsc: boolean;
   currentPage: number;
 };
+
+export type IdPreviewDataType = { idCardUrl: string; fullName: string };
+
+export type ChangeStatusModalType = { id: string; status: UserAccountStatus };
