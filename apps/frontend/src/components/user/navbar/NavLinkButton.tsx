@@ -21,7 +21,7 @@ const NavLinkButton = ({
     <Link href={path} className="cursor-pointer">
       <div className="relative">
         <Button
-          className={`cursor-pointer text-[17px] gap-3 p-0 min-h-[40px]
+          className={`cursor-pointer text-[16px] font-normal gap-3 p-0 min-h-[40px]
         transition-colors duration-300 bg-transparent w-fit shadow-none  hover:bg-transparent hover:cursor-pointer  ${
           isActive
             ? " text-app-user-primary shadow-freelancer"

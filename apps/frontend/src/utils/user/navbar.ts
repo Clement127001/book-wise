@@ -1,4 +1,4 @@
-import { Home, Search } from "lucide-react";
+import { Home, NotebookTabs, Search, User } from "lucide-react";
 
 export const loggedUserNavItems = [
   {
@@ -10,5 +10,18 @@ export const loggedUserNavItems = [
     Icon: Search,
     path: "/user/search",
     label: "create new blog",
+  },
+];
+
+export const ProfileMenuItems = [
+  {
+    path: "/user/profile",
+    label: "My Profile",
+    Icon: User,
+  },
+  {
+    path: "/user/notes",
+    label: "Notes",
+    Icon: NotebookTabs,
   },
 ];

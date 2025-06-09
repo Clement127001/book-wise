@@ -1,13 +1,13 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
+import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
 import { LogOut } from "lucide-react";
 import SidebarLink from "@/components/admin/sidebar/SidebarLink";
 import UserAvatar from "@/components/common/UserAvatar";
 import { useUserData } from "@/context/UserDataProvider";
+import useLogout from "@/hooks/useLogout";
 import { adminSidebarLinks } from "@/utils/admin/common";
-import { getFullName, logout } from "@/utils/common";
-import Link from "next/link";
+import { getFullName } from "@/utils/common";
 
 const LogoutConfirmationModal = dynamic(
   import("@/components/common/ConfirmationModal").then((mod) => mod.default),
@@ -15,21 +15,15 @@ const LogoutConfirmationModal = dynamic(
 );
 
 const Sidebar = () => {
-  const [logoutConfirmationModalOpened, setLogoutConfirmationModalOpened] =
-    useState<boolean>(false);
-  const router = useRouter();
   const { userData } = useUserData();
+  const {
+    logoutConfirmationModalOpened,
+    handleCloseLogoutConfirmationModal,
+    handleOpenLogoutConfirmationModal,
+    handleLogout,
+  } = useLogout();
   const { firstname, lastname, avatarUrl, email } = userData;
   const fullName = getFullName(firstname, lastname);
-
-  const handleCloseLogoutConfirmationModal = () => {
-    setLogoutConfirmationModalOpened(false);
-  };
-
-  const handleLogout = () => {
-    logout();
-    router.push("/?ua=false");
-  };
 
   return (
     <>
@@ -71,9 +65,7 @@ const Sidebar = () => {
             size={32}
             className="text-red-500 p-2 hover:bg-app-gray-100 rounded-full"
             strokeWidth={2.4}
-            onClick={() => {
-              setLogoutConfirmationModalOpened(true);
-            }}
+            onClick={handleOpenLogoutConfirmationModal}
           />
         </section>
       </section>
