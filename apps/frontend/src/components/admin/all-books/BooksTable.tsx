@@ -14,7 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import useDeleteBook from "@/hooks/useDeleteBook";
+import useDeleteBook from "@/hooks/admin/useDeleteBook";
 import { getQueryClient } from "@/utils/api";
 import { contract } from "contract";
 

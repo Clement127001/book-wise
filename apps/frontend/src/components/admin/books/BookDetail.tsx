@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import AdminPrimaryButton from "@/components/admin/AdminPrimaryButton";
 import { Button } from "@/components/ui/button";
-import useDeleteBook from "@/hooks/useDeleteBook";
+import useDeleteBook from "@/hooks/admin/useDeleteBook";
 import { getQueryClient } from "@/utils/api";
 import { contract } from "contract";
 

@@ -6,7 +6,11 @@ import { User } from '@/user/entities/user.entity';
 import { EmailVerification } from '@/user-auth/entities/emailVerification.entity';
 import { BorrowedBook } from '@/book/entities/borrowedBook.entity';
 import { Account } from '@/auth/entities/account.entity';
-import { UserAccountStatus, UserRoleEnum } from 'contract/enum';
+import {
+  BorrowedBookStatusEnum,
+  UserAccountStatus,
+  UserRoleEnum,
+} from 'contract/enum';
 
 @Injectable()
 export class UserService {
@@ -25,7 +29,10 @@ export class UserService {
       avatarUrl,
     } = data;
 
-    const user = await this.em.findOne(User, { user: { email } });
+    const user = await this.em.findOne(User, {
+      user: { email },
+      isDeleted: false,
+    });
 
     if (user)
       throw new BadRequestException(
@@ -178,6 +185,7 @@ export class UserService {
           'user.lastname',
           'user.avatarUrl',
           'user.email',
+          'user.id',
         ],
         orderBy: {
           user: {
@@ -189,6 +197,18 @@ export class UserService {
         },
       },
     );
+
+    const verifiedUsersId = verifiedUsers.map((user) => user.id);
+
+    const borrowedUsers = await this.em.findAll(BorrowedBook, {
+      where: {
+        user: { id: { $in: verifiedUsersId } },
+        status: BorrowedBookStatusEnum.BORROWED,
+      },
+      populate: ['user.id'],
+    });
+
+    const borrowedUsersId = new Set(borrowedUsers.map((book) => book.user.id));
 
     const allUsers = verifiedUsers.map((item) => {
       const { id, borrowedBooks, createdAt, updatedAt, identityCardUrl, user } =
@@ -204,6 +224,7 @@ export class UserService {
         createdAt,
         updatedAt,
         borrowedBooksCount: borrowedBooks.length,
+        canDeleteByAdmin: !borrowedUsersId.has(user.id),
       };
     });
 
@@ -280,5 +301,32 @@ export class UserService {
     }
     wrap(user).assign({ verificationStatus: status });
     await this.em.flush();
+  }
+
+  async deleteUser(data: UserRequestShape['deleteUser']['body']) {
+    const { id } = data;
+
+    const user = await this.em.findOne(User, { id, isDeleted: false });
+
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+
+    const [_, borrowedNotReturnedBookCount] = await this.em.findAndCount(
+      BorrowedBook,
+      {
+        user: user,
+        status: BorrowedBookStatusEnum.BORROWED,
+      },
+    );
+
+    if (borrowedNotReturnedBookCount > 0) {
+      throw new BadRequestException(
+        "User borrowed book, can't delete this user",
+      );
+    }
+
+    wrap(user).assign({ isDeleted: true });
+    this.em.flush();
   }
 }

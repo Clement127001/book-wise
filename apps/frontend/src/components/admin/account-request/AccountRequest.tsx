@@ -3,11 +3,11 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AccountRequestTable from "@/components/admin/account-request/AccountRequestTable";
 import { useQueryState } from "@/hooks/useQueryState";
-import { AccountRequestQuery } from "@/types/admin";
+import { UserAccountListType } from "@/types/admin";
 
 const AccountRequest = memo(({ searchText }: { searchText: string }) => {
   const [accountRequestQuery, setAccountRequestQuery] =
-    useQueryState<AccountRequestQuery>("orderByAlphabet", {
+    useQueryState<UserAccountListType>("orderByAlphabet", {
       sortInAsc: false,
       currentPage: 1,
     });

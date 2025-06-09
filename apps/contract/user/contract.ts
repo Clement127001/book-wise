@@ -11,6 +11,7 @@ import {
   GetAllAccountRequestSchema,
 } from "../user/schema";
 import { PaginatedRequestSchema, SuccessSchema } from "../common";
+import { z } from "zod";
 
 const c = initContract();
 
@@ -63,6 +64,12 @@ export const userContract = c.router(
       method: "PATCH",
       path: "/changeAccountStatus",
       body: ChangeStatusRequestSchema,
+      responses: { 200: SuccessSchema },
+    },
+    deleteUser: {
+      method: "PATCH",
+      path: "/delete",
+      body: z.object({ id: z.string() }),
       responses: { 200: SuccessSchema },
     },
   },
