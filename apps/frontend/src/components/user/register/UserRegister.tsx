@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import RegisterDetailsStepForm from "@/components/user/register/RegisterDetailsStepForm";
 import { useTimer } from "@/hooks/useTimer";
 import { useApi } from "@/hooks/useApi";
-import { StepValueType, UserRegisterType } from "@/types/userRegister";
+import { StepValueType, UserRegisterType } from "@/types/user/register";
 import {
   registerMaxSteps,
   registerSteps,

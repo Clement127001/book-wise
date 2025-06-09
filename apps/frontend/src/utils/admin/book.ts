@@ -1,4 +1,4 @@
-import { BookFormType } from "@/types/admin";
+import { BookFormType } from "@/types/admin/book";
 
 export const defaultBookValues: BookFormType = {
   title: "",

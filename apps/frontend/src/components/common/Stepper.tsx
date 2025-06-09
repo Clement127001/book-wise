@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import Step from "@/components/common/Step";
-import { StepDataType, StepValueType } from "@/types/userRegister";
+import { StepDataType, StepValueType } from "@/types/user/register";
 
 const Stepper = ({
   stepData,

@@ -1,5 +1,5 @@
-import { IdPreviewDataType } from "@/types/admin";
 import { useState } from "react";
+import { IdPreviewDataType } from "@/types/admin/user";
 
 const usePreviewIdCard = () => {
   const [activeIdCardData, setActiveIdCardData] =

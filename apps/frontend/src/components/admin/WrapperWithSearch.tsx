@@ -3,7 +3,7 @@ import useDebounce from "@/hooks/useDebounce";
 import { useQueryState } from "@/hooks/useQueryState";
 import { useUserData } from "@/context/UserDataProvider";
 import { getFullName } from "@/utils/common";
-import { AdminGlobalSearchText, AdminLayoutProps } from "@/types/admin";
+import { AdminGlobalSearchText, AdminLayoutProps } from "@/types/admin/layout";
 
 const WrapperWithSearch = ({ MainComponent, className }: AdminLayoutProps) => {
   const { userData } = useUserData();

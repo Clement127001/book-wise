@@ -1,4 +1,4 @@
-import { UserRegisterType } from "@/types/userRegister";
+import { UserRegisterType } from "@/types/user/register";
 import { User, Mail } from "lucide-react";
 export const registerSteps = [
   {

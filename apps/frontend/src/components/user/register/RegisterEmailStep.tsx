@@ -4,7 +4,7 @@ import { ChevronRight, RotateCw } from "lucide-react";
 import { CommonInput } from "@/components/form/CommonInput";
 import { OTPInput } from "@/components/form/OTPInput";
 import { Button } from "@/components/ui/button";
-import { UserRegisterType } from "@/types/userRegister";
+import { UserRegisterType } from "@/types/user/register";
 import { validateEmail, validateOTP } from "@/utils/common";
 
 const RegisterEmailStep = ({

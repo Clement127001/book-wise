@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import BookForm from "@/components/admin/books/BookForm";
 import { useApi } from "@/hooks/useApi";
-import { BookDetailsType, BookFormType } from "@/types/admin";
+import { BookDetailsType, BookFormType } from "@/types/admin/book";
 import { CustomSelectOption } from "@/types/common";
 import { getQueryClient } from "@/utils/api";
 

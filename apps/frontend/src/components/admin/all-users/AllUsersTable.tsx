@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/table";
 import usePreviewIdCard from "@/hooks/admin/usePreviewIdCard";
 import { useApi } from "@/hooks/useApi";
-import { UserAccountListType } from "@/types/admin";
+import { UserAccountListType } from "@/types/admin/user";
 import { getQueryClient } from "@/utils/api";
 import { contract } from "contract";
 

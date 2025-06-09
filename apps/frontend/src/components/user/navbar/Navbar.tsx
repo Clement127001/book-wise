@@ -1,8 +1,8 @@
-import { loggedUserNavItems } from "@/utils/user/navbar";
 import Link from "next/link";
-import NavLinkButton from "./navbar/NavLinkButton";
-import UserAvatar from "../common/UserAvatar";
+import NavLinkButton from "@/components/user/navbar/NavLinkButton";
+import UserAvatar from "@/components/common/UserAvatar";
 import { useUserData } from "@/context/UserDataProvider";
+import { loggedUserNavItems } from "@/utils/user/navbar";
 
 const Navbar = () => {
   const { userData } = useUserData();

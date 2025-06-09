@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Navbar from "@/components/user/Navbar";
+import Navbar from "@/components/user/navbar/Navbar";
 
 const UserLayout = ({ children }: { children: ReactNode }) => {
   return (
