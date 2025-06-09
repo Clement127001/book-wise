@@ -1,0 +1,43 @@
+import { type LucideProps } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/router";
+import Link from "next/link";
+
+const NavLinkButton = ({
+  label,
+  path,
+  Icon,
+}: {
+  label: string;
+  path: string;
+  Icon?: React.ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+  >;
+}) => {
+  const router = useRouter();
+  const isActive = router.pathname.includes(path);
+
+  return (
+    <Link href={path} className="cursor-pointer">
+      <div className="relative">
+        <Button
+          className={`cursor-pointer text-[17px] gap-3 p-0 min-h-[40px]
+        transition-colors duration-300 bg-transparent w-fit shadow-none  hover:bg-transparent hover:cursor-pointer  ${
+          isActive
+            ? " text-app-user-primary shadow-freelancer"
+            : "text-white hover:text-app-user-primary"
+        }`}
+        >
+          {Icon && <Icon strokeWidth={2.5} />}
+          <p className="font-medium capitalize">{label}</p>
+        </Button>
+
+        {isActive && (
+          <div className="bg-app-user-primary  h-1 rounded-t-sm block absolute w-full bottom-[-10px]" />
+        )}
+      </div>
+    </Link>
+  );
+};
+
+export default NavLinkButton;

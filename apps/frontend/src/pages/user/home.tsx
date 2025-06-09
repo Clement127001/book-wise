@@ -1,3 +1,4 @@
+import UserLayout from "@/components/layout/UserLayout";
 import Head from "next/head";
 
 const UserHomePage = () => {
@@ -11,7 +12,9 @@ const UserHomePage = () => {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <div>Home page</div>
+      <UserLayout>
+        <div>Home page</div>
+      </UserLayout>
     </>
   );
 };
