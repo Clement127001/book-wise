@@ -1,6 +1,6 @@
-import { CreateUserSchema } from "../user/schema";
+import { UserBaseSchema } from "../user/schema";
 
-export const CreateAdminSchema = CreateUserSchema.omit({
+export const CreateAdminSchema = UserBaseSchema.omit({
   verficationId: true,
   identityCardUrl: true,
 });

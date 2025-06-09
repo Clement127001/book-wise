@@ -91,7 +91,7 @@ const BooksTable = memo(
               <TableBody>
                 <TableRow className="h-6 border-t-0 border-b-0" />
 
-                {results.map((book, index) => {
+                {results.map((book) => {
                   const {
                     id,
                     title,
@@ -105,7 +105,7 @@ const BooksTable = memo(
                   const modifiedDate = new Date(createdAt).toLocaleString();
 
                   return (
-                    <Fragment key={index}>
+                    <Fragment key={id}>
                       <TableRow
                         className="text-[16px] font-normal hover:bg-gray-100"
                         onClick={() => {

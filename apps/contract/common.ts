@@ -21,3 +21,9 @@ export const PaginatedRequestSchema = z.object({
   pageNumber: z.string().transform(Number),
   pageSize: z.string().transform(Number),
 });
+
+export const BaseResponseSchema = z.object({
+  id: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});

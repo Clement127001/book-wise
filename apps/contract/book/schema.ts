@@ -1,5 +1,5 @@
-import { PaginatedRequestSchema } from "../common";
-import { boolean, z } from "zod";
+import { BaseResponseSchema, PaginatedRequestSchema } from "../common";
+import { z } from "zod";
 
 export const BaseBookSchema = z.object({
   title: z
@@ -24,14 +24,13 @@ export const BaseBookSchema = z.object({
     }),
 });
 
-export const BookDetailsSchema = BaseBookSchema.extend({
-  id: z.string(),
+export const BookDetailsSchema = BaseBookSchema.merge(
+  BaseResponseSchema
+).extend({
   available: z.number(),
   genre: z.string(),
   canBorrowBook: z.boolean().optional(),
   canDeleteBook: z.boolean().optional(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
 });
 
 export const BookQuerySchema = z.object({ id: z.string() });

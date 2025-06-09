@@ -87,7 +87,7 @@ const Pagination = ({
 
         <Button
           onClick={() => goToPage(currentPage + 1)}
-          disabled={currentPage === totalPages}
+          disabled={totalPages === 0 || currentPage === totalPages}
           className="bg-app-gray-100 hover:bg-gray-300"
         >
           Next <ArrowRight />

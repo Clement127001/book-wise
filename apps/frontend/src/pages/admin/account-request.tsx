@@ -5,7 +5,10 @@ import AdminLayout from "@/components/layout/AdminLayout";
 const AccountRequestPage = () => {
   return (
     <AdminLayout>
-      <WrapperWithSearch MainComponent={AccountRequest} />
+      <WrapperWithSearch
+        MainComponent={AccountRequest}
+        className={"bg-app-admin-bg/90"}
+      />
     </AdminLayout>
   );
 };

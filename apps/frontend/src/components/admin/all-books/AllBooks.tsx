@@ -32,7 +32,7 @@ const AllBooks = memo(({ searchText }: { searchText: string }) => {
             className="bg-transparent border-[1px] py-2 border-app-gray-200 hover:bg-gray-50"
             onClick={handleToggleSortOrder}
           >
-            A-Z
+            {allBooksSearchQuery.sortInAsc ? "Z-A" : "A-Z"}
             <ArrowUpDown />
           </Button>
           <Link href={"/admin/book/create"}>

@@ -1,7 +1,7 @@
 export enum UserAccountStatus {
   PENDING = "Pending",
   DENIED = "Denied",
-  VERFIED = "Verified",
+  VERIFIED = "Verified",
 }
 
 export enum UserRoleEnum {

@@ -19,7 +19,17 @@ export class AuthService {
     const account = await this.em.findOne(
       Account,
       { id },
-      { populate: ['user.id'] },
+      {
+        populate: [
+          'role',
+          'firstname',
+          'lastname',
+          'email',
+          'id',
+          'avatarUrl',
+          'user',
+        ],
+      },
     );
     return account;
   }

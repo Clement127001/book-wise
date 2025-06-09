@@ -12,7 +12,7 @@ const EditBook = () => {
 
   const { isLoading, error, data } =
     getQueryClient().book.getBookDetails.useQuery(
-      [contract.book.getBookDetails.path],
+      [contract.book.getBookDetails.path, bookId],
       { query: { id: bookId } }
     );
 

@@ -6,7 +6,7 @@ import {
   LoginOTPVerifiedSuccessSchema,
 } from "../common";
 import {
-  UserEmailVerfiedSuccessSchema,
+  UserEmailVERIFIEDSuccessSchema,
   UserEmailVerificationRequestSchema,
 } from "../userAuth/schema";
 
@@ -27,7 +27,7 @@ export const userAuthContract = c.router(
       path: "/verifyUserEmailVerficationOTP",
       body: VerifyEmailOTPRequestSchema,
       responses: {
-        201: UserEmailVerfiedSuccessSchema,
+        201: UserEmailVERIFIEDSuccessSchema,
       },
     },
     generateUserLoginOTP: {
