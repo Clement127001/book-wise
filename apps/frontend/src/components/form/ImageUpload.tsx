@@ -22,8 +22,7 @@ const ImageUpload = ({
   const fileUploadInputRef = useRef<HTMLInputElement | null>(null);
   const previewUrl = watch(name);
 
-  const { role } = userData;
-  const isAdmin = role === UserRoleEnum.ADMIN;
+  const isAdmin = userData && userData.role === UserRoleEnum.ADMIN;
 
   const { showPageLoader, hidePageLoader } = usePageLoader();
 

@@ -10,11 +10,8 @@ const RegisterDetailsStepForm = ({
 }) => {
   return (
     <>
-      <ImageUpload
-        name="identityCardUrl"
-        label="Identity Card Image"
-        required
-      />
+      <ImageUpload name="avatarUrl" label="Profile Image" required />
+
       <CommonInput
         hForm={userRegisterForm}
         name="firstName"
@@ -54,6 +51,11 @@ const RegisterDetailsStepForm = ({
         }}
         labelClassName="text-white"
         inputClassName="bg-[#232839] border-none hover:bg-[#23283990] focus:bg-[#23283990] !placeholder-gray-400 text-white"
+      />
+      <ImageUpload
+        name="identityCardUrl"
+        label="Identity Card Image"
+        required
       />
     </>
   );
