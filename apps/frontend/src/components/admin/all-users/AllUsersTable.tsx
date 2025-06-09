@@ -1,12 +1,8 @@
-import { Fragment, memo, useState } from "react";
-import dynamic from "next/dynamic";
-import { Eye, XCircle } from "lucide-react";
-import { useQueryClient } from "@tanstack/react-query";
 import ErrorMessage from "@/components/common/ErrorMessage";
-import Pagination from "@/components/common/Pagination";
 import TableWithCardSkeleton from "@/components/common/TableWithCardSkeleton";
-import UserAvatar from "@/components/common/UserAvatar";
-import { Button } from "@/components/ui/button";
+import usePreviewIdCard from "@/hooks/admin/usePreviewIdCard";
+import { useApi } from "@/hooks/useApi";
+import { UserAccountListType } from "@/types/admin";
 import {
   Table,
   TableBody,
@@ -15,12 +11,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useApi } from "@/hooks/useApi";
-import { UserAccountListType, ChangeStatusModalType } from "@/types/admin";
 import { getQueryClient } from "@/utils/api";
+import { useQueryClient } from "@tanstack/react-query";
 import { contract } from "contract";
-import { UserAccountStatus } from "contract/enum";
-import usePreviewIdCard from "@/hooks/admin/usePreviewIdCard";
+import dynamic from "next/dynamic";
+import { Fragment, memo, useState } from "react";
+import Pagination from "@/components/common/Pagination";
+import { Eye, Trash } from "lucide-react";
+import UserAvatar from "@/components/common/UserAvatar";
 
 const IdCardPreviewModal = dynamic(
   import("@/components/admin/account-request/IdCardPreviewModal").then(
@@ -29,45 +27,38 @@ const IdCardPreviewModal = dynamic(
   { ssr: false }
 );
 
-const ChangeStatusModal = dynamic(
+const DeleteUserConfirmationModal = dynamic(
   import("@/components/common/ConfirmationModal").then((mod) => mod.default),
   { ssr: false }
 );
 
-const AccountRequestTable = memo(
+const AllUsersTable = memo(
   ({
     searchText,
     handlePageNumberChange,
-    accountRequestQuery,
+    allUserQuery,
   }: {
     searchText: string;
     handlePageNumberChange: (val: number) => void;
-    accountRequestQuery: UserAccountListType;
+    allUserQuery: UserAccountListType;
   }) => {
-    const [activeStatusWithId, setActiveStatusWithId] =
-      useState<ChangeStatusModalType | null>(null);
     const { activeIdCardData, openIdPreview, hideIdPreviewModal } =
       usePreviewIdCard();
+    const [activeDeleteId, setActiveDeleteId] = useState<string | null>(null);
 
     const { makeApiCall } = useApi();
     const invaldationQueryClient = useQueryClient();
-
-    const { currentPage, sortInAsc } = accountRequestQuery;
+    const { currentPage, sortInAsc } = allUserQuery;
 
     const { data, isLoading, error } =
-      getQueryClient().user.getAllAccountRequest.useQuery(
-        [
-          contract.user.getAllAccountRequest.path,
-          searchText,
-          currentPage,
-          sortInAsc,
-        ],
+      getQueryClient().user.getAllUsers.useQuery(
+        [contract.user.getAllUsers.path, searchText, currentPage, sortInAsc],
         {
           query: {
             pageNumber: String(currentPage),
             pageSize: String(5),
             searchText,
-            sortByCreatedTime: String(sortInAsc),
+            sortByAlphabeticOrder: String(sortInAsc),
           },
         }
       );
@@ -78,64 +69,51 @@ const AccountRequestTable = memo(
 
     if (isLoading) return <TableWithCardSkeleton />;
 
-    const { results, totalPages } = data.body;
-
-    const showAccountRequest = results.length > 0;
-
-    const showIdPreview = activeIdCardData !== null;
-
-    const changeStatusActive = activeStatusWithId;
-    const showApproveAccountModal =
-      changeStatusActive &&
-      activeStatusWithId.status === UserAccountStatus.VERIFIED;
-    const showRejectAccountModal =
-      changeStatusActive &&
-      activeStatusWithId.status === UserAccountStatus.DENIED;
-
-    const handleOpenChangeStatusModal = (data: ChangeStatusModalType) => {
-      setActiveStatusWithId(data);
+    const handleOpenDeleteUserModal = (id: string) => {
+      setActiveDeleteId(id);
     };
 
-    const handleChangeStatus = () => {
-      if (!activeStatusWithId) return;
+    const handleCloseDeleteUserModal = () => {
+      setActiveDeleteId(null);
+    };
 
-      const { id, status } = activeStatusWithId;
-      const isAccepted = status === UserAccountStatus.VERIFIED;
+    const handleDeleteUser = () => {
+      if (!activeDeleteId) return;
 
       makeApiCall({
         fetcherFn: async () => {
-          return await getQueryClient().user.changeAccountStatus.mutation({
+          return await getQueryClient().user.deleteUser.mutation({
             body: {
-              id: id,
-              status: status,
+              id: activeDeleteId,
             },
           });
         },
         successMsgProps: {
-          title: "Status Changed",
-          description: `Account ${
-            isAccepted ? "accepted" : "rejected"
-          } successfully`,
+          title: "User Deleted",
+          description: "User deleted successfully!",
           duration: 3000,
         },
         failureMsgProps: {
           title: "Error occurred",
-          description: "Failed to change status",
+          description: "Failed to delete user",
           duration: 3000,
         },
 
         onSuccessFn: () => {
           invaldationQueryClient.invalidateQueries({
-            queryKey: [contract.user.getAllAccountRequest.path],
+            queryKey: [contract.user.getAllUsers.path],
           });
-          setActiveStatusWithId(null);
+          setActiveDeleteId(null);
         },
       });
     };
 
-    const handleCloseChangeStatusModal = () => {
-      setActiveStatusWithId(null);
-    };
+    const showDeleteModal = activeDeleteId !== null;
+    const showIdPreview = activeIdCardData !== null;
+
+    const { results, totalPages } = data.body;
+
+    const showAllUser = results.length > 0;
 
     return (
       <>
@@ -153,7 +131,7 @@ const AccountRequestTable = memo(
                 </TableHead>
               </TableRow>
             </TableHeader>
-            {showAccountRequest && (
+            {showAllUser && (
               <TableBody>
                 <TableRow className="h-6 border-t-0 border-b-0" />
 
@@ -166,6 +144,7 @@ const AccountRequestTable = memo(
                     email,
                     createdAt,
                     identityCardUrl,
+                    canDeleteByAdmin,
                   } = accountRequest;
 
                   const fullName = firstname + " " + lastname;
@@ -205,31 +184,21 @@ const AccountRequestTable = memo(
                           )}
                         </TableCell>
 
-                        <TableCell className="flex gap-3 items-center">
-                          <Button
-                            className={
-                              "bg-app-accent-success-300 text-app-accent-success-600 hover:bg-app-accent-success-400 hover:text-app-accent-success-700"
-                            }
-                            onClick={() => {
-                              handleOpenChangeStatusModal({
-                                id,
-                                status: UserAccountStatus.VERIFIED,
-                              });
-                            }}
-                          >
-                            Approve Account
-                          </Button>
-                          <div
-                            className="p-[6px__4px] hover:bg-white rounded-sm cursor-pointer"
-                            onClick={() => {
-                              handleOpenChangeStatusModal({
-                                id,
-                                status: UserAccountStatus.DENIED,
-                              });
-                            }}
-                          >
-                            <XCircle className="h-5 text-app-accent-error-500" />
-                          </div>
+                        <TableCell className="px-4">
+                          {canDeleteByAdmin ? (
+                            <div
+                              className="p-[6px__4px] w-fit hover:bg-white rounded-sm cursor-pointer"
+                              onClick={() => {
+                                handleOpenDeleteUserModal(id);
+                              }}
+                            >
+                              <Trash className="h-5 text-app-accent-error-500" />
+                            </div>
+                          ) : (
+                            <p className="text-app-gray-500">
+                              Can't delete user
+                            </p>
+                          )}
                         </TableCell>
                       </TableRow>
                     </Fragment>
@@ -239,7 +208,7 @@ const AccountRequestTable = memo(
             )}
           </Table>
 
-          {!showAccountRequest && (
+          {!showAllUser && (
             <p className="w-full text-center font-medium text-app-accent-error-500 py-10">
               No account request found
             </p>
@@ -251,34 +220,23 @@ const AccountRequestTable = memo(
             handleChangePageNumber={handlePageNumberChange}
           />
         </div>
-        {activeIdCardData && (
+
+        {showIdPreview && (
           <IdCardPreviewModal
             data={activeIdCardData}
             opened={showIdPreview}
             onClose={hideIdPreviewModal}
           />
         )}
-        {showApproveAccountModal && (
-          <ChangeStatusModal
-            opened={showApproveAccountModal}
-            onClose={handleCloseChangeStatusModal}
-            title="Approve account"
-            description="Approve the student’s account request and grant access. A confirmation email will be sent upon approval."
-            confirmText="Yes, Approve"
-            onClickConfirm={handleChangeStatus}
-            confirmClassname={
-              "bg-app-accent-success-300 border-app-accent-success-200 text-app-accent-success-600 hover:bg-app-accent-success-400 hover:text-app-accent-success-700"
-            }
-          />
-        )}
-        {showRejectAccountModal && (
-          <ChangeStatusModal
-            opened={showRejectAccountModal}
-            onClose={handleCloseChangeStatusModal}
-            title="Reject account"
-            description="Denying this request will notify the student they’re not eligible due to unsuccessful ID card verification."
-            confirmText="Yes, Reject"
-            onClickConfirm={handleChangeStatus}
+
+        {showDeleteModal && (
+          <DeleteUserConfirmationModal
+            opened={showDeleteModal}
+            onClose={handleCloseDeleteUserModal}
+            title="Delete User"
+            description="Are you sure you want to delete this user? This action cannot be reverted back"
+            confirmText="Yes, Delete"
+            onClickConfirm={handleDeleteUser}
           />
         )}
       </>
@@ -286,4 +244,4 @@ const AccountRequestTable = memo(
   }
 );
 
-export default AccountRequestTable;
+export default AllUsersTable;

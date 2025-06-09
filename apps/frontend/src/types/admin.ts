@@ -20,7 +20,7 @@ export type AdminGlobalSearchText = {
   searchText: string;
 };
 
-export type AccountRequestQuery = {
+export type UserAccountListType = {
   sortInAsc: boolean;
   currentPage: number;
 };
