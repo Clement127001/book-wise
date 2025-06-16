@@ -1,14 +1,13 @@
+import { Fragment, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { LogOut } from "lucide-react";
 import NavLinkButton from "@/components/user/navbar/NavLinkButton";
 import UserAvatar from "@/components/common/UserAvatar";
-import { useUserData } from "@/context/UserDataProvider";
-import { loggedUserNavItems, ProfileMenuItems } from "@/utils/user/navbar";
-import { Fragment, useState } from "react";
 import MenuLinkItems from "@/components/user/navbar/MenuLinkItems";
-
+import { useUserData } from "@/context/UserDataProvider";
 import useLogout from "@/hooks/useLogout";
+import { loggedUserNavItems, ProfileMenuItems } from "@/utils/user/navbar";
 
 const LogoutConfirmationModal = dynamic(
   import("@/components/common/ConfirmationModal").then((mod) => mod.default),
@@ -58,14 +57,14 @@ const Navbar = () => {
             </div>
 
             {showProfileDropdown && (
-              <div className="absolute  flex flex-col gap-2 bg-black  min-w-[200px] outline outline-1 outline-app-user-primary rounded-[10px] top-[74px] p-3 right-0">
+              <div className="absolute  flex flex-col gap-2 bg-app-gray-800 min-w-[200px]  rounded-[10px] top-[74px] p-3 right-0">
                 {ProfileMenuItems.map((menuItem) => (
                   <Fragment key={menuItem.label}>
                     <MenuLinkItems {...menuItem} />
                   </Fragment>
                 ))}
                 <div
-                  className="flex p-2 text-red-500 hover:bg-gray-100 rounded-sm w-full items-center gap-2 text-md cursor-pointer"
+                  className="flex p-3 text-red-500 hover:bg-app-gray-100/10 rounded-sm w-full items-center gap-4 text-md cursor-pointer"
                   onClick={handleOpenLogoutConfirmationModal}
                 >
                   <LogOut size={18} />
@@ -76,6 +75,7 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+
       {logoutConfirmationModalOpened && (
         <LogoutConfirmationModal
           opened={logoutConfirmationModalOpened}
