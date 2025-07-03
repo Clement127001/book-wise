@@ -1,5 +1,7 @@
 # this is the first part of learning full stack devlopment on my own
 
+- minor change
+
 - the major goal is to complete the application by april 10 (that all, it is need to be ready fo r deployment)
 
 ## the todo that are need to be checked are:
