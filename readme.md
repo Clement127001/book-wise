@@ -18,10 +18,11 @@
 - [x] Start backend
 - [x] do auth part
 - [x] frontend for auth part with the email verification
-- [ ] project setup for frontend with the colors -> no need for mobile responsiveness for v 1.0
+- [x] project setup for frontend with the colors -> no need for mobile responsiveness for v 1.0
 - [ ] admin panel routes
 - [ ] frontend for admin panel
 - [ ] user panel routes
 - [ ] user panel frontend
+- [ ] model development for book recommendation system
 - [ ] deployment setup for the frontend
 - [ ] deployment setup for the backend
