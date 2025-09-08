@@ -1,6 +1,6 @@
-import { User } from '@/user/entities/user.entity';
+import { User } from '../../user/entities/user.entity';
 import { Entity, ManyToOne, Property } from '@mikro-orm/core';
-import { BaseEntity } from 'base.entity';
+import { BaseEntity } from '../../../base.entity';
 
 @Entity()
 export class UserLoginOTP extends BaseEntity {

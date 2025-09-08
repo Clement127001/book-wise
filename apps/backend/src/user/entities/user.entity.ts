@@ -1,6 +1,6 @@
-import { Account } from '@/auth/entities/account.entity';
-import { BorrowedBook } from '@/book/entities/borrowedBook.entity';
-import { BorrowRequest } from '@/book/entities/borrowRequest.entity';
+import { Account } from '../../auth/entities/account.entity';
+import { BorrowedBook } from '../../book/entities/borrowedBook.entity';
+import { BorrowRequest } from '../../book/entities/borrowRequest.entity';
 import {
   Collection,
   Entity,
@@ -10,7 +10,7 @@ import {
   Property,
   Unique,
 } from '@mikro-orm/core';
-import { BaseEntity } from 'base.entity';
+import { BaseEntity } from '../../../base.entity';
 import { UserAccountStatus } from 'contract/enum';
 
 @Entity()

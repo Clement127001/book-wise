@@ -1,4 +1,4 @@
-import { Genre } from '@/genre/entities/genre.entity';
+import { Genre } from '../../genre/entities/genre.entity';
 import {
   Collection,
   Entity,
@@ -7,9 +7,9 @@ import {
   Property,
   Unique,
 } from '@mikro-orm/core';
-import { BaseEntity } from 'base.entity';
-import { BorrowRequest } from '@/book/entities/borrowRequest.entity';
-import { BorrowedBook } from '@/book/entities/borrowedBook.entity';
+import { BaseEntity } from '../../../base.entity';
+import { BorrowRequest } from '../../book/entities/borrowRequest.entity';
+import { BorrowedBook } from '../../book/entities/borrowedBook.entity';
 
 @Unique({ properties: ['author', 'title'] })
 @Entity()

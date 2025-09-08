@@ -1,7 +1,7 @@
-import { Admin } from '@/admin/entities/admin.entity';
-import { User } from '@/user/entities/user.entity';
+import { Admin } from '../../admin/entities/admin.entity';
+import { User } from '../../user/entities/user.entity';
 import { Entity, Enum, OneToOne, Property, Unique } from '@mikro-orm/core';
-import { BaseEntity } from 'base.entity';
+import { BaseEntity } from '../../../base.entity';
 import { UserRoleEnum } from 'contract/enum';
 
 @Entity()

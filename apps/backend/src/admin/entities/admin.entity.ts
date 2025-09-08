@@ -1,6 +1,6 @@
-import { Account } from '@/auth/entities/account.entity';
+import { Account } from '../../auth/entities/account.entity';
 import { Entity, OneToOne, Unique } from '@mikro-orm/core';
-import { BaseEntity } from 'base.entity';
+import { BaseEntity } from '../../../base.entity';
 
 @Entity()
 export class Admin extends BaseEntity {
