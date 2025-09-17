@@ -3,7 +3,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserRequestShape } from '@/user/user.controller';
 import { AuthService } from '@/auth/auth.service';
 import { User } from '@/user/entities/user.entity';
-import { EmailVerification } from '@/user-auth/entities/emailVerification.entity';
+import { EmailVerification } from '@/auth/entities/emailVerification.entity';
 import { BorrowedBook } from '@/book/entities/borrowedBook.entity';
 import { Account } from '@/auth/entities/account.entity';
 import {

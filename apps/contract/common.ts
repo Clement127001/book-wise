@@ -17,6 +17,12 @@ export const LoginOTPVerifiedSuccessSchema = SuccessSchema.extend({
   token: z.string(),
 });
 
+export const emailVerificationRequestSchema = LoginOTPRequetSchema;
+
+export const emailVerficationSuccessSchema = SuccessSchema.extend({
+  verificationId: z.string(),
+});
+
 export const PaginatedRequestSchema = z.object({
   pageNumber: z.string().transform(Number),
   pageSize: z.string().transform(Number),

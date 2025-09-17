@@ -4,9 +4,10 @@ import {
   LoginOTPRequetSchema,
   LoginOTPVerifiedSuccessSchema,
   VerifyEmailOTPRequestSchema,
+  emailVerficationSuccessSchema,
+  emailVerificationRequestSchema,
 } from "../common";
-import { CreateAdminSchema } from "./schema";
-import z from "zod"
+import { verifyAdminRequestSchema } from "./schema";
 
 const c = initContract();
 
@@ -28,24 +29,30 @@ export const adminAuthContract = c.router(
         201: LoginOTPVerifiedSuccessSchema,
       },
     },
-    createAdmin: {
+    generateAdminEmailVerficationOTP: {
       method: "POST",
-      path: "/create",
-      body: CreateAdminSchema,
+      path: "/generateAdminEmailVerficationOTP",
+      body: emailVerificationRequestSchema,
       responses: {
-        201: SuccessSchema,
+        200: SuccessSchema,
       },
     },
-    verifyAdmin:{
-      method:"PATCH",
-      path:"/verify",
-      body:z.object({
-        email:z.string(),
-      }),
-      responses:{
-        200:SuccessSchema,
-      }
-    }
+    verfiyAdminEmailVerificationOTP: {
+      method: "POST",
+      path: "/verifyAdminEmailVerficationOTP",
+      body: VerifyEmailOTPRequestSchema,
+      responses: {
+        201: emailVerficationSuccessSchema,
+      },
+    },
+    verifyAdmin: {
+      method: "PATCH",
+      path: "/verify",
+      body: verifyAdminRequestSchema,
+      responses: {
+        200: SuccessSchema,
+      },
+    },
   },
   { pathPrefix: "/adminAuth" }
 );
