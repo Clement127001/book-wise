@@ -12,7 +12,7 @@ export type StepValueType = {
   maxAllowedStep: number;
 };
 
-export type UserRegisterType = {
+export type registerType = {
   email: string;
   otp: string | null;
   firstName: string;

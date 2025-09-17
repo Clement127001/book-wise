@@ -68,4 +68,18 @@ export class AdminAuthController
       },
     };
   }
+
+  @TsRest(adminAuthContract.verifyAdmin)
+  async verifyAdmin(@TsRestRequest()
+  {body}:AdminAuthRequestShape['verifyAdmin'])
+  {
+    await this.adminAuthService.verifyAdmin(body);
+    return {
+      status:200 as const,
+      body:{
+        success:true,
+        message:"Admin verified successfully"
+      }
+    }
+  }
 }

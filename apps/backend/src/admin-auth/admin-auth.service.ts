@@ -112,4 +112,18 @@ export class AdminAuthService {
 
     this.em.persistAndFlush([newAdminAccount, newAdmin]);
   }
+
+  async verifyAdmin(data: AdminAuthRequestShape['verifyAdmin']['body']) {
+    const { email } = data;
+    const admin = await this.em.findOne(Admin, { user: { email } });
+
+    if (!admin) {
+      throw new BadRequestException(
+        'Admin with given email is not found. Please register as admin',
+      );
+    }
+
+    wrap(admin).assign({ isVerified: true });
+    await this.em.persistAndFlush(admin);
+  }
 }

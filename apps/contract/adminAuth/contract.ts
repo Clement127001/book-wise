@@ -6,6 +6,7 @@ import {
   VerifyEmailOTPRequestSchema,
 } from "../common";
 import { CreateAdminSchema } from "./schema";
+import z from "zod"
 
 const c = initContract();
 
@@ -32,9 +33,19 @@ export const adminAuthContract = c.router(
       path: "/create",
       body: CreateAdminSchema,
       responses: {
-        200: SuccessSchema,
+        201: SuccessSchema,
       },
     },
+    verifyAdmin:{
+      method:"PATCH",
+      path:"/verify",
+      body:z.object({
+        email:z.string(),
+      }),
+      responses:{
+        200:SuccessSchema,
+      }
+    }
   },
   { pathPrefix: "/adminAuth" }
 );
