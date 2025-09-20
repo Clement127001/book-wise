@@ -69,20 +69,6 @@ export class AdminAuthService {
     return { verificationId: verification.id };
   }
 
-  async verifyAdmin(data: AdminAuthRequestShape['verifyAdmin']['body']) {
-    const { email } = data;
-    const admin = await this.em.findOne(Admin, { user: { email } });
-
-    if (!admin) {
-      throw new BadRequestException(
-        'Admin with given email is not found. Please register as admin',
-      );
-    }
-
-    wrap(admin).assign({ isVerified: true });
-    await this.em.persistAndFlush(admin);
-  }
-
   async generateAdminLoginOTP(
     data: AdminAuthRequestShape['generateAdminLoginOTP']['body'],
   ) {

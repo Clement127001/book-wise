@@ -7,7 +7,7 @@ import {
   emailVerficationSuccessSchema,
   emailVerificationRequestSchema,
 } from "../common";
-import { verifyAdminRequestSchema } from "./schema";
+import {} from "./schema";
 
 const c = initContract();
 
@@ -43,14 +43,6 @@ export const adminAuthContract = c.router(
       body: VerifyEmailOTPRequestSchema,
       responses: {
         201: emailVerficationSuccessSchema,
-      },
-    },
-    verifyAdmin: {
-      method: "PATCH",
-      path: "/verify",
-      body: verifyAdminRequestSchema,
-      responses: {
-        200: SuccessSchema,
       },
     },
   },
