@@ -4,8 +4,6 @@ import {
   LoginOTPRequetSchema,
   VerifyEmailOTPRequestSchema,
   LoginOTPVerifiedSuccessSchema,
-} from "../common";
-import {
   emailVerficationSuccessSchema,
   emailVerificationRequestSchema,
 } from "../common";

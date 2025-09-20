@@ -1,5 +1,5 @@
 import { initContract } from "@ts-rest/core";
-import { accountSchema } from "./schema";
+import { accountSchema } from "../common";
 
 const c = initContract();
 

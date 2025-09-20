@@ -7,7 +7,6 @@ import {
   emailVerficationSuccessSchema,
   emailVerificationRequestSchema,
 } from "../common";
-import {} from "./schema";
 
 const c = initContract();
 

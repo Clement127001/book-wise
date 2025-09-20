@@ -32,7 +32,7 @@ export class AdminController
       body: {
         success: true,
         message: 'User Created Successfully!',
-        token: 'token',
+        token,
       },
     };
   }

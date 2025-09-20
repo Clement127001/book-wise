@@ -1,8 +1,10 @@
 import { initContract } from "@ts-rest/core";
-import { z } from "Zod";
-import { CreateUserSuccessSchema, UserBaseSchema } from "../user/schema";
+import {
+  CreateUserSuccessSchema,
+  UserBaseSchema,
+  SuccessSchema,
+} from "../common";
 import { verifyAdminRequestSchema } from "./schema";
-import { SuccessSchema } from "../common";
 
 const c = initContract();
 
@@ -12,7 +14,7 @@ export const adminContract = c.router(
       method: "POST",
       path: "/createAdmin",
       body: UserBaseSchema,
-      responses: { 201: SuccessSchema },
+      responses: { 201: CreateUserSuccessSchema },
     },
     verifyAdmin: {
       method: "PATCH",

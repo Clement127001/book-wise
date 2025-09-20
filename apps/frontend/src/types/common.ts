@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { accountSchema } from "contract/account/schema";
 import { UploadMediaResultSchema } from "contract/upload/schema";
 import { UserRoleEnum } from "contract/enum";
 import {
@@ -9,6 +8,7 @@ import {
   UseFormReturn,
 } from "react-hook-form";
 import { GroupBase, StylesConfig } from "react-select";
+import { accountSchema } from "contract/common";
 export interface ErrorStatusInterface {
   message: string;
 }
