@@ -1,11 +1,10 @@
-import { AdminAuthRequestShape } from '@/admin-auth/admin-auth.controller';
-import { AuthService } from '@/auth/auth.service';
 import { EntityManager, wrap } from '@mikro-orm/postgresql';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { AdminRequestShape } from './admin.controller';
+import { Account } from '@/auth/entities/account.entity';
 import { Admin } from './entities/admin.entity';
 import { EmailVerification } from '@/auth/entities/emailVerification.entity';
-import { Account } from '@/auth/entities/account.entity';
+import { AdminRequestShape } from './admin.controller';
+import { AuthService } from '@/auth/auth.service';
 import { UserRoleEnum } from 'contract/enum';
 
 @Injectable()
@@ -16,14 +15,7 @@ export class AdminService {
   ) {}
 
   async createAdmin(data: AdminRequestShape['createAdmin']['body']) {
-    const {
-      email,
-      verficationId,
-      firstname,
-      lastname,
-      identityCardUrl,
-      avatarUrl,
-    } = data;
+    const { email, verficationId, firstname, lastname, avatarUrl } = data;
 
     const admin = await this.em.findOne(Admin, {
       user: { email },

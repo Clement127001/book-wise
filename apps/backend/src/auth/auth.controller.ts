@@ -3,14 +3,13 @@ import {
   nestControllerContract,
   NestControllerInterface,
   TsRest,
+  NestRequestShapes,
 } from '@ts-rest/nest';
-import { accountContract } from 'contract/account/contract';
-import { NestRequestShapes } from '@ts-rest/nest';
 import { Auth, getAccountFromToken } from './decorators/auth.decorator';
 import { Account } from './entities/account.entity';
+import { accountContract } from 'contract/account/contract';
 
 const authController = nestControllerContract(accountContract);
-
 export type authControllerShape = NestRequestShapes<typeof authController>;
 
 @Controller()
@@ -31,7 +30,7 @@ export class AuthController
         id,
         email,
         role,
-        avatarUrl,
+        avatarUrl: avatarUrl ?? '',
       },
     };
   }

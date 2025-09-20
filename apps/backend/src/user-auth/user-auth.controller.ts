@@ -12,7 +12,6 @@ import {
 } from '@ts-rest/nest';
 
 const userAuthController = nestControllerContract(userAuthContract);
-
 export type UserAuthRequestShape = NestRequestShapes<typeof userAuthController>;
 
 @Controller()

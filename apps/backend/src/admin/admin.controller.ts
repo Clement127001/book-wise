@@ -4,14 +4,12 @@ import {
   NestControllerInterface,
   NestRequestShapes,
   TsRest,
-  TsRestInterceptor,
   TsRestRequest,
 } from '@ts-rest/nest';
 import { adminContract } from 'contract/admin/contract';
 import { AdminService } from './admin.service';
 
 const adminAuthController = nestControllerContract(adminContract);
-
 export type AdminRequestShape = NestRequestShapes<typeof adminAuthController>;
 
 @Controller()

@@ -10,7 +10,6 @@ import { AdminAuthService } from '@/admin-auth/admin-auth.service';
 import { adminAuthContract } from 'contract/adminAuth/contract';
 
 const adminAuthController = nestControllerContract(adminAuthContract);
-
 export type AdminAuthRequestShape = NestRequestShapes<
   typeof adminAuthController
 >;

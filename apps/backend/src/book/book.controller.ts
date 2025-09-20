@@ -6,14 +6,14 @@ import {
   TsRest,
   TsRestRequest,
 } from '@ts-rest/nest';
-import { bookContract } from 'contract/book/contract';
-import { BookService } from '@/book/book.service';
+import { Account } from '@/auth/entities/account.entity';
 import {
   AdminOnlyAuth,
   Auth,
   getAccountFromToken,
 } from '@/auth/decorators/auth.decorator';
-import { Account } from '@/auth/entities/account.entity';
+import { BookService } from '@/book/book.service';
+import { bookContract } from 'contract/book/contract';
 
 const bookController = nestControllerContract(bookContract);
 export type BookRequestShape = NestRequestShapes<typeof bookController>;
