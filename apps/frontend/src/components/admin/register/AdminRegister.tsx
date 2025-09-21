@@ -11,15 +11,17 @@ import { Button } from "@/components/ui/button";
 import RegisterDetailsStepForm from "@/components/user/register/RegisterDetailsStepForm";
 import { useTimer } from "@/hooks/useTimer";
 import { useApi } from "@/hooks/useApi";
-import { StepValueType, registerType } from "@/types/user/register";
+
 import {
   registerMaxSteps,
   registerSteps,
   userRegisterDefaultValues,
 } from "@/utils/user/register";
 import { getQueryClient } from "@/utils/api";
-
-//TODO: no, the flow is after admin register, he have to be verified through the database, no OTP
+import { adminRegisterType } from "@/types/admin/register";
+import { StepValueType } from "@/types/common";
+import AdminPrimaryButton from "../AdminPrimaryButton";
+import { ChevronRight } from "lucide-react";
 
 const AdminRegister = () => {
   const { timer, setTimer } = useTimer();
@@ -30,7 +32,7 @@ const AdminRegister = () => {
     maxAllowedStep: 1,
   });
   const { makeApiCall } = useApi();
-  const userRegisterForm = useForm<registerType>({
+  const userRegisterForm = useForm<adminRegisterType>({
     mode: "onSubmit",
     defaultValues: userRegisterDefaultValues,
   });
@@ -108,17 +110,10 @@ const AdminRegister = () => {
     });
   };
 
-  const handleRegisterUser = (data: registerType) => {
-    const {
-      email,
-      verificationId,
-      avatarUrl,
-      identityCardUrl,
-      firstName,
-      lastName,
-    } = data;
+  const handleRegisterUser = (data: adminRegisterType) => {
+    const { email, verificationId, avatarUrl, firstName, lastName } = data;
 
-    if (verificationId === null || identityCardUrl === null) {
+    if (verificationId === null || avatarUrl === null) {
       toast.warning("Required data is missing", {
         description: "Please fill all data",
         duration: 2000,
@@ -135,12 +130,11 @@ const AdminRegister = () => {
 
     makeApiCall({
       fetcherFn: async () => {
-        return await getQueryClient().user.createUser.mutation({
+        return await getQueryClient().admin.createAdmin.mutation({
           body: {
             email,
             firstname: firstName,
             lastname: lastName,
-            identityCardUrl,
             verficationId: verificationId,
             avatarUrl: avatarUrl ? avatarUrl : undefined,
           },
@@ -160,7 +154,7 @@ const AdminRegister = () => {
     });
   };
 
-  const onRegister: SubmitHandler<registerType> = (data) => {
+  const onRegister: SubmitHandler<adminRegisterType> = (data) => {
     const { otp } = data;
 
     if (!isEmailVerified && otp === null) {
@@ -177,30 +171,29 @@ const AdminRegister = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center  flex-col p-4 sm:p-6 md:p-8 bg-user-gradient">
-      <BackButton className={"text-black font-semibold bg-app-user-primary"} />
-
+    <div className="min-h-screen flex justify-center  flex-col p-4 sm:p-6 md:p-8">
+      <BackButton url="/" />
       <div className="min-h-[90vh] flex flex-col justify-center items-center">
         <section
-          className={`min-w-[90%] sm:min-w-[480px] flex flex-col items-center justify-center p-4 py-[40px] shadow-xl rounded-[20px] outline outline-[1.5px] bg-user-login-gradient ${
+          className={`min-w-[90%] sm:min-w-[480px] flex flex-col items-center justify-center p-4 py-[40px] shadow-xl rounded-[20px] outline outline-[1.5px]  ${
             registerStepValues.activeStep === 1
               ? "sm:max-w-[520px]"
               : "sm:max-w-[620px]"
           }`}
         >
           <img
-            src={"/assets/user/user-logo.svg"}
+            src={"/assets/admin/logo.svg"}
             alt={"logo"}
-            className={"h-8 w-[192px]"}
+            className={"h-12 w-[192px]"}
           />
           <div className="p-[24px] lg:p-[24px__16px]  rounded-[18px] w-full">
             <div className="flex flex-col gap-2 md:gap-[10px]">
-              <h1 className="text-[24px] md:text-[28px] font-[600] text-white">
-                Create Your Library Account
+              <h1 className="text-[24px] md:text-[28px] font-[600] text-black">
+                Create Your Admin Account
               </h1>
-              <p className="text-app-gray-100 text-[14px] leading-5">
-                Please complete all fields and upload a valid university ID to
-                gain access to the library
+              <p className="text-app-gray-800 text-[14px] leading-5">
+                Please complete all fields and access your accent to experience
+                fully tailored features
               </p>
             </div>
 
@@ -209,6 +202,7 @@ const AdminRegister = () => {
                 maxStep={registerMaxSteps}
                 stepData={registerSteps}
                 stepValues={registerStepValues}
+                isAdmin
               />
             </div>
             <FormProvider {...userRegisterForm}>
@@ -222,25 +216,33 @@ const AdminRegister = () => {
                     isEmailVerified={isEmailVerified}
                     handleSendOTP={handleSendOTP}
                     timer={timer}
+                    isAdmin
                   />
                 )}
 
                 {registerStepValues.activeStep == 2 && (
                   <RegisterDetailsStepForm
                     userRegisterForm={userRegisterForm}
+                    isAdmin
                   />
                 )}
 
                 {registerStepValues.activeStep == 2 && (
-                  <Button className="self-end">Register</Button>
+                  <AdminPrimaryButton className="w-full my-4" type="submit">
+                    Register
+                    <ChevronRight className="group-hover:scale-[1.35] group-hover:translate-x-2 ease-linear transition-[300ms]" />
+                  </AdminPrimaryButton>
                 )}
               </form>
             </FormProvider>
           </div>
 
-          <p className="text-white self-start px-4">
+          <p className="text-black self-start px-4">
             Had an account already?
-            <Link href={"/user/login"} className="text-app-user-primary ml-2">
+            <Link
+              href={"/admin/login"}
+              className="text-app-admin-primary-700 ml-2 font-[450]"
+            >
               Login
             </Link>
           </p>

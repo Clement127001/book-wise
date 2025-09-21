@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { UserAccountStatus, UserRoleEnum } from "./enum";
+import { UserRoleEnum } from "./enum";
 
 export const BaseResponseSchema = z.object({
   id: z.string(),
@@ -42,7 +42,7 @@ export const PaginatedRequestSchema = z.object({
   pageSize: z.string().transform(Number),
 });
 
-const accountBaseSchema = z.object({
+export const accountBaseSchema = z.object({
   firstname: z
     .string()
     .min(4, { message: "User first name should have 4 character atleast" })
@@ -65,14 +65,3 @@ export const accountSchema = accountBaseSchema.extend({
   id: z.string(),
   role: z.nativeEnum(UserRoleEnum),
 });
-
-export const UserBaseSchema = accountBaseSchema.extend({
-  identityCardUrl: z.string().url({ message: "Please attach your ID card" }),
-  verficationId: z.string(),
-});
-
-export const UserDetailsSchema = UserBaseSchema.omit({
-  verficationId: true,
-})
-  .extend({ verificationStatus: z.nativeEnum(UserAccountStatus) })
-  .merge(BaseResponseSchema);

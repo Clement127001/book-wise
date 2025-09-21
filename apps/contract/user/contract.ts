@@ -7,13 +7,13 @@ import {
   GetBorrowedBooks,
   GetAllAccountQuerySchema,
   GetAllAccountRequestSchema,
+  UserBaseSchema,
+  UserDetailsSchema,
 } from "../user/schema";
 import {
   PaginatedRequestSchema,
   SuccessSchema,
   CreateUserSuccessSchema,
-  UserBaseSchema,
-  UserDetailsSchema,
 } from "../common";
 
 const c = initContract();

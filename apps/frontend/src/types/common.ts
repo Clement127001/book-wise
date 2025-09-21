@@ -69,6 +69,11 @@ export interface LoginType {
   otp: string | null;
 }
 
+export type StepValueType = {
+  activeStep: number;
+  maxAllowedStep: number;
+};
+
 export type UploadMediaResponseType = z.infer<typeof UploadMediaResultSchema>;
 
 export interface CustomSelectOption<T = string> {

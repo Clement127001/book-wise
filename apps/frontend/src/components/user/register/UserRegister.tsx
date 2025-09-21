@@ -11,13 +11,14 @@ import { Button } from "@/components/ui/button";
 import RegisterDetailsStepForm from "@/components/user/register/RegisterDetailsStepForm";
 import { useTimer } from "@/hooks/useTimer";
 import { useApi } from "@/hooks/useApi";
-import { StepValueType, registerType } from "@/types/user/register";
+import { registerType } from "@/types/user/register";
 import {
   registerMaxSteps,
   registerSteps,
   userRegisterDefaultValues,
 } from "@/utils/user/register";
 import { getQueryClient } from "@/utils/api";
+import { StepValueType } from "@/types/common";
 
 const UserRegister = () => {
   const { timer, setTimer } = useTimer();
