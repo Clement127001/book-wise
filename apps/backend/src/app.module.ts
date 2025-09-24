@@ -13,6 +13,7 @@ import { UserModule } from '@/user/user.module';
 import { UploadModule } from './upload/upload.module';
 import { GenreModule } from './genre/genre.module';
 import { BookModule } from './book/book.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { BookModule } from './book/book.module';
     AuthModule,
     UserAuthModule,
     AdminAuthModule,
+    AdminModule,
     UserModule,
     UploadModule,
     GenreModule,

@@ -7,6 +7,7 @@ import "@/styles/globals.css";
 import { LoginProvider } from "@/context/LoginProvider";
 import { UserDataProvider } from "@/context/UserDataProvider";
 import PageRestrictionProvider from "@/context/PageRestrictionProvider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 type responseType = { response: { status: number } };
 
@@ -51,11 +52,13 @@ export default function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <PageLoaderProvider>
           <LoginProvider>
-            <UserDataProvider>
-              <PageRestrictionProvider>
-                <Component {...pageProps} />
-              </PageRestrictionProvider>
-            </UserDataProvider>
+            <TooltipProvider>
+              <UserDataProvider>
+                <PageRestrictionProvider>
+                  <Component {...pageProps} />
+                </PageRestrictionProvider>
+              </UserDataProvider>
+            </TooltipProvider>
           </LoginProvider>
         </PageLoaderProvider>
       </QueryClientProvider>

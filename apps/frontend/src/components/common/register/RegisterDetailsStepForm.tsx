@@ -1,4 +1,5 @@
 import { UseFormReturn } from "react-hook-form";
+import { useRouter } from "next/router";
 import { CommonInput } from "@/components/form/CommonInput";
 import ImageUpload from "@/components/form/ImageUpload";
 import { registerType } from "@/types/user/register";
@@ -6,11 +7,13 @@ import { adminRegisterType } from "@/types/admin/register";
 
 const RegisterDetailsStepForm = ({
   userRegisterForm,
-  isAdmin,
 }: {
-  userRegisterForm: UseFormReturn<registerType | adminRegisterType>;
-  isAdmin?: boolean;
+  userRegisterForm: UseFormReturn<registerType & adminRegisterType>;
 }) => {
+  const router = useRouter();
+  const pathName = router.pathname;
+  const isAdmin = pathName.includes("/admin");
+
   return (
     <>
       <ImageUpload
@@ -38,7 +41,11 @@ const RegisterDetailsStepForm = ({
           },
         }}
         labelClassName={isAdmin ? "text-black" : "text-white"}
-        inputClassName="bg-[#232839] border-none hover:bg-[#23283990] focus:bg-[#23283990] !placeholder-gray-400 text-white"
+        inputClassName={
+          isAdmin
+            ? ""
+            : "bg-[#232839] border-none hover:bg-[#23283990] focus:bg-[#23283990] !placeholder-gray-400 text-white"
+        }
       />
       <CommonInput
         hForm={userRegisterForm}
@@ -58,7 +65,11 @@ const RegisterDetailsStepForm = ({
           },
         }}
         labelClassName={isAdmin ? "text-black" : "text-white"}
-        inputClassName="bg-[#232839] border-none hover:bg-[#23283990] focus:bg-[#23283990] !placeholder-gray-400 text-white"
+        inputClassName={
+          isAdmin
+            ? ""
+            : "bg-[#232839] border-none hover:bg-[#23283990] focus:bg-[#23283990] !placeholder-gray-400 text-white"
+        }
       />
       {!isAdmin && (
         <ImageUpload

@@ -9,6 +9,7 @@ import {
 } from "react-hook-form";
 import { GroupBase, StylesConfig } from "react-select";
 import { accountSchema } from "contract/common";
+import { LucideProps } from "lucide-react";
 export interface ErrorStatusInterface {
   message: string;
 }
@@ -53,6 +54,10 @@ export interface LoginContextInterface {
   isLoggedIn: boolean;
   refreshLoginState: () => void;
 }
+
+export type IconType = React.ForwardRefExoticComponent<
+  Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+>;
 
 interface UserDataInterface {
   id: string;

@@ -6,9 +6,9 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import BackButton from "@/components/common/BackButton";
 import Stepper from "@/components/common/Stepper";
-import RegisterEmailStep from "@/components/user/register/RegisterEmailStep";
+import RegisterEmailStep from "@/components/common/register/RegisterEmailStep";
 import { Button } from "@/components/ui/button";
-import RegisterDetailsStepForm from "@/components/user/register/RegisterDetailsStepForm";
+import RegisterDetailsStepForm from "@/components/common/register/RegisterDetailsStepForm";
 import { useTimer } from "@/hooks/useTimer";
 import { useApi } from "@/hooks/useApi";
 import { registerType } from "@/types/user/register";
@@ -238,7 +238,7 @@ const UserRegister = () => {
           </div>
 
           <p className="text-white self-start px-4">
-            Had an account already?
+            Had an account already ?
             <Link href={"/user/login"} className="text-app-user-primary ml-2">
               Login
             </Link>

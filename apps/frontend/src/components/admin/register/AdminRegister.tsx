@@ -1,27 +1,26 @@
 import { useState } from "react";
 import Link from "next/link";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { ChevronRight } from "lucide-react";
 import BackButton from "@/components/common/BackButton";
 import Stepper from "@/components/common/Stepper";
-import RegisterEmailStep from "@/components/user/register/RegisterEmailStep";
-import { Button } from "@/components/ui/button";
-import RegisterDetailsStepForm from "@/components/user/register/RegisterDetailsStepForm";
+import RegisterEmailStep from "@/components/common/register/RegisterEmailStep";
+import RegisterDetailsStepForm from "@/components/common/register/RegisterDetailsStepForm";
+import AdminPrimaryButton from "@/components/admin/AdminPrimaryButton";
+import { getQueryClient } from "@/utils/api";
+import { adminRegisterType } from "@/types/admin/register";
 import { useTimer } from "@/hooks/useTimer";
 import { useApi } from "@/hooks/useApi";
-
 import {
   registerMaxSteps,
   registerSteps,
   userRegisterDefaultValues,
 } from "@/utils/user/register";
-import { getQueryClient } from "@/utils/api";
-import { adminRegisterType } from "@/types/admin/register";
 import { StepValueType } from "@/types/common";
-import AdminPrimaryButton from "../AdminPrimaryButton";
-import { ChevronRight } from "lucide-react";
+import { registerType } from "@/types/user/register";
 
 const AdminRegister = () => {
   const { timer, setTimer } = useTimer();
@@ -32,7 +31,7 @@ const AdminRegister = () => {
     maxAllowedStep: 1,
   });
   const { makeApiCall } = useApi();
-  const userRegisterForm = useForm<adminRegisterType>({
+  const userRegisterForm = useForm<registerType>({
     mode: "onSubmit",
     defaultValues: userRegisterDefaultValues,
   });
@@ -175,7 +174,7 @@ const AdminRegister = () => {
       <BackButton url="/" />
       <div className="min-h-[90vh] flex flex-col justify-center items-center">
         <section
-          className={`min-w-[90%] sm:min-w-[480px] flex flex-col items-center justify-center p-4 py-[40px] shadow-xl rounded-[20px] outline outline-[1.5px]  ${
+          className={`min-w-[90%] sm:min-w-[480px] flex flex-col items-center justify-center p-4 py-[40px] shadow-xl rounded-xl outline outline-[1.5px] outline-app-gray-100 ${
             registerStepValues.activeStep === 1
               ? "sm:max-w-[520px]"
               : "sm:max-w-[620px]"
@@ -216,14 +215,12 @@ const AdminRegister = () => {
                     isEmailVerified={isEmailVerified}
                     handleSendOTP={handleSendOTP}
                     timer={timer}
-                    isAdmin
                   />
                 )}
 
                 {registerStepValues.activeStep == 2 && (
                   <RegisterDetailsStepForm
                     userRegisterForm={userRegisterForm}
-                    isAdmin
                   />
                 )}
 
@@ -238,7 +235,7 @@ const AdminRegister = () => {
           </div>
 
           <p className="text-black self-start px-4">
-            Had an account already?
+            Had an account already ?
             <Link
               href={"/admin/login"}
               className="text-app-admin-primary-700 ml-2 font-[450]"

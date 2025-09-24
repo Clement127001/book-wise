@@ -226,7 +226,7 @@ const UserLogin = () => {
           </div>
 
           <p className="text-white self-start px-4">
-            Don't have account?
+            Don't have account ?
             <Link
               href={"/user/register"}
               className="text-app-user-primary ml-2"

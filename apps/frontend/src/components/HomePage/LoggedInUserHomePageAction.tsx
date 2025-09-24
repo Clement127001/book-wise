@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { UserRoleEnum } from "contract/enum";
+import { DatabaseZapIcon, UserCheck2 } from "lucide-react";
+import GlitterButtonAdmin from "@/components/common/glitterButtons/GlitterButtonAdmin";
+import GlitterButton from "@/components/common/glitterButtons/GlitterButtonUser";
 import { useUserData } from "@/context/UserDataProvider";
+import { UserRoleEnum } from "contract/enum";
 
 const LoggedInUserHomePageAction = () => {
   const { userData } = useUserData();
@@ -11,11 +13,14 @@ const LoggedInUserHomePageAction = () => {
     <>
       {role === UserRoleEnum.ADMIN ? (
         <Link href={"/admin/dashboard"}>
-          <Button>Explore Dashboard</Button>
+          <GlitterButtonAdmin
+            label="Explore Dashboard"
+            Icon={DatabaseZapIcon}
+          />
         </Link>
       ) : (
         <Link href={"/user/home"}>
-          <Button>Explore Books</Button>
+          <GlitterButton label="Explore Books" Icon={UserCheck2} />
         </Link>
       )}
     </>

@@ -4,6 +4,11 @@ import dynamic from "next/dynamic";
 import { LogOut } from "lucide-react";
 import SidebarLink from "@/components/admin/sidebar/SidebarLink";
 import UserAvatar from "@/components/common/UserAvatar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useUserData } from "@/context/UserDataProvider";
 import useLogout from "@/hooks/useLogout";
 import { adminSidebarLinks } from "@/utils/admin/common";
@@ -50,23 +55,29 @@ const Sidebar = () => {
 
         <section
           aria-description="admin-account"
-          className="p-2 rounded-full border border-app-gray-200 shadow-sm  cursor-pointer flex gap-2 items-center"
+          className="p-2 py-1.5 rounded-full  border-[1.5px] border-app-gray-200 shadow-sm  cursor-pointer flex gap-2 items-center"
         >
           <UserAvatar src={avatarUrl} name={fullName} />
-
-          <div className="w-[140px] overflow-y-scroll text-nowrap">
-            <h4 className="font-medium">{fullName}</h4>
-            <p className="text-app-gray-300 text-[12px] text-ellipsis">
-              {email}
-            </p>
+          <div className="w-[115px]">
+            <p className="font-medium truncate">{fullName}</p>
+            <p className="text-app-gray-300 text-[12px] truncate">{email}</p>
           </div>
 
-          <LogOut
-            size={32}
-            className="text-red-500 p-2 hover:bg-app-gray-100 rounded-full"
-            strokeWidth={2.4}
-            onClick={handleOpenLogoutConfirmationModal}
-          />
+          <div>
+            <Tooltip>
+              <TooltipTrigger>
+                <LogOut
+                  size={32}
+                  className="text-red-500 p-2 hover:bg-app-gray-100 rounded-full"
+                  strokeWidth={2.4}
+                  onClick={handleOpenLogoutConfirmationModal}
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Logout</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
         </section>
       </section>
 

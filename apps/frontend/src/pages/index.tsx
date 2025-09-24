@@ -1,9 +1,9 @@
-import LoggedInUserHomePageAction from "@/components/HomePage/LoggedInUserHomePageAction";
-import PublicUserHomePageAction from "@/components/HomePage/PublicUserHomePageAction";
-import { UseLogin } from "@/context/LoginProvider";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import LoggedInUserHomePageAction from "@/components/HomePage/LoggedInUserHomePageAction";
+import PublicUserHomePageAction from "@/components/HomePage/PublicUserHomePageAction";
+import { UseLogin } from "@/context/LoginProvider";
 
 export default function Home() {
   const { isLoggedIn } = UseLogin();
@@ -48,22 +48,15 @@ export default function Home() {
   }, [router.isReady, isUnauthorised, query]);
 
   return (
-    <div className="grid grid-cols-2 w-full gap-5 h-screen px-40 py-32 bg-user-gradient">
-      <img
-        src={"assets/home/home-page-cover.webp"}
-        alt="explore book wise"
-        className="rounded-xl object-cover h-[70vh] shadow-md shadow-[#EED1AC]"
-      />
-      <div className="flex flex-col self-center gap-4">
-        <div className="flex max-h-20 items-center gap-4">
+    <div className="h-screen bg-user-gradient flex justify-center">
+      <div className="flex flex-col justify-center items-center text-center max-w-[50%] gap-12">
+        <div className="flex h-20 gap-4 w-fit">
           <img className="w-20" src="assets/admin/logo.svg" />
-          <h1 className="text-[52px] font-semibold text-white">BookWise</h1>
+          <h1 className="text-[60px] font-semibold text-white">Book Wise</h1>
         </div>
-        <p className="text-app-gray-200 text-md tracking-normal leading-6">
+        <p className="text-app-gray-200 text-lg  tracking-normal max-w-[40vw]">
           Book Wise is your smart companion for discovering, organizing, and
-          tracking books effortlessly. Whether {"you're"} an avid reader or just
-          getting started, it helps you explore recommendations and manage your
-          personal library with ease. With intuitive features and a sleek
+          tracking books effortlessly. With intuitive features and a sleek
           interface, finding and keeping track of your favorite books has never
           been simpler. Elevate your reading experience with Book Wise—where
           every book finds its place! 📚✨

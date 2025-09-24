@@ -30,6 +30,11 @@ export function OTPInput<T extends FieldValues>({
           className={`text-app-black-300 dark:text-app-primary-300 capitalize text-[16px] ${labelClassName}`}
         >
           {label}
+          {registerOptions?.required ? (
+            <span className="text-app-accent-error-500 ml-1">*</span>
+          ) : (
+            ""
+          )}
         </Label>
       )}
       <div className="relative flex">

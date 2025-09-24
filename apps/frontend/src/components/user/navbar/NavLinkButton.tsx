@@ -1,7 +1,7 @@
-import { type LucideProps } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { IconType } from "@/types/common";
 
 const NavLinkButton = ({
   label,
@@ -10,9 +10,7 @@ const NavLinkButton = ({
 }: {
   label: string;
   path: string;
-  Icon?: React.ForwardRefExoticComponent<
-    Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
-  >;
+  Icon?: IconType;
 }) => {
   const router = useRouter();
   const isActive = router.pathname.includes(path);

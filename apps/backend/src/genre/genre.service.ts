@@ -12,7 +12,6 @@ export class GenreService {
 
     const newTitle =
       title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();
-
     const genre = await this.em.findOne(Genre, { title: newTitle });
 
     if (genre) {
