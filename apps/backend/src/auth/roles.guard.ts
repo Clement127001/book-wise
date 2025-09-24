@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { UserRoleEnum } from 'contract/enum';
 import { ROLES_KEY } from '@/auth/decorators/auth.decorator';
@@ -18,6 +23,10 @@ export class RolesGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const account: Account = request.user;
+
+    if (account.admin && account.admin.isVerified === false) {
+      throw new UnauthorizedException('Admin is not verified');
+    }
 
     return requiredRoles.some((role) => account.role === role);
   }

@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/table";
 import { useApi } from "@/hooks/useApi";
 import usePreviewIdCard from "@/hooks/admin/usePreviewIdCard";
-import { UserAccountListType, ChangeStatusModalType } from "@/types/admin";
+import { UserAccountListType, ChangeStatusModalType } from "@/types/admin/user";
 import { getQueryClient } from "@/utils/api";
 import { contract } from "contract";
 import { UserAccountStatus } from "contract/enum";

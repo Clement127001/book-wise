@@ -1,4 +1,4 @@
-import { UserRegisterType } from "@/types/userRegister";
+import { registerType } from "@/types/user/register";
 import { User, Mail } from "lucide-react";
 export const registerSteps = [
   {
@@ -10,7 +10,7 @@ export const registerSteps = [
 
 export const registerMaxSteps = 2;
 
-export const userRegisterDefaultValues: UserRegisterType = {
+export const userRegisterDefaultValues: registerType = {
   email: "",
   otp: null,
   firstName: "",

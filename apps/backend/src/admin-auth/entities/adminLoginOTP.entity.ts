@@ -1,6 +1,6 @@
-import { Admin } from '@/admin/entities/admin.entity';
+import { Admin } from '../../admin/entities/admin.entity';
 import { Entity, ManyToOne, Property } from '@mikro-orm/core';
-import { BaseEntity } from 'base.entity';
+import { BaseEntity } from '../../../base.entity';
 
 @Entity()
 export class AdminLoginOTP extends BaseEntity {

@@ -1,7 +1,7 @@
-import { User } from '@/user/entities/user.entity';
+import { User } from '../../user/entities/user.entity';
 import { Entity, Enum, Index, ManyToOne, Property } from '@mikro-orm/core';
-import { BaseEntity } from 'base.entity';
-import { Book } from '@/book/entities/book.entity';
+import { BaseEntity } from '../../../base.entity';
+import { Book } from '../../book/entities/book.entity';
 import { BorrowRequestStatusEnum } from 'contract/enum';
 
 @Entity()

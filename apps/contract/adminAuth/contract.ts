@@ -4,8 +4,9 @@ import {
   LoginOTPRequetSchema,
   LoginOTPVerifiedSuccessSchema,
   VerifyEmailOTPRequestSchema,
+  emailVerficationSuccessSchema,
+  emailVerificationRequestSchema,
 } from "../common";
-import { CreateAdminSchema } from "./schema";
 
 const c = initContract();
 
@@ -27,12 +28,20 @@ export const adminAuthContract = c.router(
         201: LoginOTPVerifiedSuccessSchema,
       },
     },
-    createAdmin: {
+    generateAdminEmailVerficationOTP: {
       method: "POST",
-      path: "/create",
-      body: CreateAdminSchema,
+      path: "/generateAdminEmailVerficationOTP",
+      body: emailVerificationRequestSchema,
       responses: {
         200: SuccessSchema,
+      },
+    },
+    verfiyAdminEmailVerificationOTP: {
+      method: "POST",
+      path: "/verifyAdminEmailVerficationOTP",
+      body: VerifyEmailOTPRequestSchema,
+      responses: {
+        201: emailVerficationSuccessSchema,
       },
     },
   },

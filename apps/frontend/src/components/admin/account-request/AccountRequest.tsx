@@ -3,7 +3,7 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AccountRequestTable from "@/components/admin/account-request/AccountRequestTable";
 import { useQueryState } from "@/hooks/useQueryState";
-import { UserAccountListType } from "@/types/admin";
+import { UserAccountListType } from "@/types/admin/user";
 
 const AccountRequest = memo(({ searchText }: { searchText: string }) => {
   const [accountRequestQuery, setAccountRequestQuery] =

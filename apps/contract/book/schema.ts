@@ -1,5 +1,5 @@
-import { BaseResponseSchema, PaginatedRequestSchema } from "../common";
 import { z } from "zod";
+import { BaseResponseSchema, PaginatedRequestSchema } from "../common";
 
 export const BaseBookSchema = z.object({
   title: z

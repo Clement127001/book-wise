@@ -1,20 +1,25 @@
 import { UseFormReturn } from "react-hook-form";
 import { CommonInput } from "@/components/form/CommonInput";
 import ImageUpload from "@/components/form/ImageUpload";
-import { UserRegisterType } from "@/types/userRegister";
+import { registerType } from "@/types/user/register";
+import { adminRegisterType } from "@/types/admin/register";
 
 const RegisterDetailsStepForm = ({
   userRegisterForm,
+  isAdmin,
 }: {
-  userRegisterForm: UseFormReturn<UserRegisterType>;
+  userRegisterForm: UseFormReturn<registerType | adminRegisterType>;
+  isAdmin?: boolean;
 }) => {
   return (
     <>
       <ImageUpload
-        name="identityCardUrl"
-        label="Identity Card Image"
+        name="avatarUrl"
+        label="Profile Image"
         required
+        isAdmin={isAdmin}
       />
+
       <CommonInput
         hForm={userRegisterForm}
         name="firstName"
@@ -32,7 +37,7 @@ const RegisterDetailsStepForm = ({
             message: "First name shoudl have 20 character atmost",
           },
         }}
-        labelClassName="text-white"
+        labelClassName={isAdmin ? "text-black" : "text-white"}
         inputClassName="bg-[#232839] border-none hover:bg-[#23283990] focus:bg-[#23283990] !placeholder-gray-400 text-white"
       />
       <CommonInput
@@ -52,9 +57,16 @@ const RegisterDetailsStepForm = ({
             message: "Last name shoudl have 20 character atmost",
           },
         }}
-        labelClassName="text-white"
+        labelClassName={isAdmin ? "text-black" : "text-white"}
         inputClassName="bg-[#232839] border-none hover:bg-[#23283990] focus:bg-[#23283990] !placeholder-gray-400 text-white"
       />
+      {!isAdmin && (
+        <ImageUpload
+          name="identityCardUrl"
+          label="Identity Card Image"
+          required
+        />
+      )}
     </>
   );
 };

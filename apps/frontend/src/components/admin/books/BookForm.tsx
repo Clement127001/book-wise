@@ -7,7 +7,7 @@ import AdminPrimaryButton from "@/components/admin/AdminPrimaryButton";
 import { CommonInput } from "@/components/form/CommonInput";
 import { CommonTextArea } from "@/components/form/CommonTextArea";
 import { contract } from "contract";
-import { BookFormType } from "@/types/admin";
+import { BookFormType } from "@/types/admin/book";
 
 const BookForm = ({
   bookForm,

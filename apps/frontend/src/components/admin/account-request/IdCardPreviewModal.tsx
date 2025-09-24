@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { IdPreviewDataType } from "@/types/admin";
+import { IdPreviewDataType } from "@/types/admin/user";
 
 const IdCardPreviewModal = ({
   opened,

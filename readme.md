@@ -18,10 +18,21 @@
 - [x] Start backend
 - [x] do auth part
 - [x] frontend for auth part with the email verification
-- [ ] project setup for frontend with the colors -> no need for mobile responsiveness for v 1.0
+- [x] project setup for frontend with the colors -> no need for mobile responsiveness for v 1.0
 - [ ] admin panel routes
 - [ ] frontend for admin panel
 - [ ] user panel routes
 - [ ] user panel frontend
+- [ ] model development for book recommendation system
 - [ ] deployment setup for the frontend
 - [ ] deployment setup for the backend
+
+## running db locally using postgres image with docker daemon
+
+### to run the postgres image
+
+- docker run --name some-postgres -e POSTGRES_PASSWORD=<you-password> -d <db_name>
+
+### to connect to the psql in terminal
+
+- docker exec -it <postgres-image-name> psql -U <user-name> -d <db-name>

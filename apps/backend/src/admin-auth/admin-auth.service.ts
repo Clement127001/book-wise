@@ -1,10 +1,11 @@
 import { EntityManager, QueryOrder, wrap } from '@mikro-orm/postgresql';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Admin } from '@/admin/entities/admin.entity';
-import { Account } from '@/auth/entities/account.entity';
 import { AdminLoginOTP } from '@/admin-auth/entities/adminLoginOTP.entity';
-import { AuthService } from '@/auth/auth.service';
+import { EmailVerification } from '@/auth/entities/emailVerification.entity';
+import { RegisterOTP } from '@/auth/entities/registerOTP.entity';
 import { AdminAuthRequestShape } from '@/admin-auth/admin-auth.controller';
+import { AuthService } from '@/auth/auth.service';
 import { checkOTPExpiration, generateOTP } from '@/utils';
 import { UserRoleEnum } from 'contract/enum';
 
@@ -14,6 +15,58 @@ export class AdminAuthService {
     private em: EntityManager,
     private authService: AuthService,
   ) {}
+
+  async generateAdminEmailVerficationOTP(
+    data: AdminAuthRequestShape['generateAdminEmailVerficationOTP']['body'],
+  ) {
+    const { email } = data;
+
+    const user = await this.em.findOne(Admin, {
+      user: { email, role: UserRoleEnum.ADMIN },
+    });
+
+    if (user)
+      throw new BadRequestException(
+        'User with give email is already exists, try to login instead',
+      );
+
+    const otp = generateOTP();
+    const userRegisterOTP = new RegisterOTP({ email, otp });
+
+    await this.em.persistAndFlush(userRegisterOTP);
+  }
+
+  async verfiyAdminEmailVerificationOTP(
+    data: AdminAuthRequestShape['verfiyAdminEmailVerificationOTP']['body'],
+  ) {
+    const { email, otp } = data;
+
+    const otpData = await this.em.findOne(
+      RegisterOTP,
+      { email },
+      { orderBy: { createdAt: QueryOrder.DESC } },
+    );
+
+    if (!otpData || otpData.otp !== otp) {
+      throw new BadRequestException('Invalid OTP.');
+    }
+
+    if (otpData.isUsed) {
+      throw new BadRequestException('OTP has already been used.');
+    }
+
+    const isOtpExpired = checkOTPExpiration(otpData.createdAt);
+
+    if (isOtpExpired) throw new BadRequestException('OTP is expired');
+
+    wrap(otpData).assign({ isUsed: true });
+    const verification = new EmailVerification({ email });
+
+    this.em.persist([otpData, verification]);
+    await this.em.flush();
+
+    return { verificationId: verification.id };
+  }
 
   async generateAdminLoginOTP(
     data: AdminAuthRequestShape['generateAdminLoginOTP']['body'],
@@ -86,30 +139,5 @@ export class AdminAuthService {
     });
 
     return { token };
-  }
-
-  async createAdmin(data: AdminAuthRequestShape['createAdmin']['body']) {
-    const { firstname, lastname, email, avatarUrl } = data;
-
-    const admin = await this.em.findOne(Admin, { user: { email } });
-
-    if (admin)
-      throw new BadRequestException(
-        'User with give email is already exists, try to login instead',
-      );
-
-    const newAdminAccount = new Account({
-      firstname: firstname.trim(),
-      lastname: lastname.trim(),
-      email,
-      avatarUrl: avatarUrl ?? null,
-      role: UserRoleEnum.ADMIN,
-    });
-
-    const newAdmin = new Admin({
-      user: newAdminAccount,
-    });
-
-    this.em.persistAndFlush([newAdminAccount, newAdmin]);
   }
 }

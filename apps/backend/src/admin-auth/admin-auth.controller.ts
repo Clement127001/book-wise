@@ -10,7 +10,6 @@ import { AdminAuthService } from '@/admin-auth/admin-auth.service';
 import { adminAuthContract } from 'contract/adminAuth/contract';
 
 const adminAuthController = nestControllerContract(adminAuthContract);
-
 export type AdminAuthRequestShape = NestRequestShapes<
   typeof adminAuthController
 >;
@@ -20,6 +19,39 @@ export class AdminAuthController
   implements NestControllerInterface<typeof adminAuthContract>
 {
   constructor(private readonly adminAuthService: AdminAuthService) {}
+
+  @TsRest(adminAuthContract.generateAdminEmailVerficationOTP)
+  async generateAdminEmailVerficationOTP(
+    @TsRestRequest()
+    { body }: AdminAuthRequestShape['generateAdminEmailVerficationOTP'],
+  ) {
+    await this.adminAuthService.generateAdminEmailVerficationOTP(body);
+    return {
+      status: 200 as const,
+      body: {
+        success: true,
+        message: 'Login OTP sent via email.',
+      },
+    };
+  }
+
+  @TsRest(adminAuthContract.verfiyAdminEmailVerificationOTP)
+  async verfiyAdminEmailVerificationOTP(
+    @TsRestRequest()
+    { body }: AdminAuthRequestShape['verfiyAdminEmailVerificationOTP'],
+  ) {
+    const { verificationId } =
+      await this.adminAuthService.verfiyAdminEmailVerificationOTP(body);
+
+    return {
+      status: 201 as const,
+      body: {
+        success: true,
+        message: 'OTP verified.',
+        verificationId,
+      },
+    };
+  }
 
   @TsRest(adminAuthContract.generateAdminLoginOTP)
   async generateAdminLoginOTP(
@@ -45,26 +77,11 @@ export class AdminAuthController
     const { token } = await this.adminAuthService.verifyAdminLoginOTP(body);
 
     return {
-      status: 201 as const,
+      status: 200 as const,
       body: {
         success: true,
         message: 'OTP verified.',
         token,
-      },
-    };
-  }
-
-  @TsRest(adminAuthContract.createAdmin)
-  async createAdmin(
-    @TsRestRequest()
-    { body }: AdminAuthRequestShape['createAdmin'],
-  ) {
-    await this.adminAuthService.createAdmin(body);
-    return {
-      status: 200 as const,
-      body: {
-        success: true,
-        message: 'Admin created successfully',
       },
     };
   }

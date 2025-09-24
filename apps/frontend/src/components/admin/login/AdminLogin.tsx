@@ -14,6 +14,7 @@ import { getQueryClient } from "@/utils/api";
 import { validateEmail, validateOTP } from "@/utils/common";
 import { defaultLoginFormValues } from "@/utils/admin/login";
 import { LoginType } from "@/types/common";
+import Link from "next/link";
 
 const AdminLogin = () => {
   const router = useRouter();
@@ -208,6 +209,15 @@ const AdminLogin = () => {
               )}
             </form>
           </div>
+          <p className="text-gray-600 font-[450] text-left mb-4">
+            Don't have account?
+            <Link
+              href={"/admin/register"}
+              className="text-app-admin-primary-700 ml-2"
+            >
+              register
+            </Link>
+          </p>
         </section>
       </div>
     </div>

@@ -12,18 +12,19 @@ const ImageUpload = ({
   name,
   label,
   required,
+  isAdmin,
 }: {
   name: string;
   label: string;
   required?: boolean;
+  isAdmin?: boolean;
 }) => {
   const { userData } = useUserData();
   const { setValue, watch } = useFormContext();
   const fileUploadInputRef = useRef<HTMLInputElement | null>(null);
   const previewUrl = watch(name);
 
-  const { role } = userData;
-  const isAdmin = role === UserRoleEnum.ADMIN;
+  const admin = isAdmin || (userData && userData.role === UserRoleEnum.ADMIN);
 
   const { showPageLoader, hidePageLoader } = usePageLoader();
 
@@ -78,7 +79,7 @@ const ImageUpload = ({
         <Label
           htmlFor={name}
           className={` dark:text-app-primary-300 capitalize text-[16px] ${
-            isAdmin ? "text-black" : "text-white"
+            admin ? "text-black" : "text-white"
           }`}
         >
           {label}
@@ -92,7 +93,7 @@ const ImageUpload = ({
 
       <div
         className={`relative flex justify-center items-center rounded-md border-2  border-dashed max-w-full h-[240px] cursor-pointer overflow-hidden p-2 ${
-          isAdmin
+          admin
             ? "bg-app-admin-primary-700/10 border-app-admin-primary-700/50"
             : "bg-app-user-primary/10  border-app-user-primary/60"
         }`}
@@ -110,7 +111,7 @@ const ImageUpload = ({
           <>
             <div
               className={`w-full h-full flex flex-col justify-center items-center gap-2 outline-2 ${
-                isAdmin ? "text-app-admin-primary-700" : "text-app-user-primary"
+                admin ? "text-app-admin-primary-700" : "text-app-user-primary"
               }`}
               onClick={handleUploadImage}
             >

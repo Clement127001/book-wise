@@ -11,13 +11,14 @@ import { Button } from "@/components/ui/button";
 import RegisterDetailsStepForm from "@/components/user/register/RegisterDetailsStepForm";
 import { useTimer } from "@/hooks/useTimer";
 import { useApi } from "@/hooks/useApi";
-import { StepValueType, UserRegisterType } from "@/types/userRegister";
+import { registerType } from "@/types/user/register";
 import {
   registerMaxSteps,
   registerSteps,
   userRegisterDefaultValues,
 } from "@/utils/user/register";
 import { getQueryClient } from "@/utils/api";
+import { StepValueType } from "@/types/common";
 
 const UserRegister = () => {
   const { timer, setTimer } = useTimer();
@@ -28,7 +29,7 @@ const UserRegister = () => {
     maxAllowedStep: 1,
   });
   const { makeApiCall } = useApi();
-  const userRegisterForm = useForm<UserRegisterType>({
+  const userRegisterForm = useForm<registerType>({
     mode: "onSubmit",
     defaultValues: userRegisterDefaultValues,
   });
@@ -106,7 +107,7 @@ const UserRegister = () => {
     });
   };
 
-  const handleRegisterUser = (data: UserRegisterType) => {
+  const handleRegisterUser = (data: registerType) => {
     const {
       email,
       verificationId,
@@ -158,7 +159,7 @@ const UserRegister = () => {
     });
   };
 
-  const onRegister: SubmitHandler<UserRegisterType> = (data) => {
+  const onRegister: SubmitHandler<registerType> = (data) => {
     const { otp } = data;
 
     if (!isEmailVerified && otp === null) {

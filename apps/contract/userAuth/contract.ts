@@ -4,11 +4,9 @@ import {
   LoginOTPRequetSchema,
   VerifyEmailOTPRequestSchema,
   LoginOTPVerifiedSuccessSchema,
+  emailVerficationSuccessSchema,
+  emailVerificationRequestSchema,
 } from "../common";
-import {
-  UserEmailVERIFIEDSuccessSchema,
-  UserEmailVerificationRequestSchema,
-} from "../userAuth/schema";
 
 const c = initContract();
 
@@ -17,7 +15,7 @@ export const userAuthContract = c.router(
     generateUserEmailVerficationOTP: {
       method: "POST",
       path: "/generateUserEmailVerficationOTP",
-      body: UserEmailVerificationRequestSchema,
+      body: emailVerificationRequestSchema,
       responses: {
         200: SuccessSchema,
       },
@@ -27,7 +25,7 @@ export const userAuthContract = c.router(
       path: "/verifyUserEmailVerficationOTP",
       body: VerifyEmailOTPRequestSchema,
       responses: {
-        201: UserEmailVERIFIEDSuccessSchema,
+        201: emailVerficationSuccessSchema,
       },
     },
     generateUserLoginOTP: {

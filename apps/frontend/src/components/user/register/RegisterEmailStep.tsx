@@ -4,18 +4,23 @@ import { ChevronRight, RotateCw } from "lucide-react";
 import { CommonInput } from "@/components/form/CommonInput";
 import { OTPInput } from "@/components/form/OTPInput";
 import { Button } from "@/components/ui/button";
-import { UserRegisterType } from "@/types/userRegister";
+
 import { validateEmail, validateOTP } from "@/utils/common";
+import { registerType } from "@/types/user/register";
+import { adminRegisterType } from "@/types/admin/register";
+import AdminPrimaryButton from "@/components/admin/AdminPrimaryButton";
 
 const RegisterEmailStep = ({
   userRegisterForm,
   isEmailVerified,
   handleSendOTP,
   timer,
+  isAdmin,
 }: {
-  userRegisterForm: UseFormReturn<UserRegisterType>;
+  userRegisterForm: UseFormReturn<registerType | adminRegisterType>;
   isEmailVerified: boolean;
   handleSendOTP: () => void;
+  isAdmin?: boolean;
   timer: number;
 }) => {
   const { setFocus, watch } = userRegisterForm;
@@ -48,15 +53,32 @@ const RegisterEmailStep = ({
             (typeof value === "string" && validateEmail(value)) ||
             "Please enter a valid email address",
         }}
-        labelClassName="text-white"
-        inputClassName="bg-[#232839] border-none hover:bg-[#23283990] focus:bg-[#23283990] !placeholder-gray-400 text-white"
+        inputClassName={
+          isAdmin
+            ? ""
+            : "bg-[#232839] border-none hover:bg-[#23283990] focus:bg-[#23283990] !placeholder-gray-400 text-white"
+        }
       />
-      {!isEmailVerified && (
-        <Button className="w-full my-4" type="submit" disabled={!isEmailValid}>
-          Send OTP
-          <ChevronRight className="group-hover:scale-[1.35] group-hover:translate-x-2 ease-linear transition-[300ms]" />
-        </Button>
-      )}
+      {!isEmailVerified &&
+        (isAdmin ? (
+          <AdminPrimaryButton
+            className="w-full my-4"
+            type="submit"
+            disabled={!isEmailValid}
+          >
+            Send OTP
+            <ChevronRight className="group-hover:scale-[1.35] group-hover:translate-x-2 ease-linear transition-[300ms]" />
+          </AdminPrimaryButton>
+        ) : (
+          <Button
+            className="w-full my-4"
+            type="submit"
+            disabled={!isEmailValid}
+          >
+            Send OTP
+            <ChevronRight className="group-hover:scale-[1.35] group-hover:translate-x-2 ease-linear transition-[300ms]" />
+          </Button>
+        ))}
       {isEmailVerified && (
         <div className="mt-4">
           <OTPInput

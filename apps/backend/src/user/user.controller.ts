@@ -7,16 +7,15 @@ import {
   TsRestRequest,
 } from '@ts-rest/nest';
 import { Account } from '@/auth/entities/account.entity';
-import { userContract } from 'contract/user/contract';
 import { UserService } from '@/user/user.service';
 import {
   AdminOnlyAuth,
   getAccountFromToken,
   UserOnlyAuth,
 } from '@/auth/decorators/auth.decorator';
+import { userContract } from 'contract/user/contract';
 
 const userController = nestControllerContract(userContract);
-
 export type UserRequestShape = NestRequestShapes<typeof userController>;
 
 @Controller()
