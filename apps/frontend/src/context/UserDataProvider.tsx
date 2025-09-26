@@ -14,6 +14,8 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
       contract.account.getAccountDetail.path,
     ]);
 
+  console.log(data);
+
   if (isLoading) return <div>loading...</div>;
 
   if (error) return <div>error occurred</div>;

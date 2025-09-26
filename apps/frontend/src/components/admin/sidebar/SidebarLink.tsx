@@ -23,7 +23,7 @@ const SidebarLink = ({
       className={`p-3 flex items-center gap-4  ${
         isActive
           ? "hover:bg-app-admin-primary-700 bg-app-admin-primary-700"
-          : "hover:bg-app-gray-100"
+          : "hover:bg-gray-200/60"
       } rounded-lg group`}
     >
       <Icon

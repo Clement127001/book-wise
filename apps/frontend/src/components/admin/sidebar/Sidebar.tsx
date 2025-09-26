@@ -9,10 +9,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import GlitterButton from "@/components/common/glitterButtons/GlitterButtonUser";
 import { useUserData } from "@/context/UserDataProvider";
 import useLogout from "@/hooks/useLogout";
 import { adminSidebarLinks } from "@/utils/admin/common";
 import { getFullName } from "@/utils/common";
+import { Button } from "@/components/ui/button";
 
 const LogoutConfirmationModal = dynamic(
   import("@/components/common/ConfirmationModal").then((mod) => mod.default),
@@ -53,32 +55,47 @@ const Sidebar = () => {
           </nav>
         </section>
 
-        <section
-          aria-description="admin-account"
-          className="p-2 py-1.5 rounded-full  border-[1.5px] border-app-gray-200 shadow-sm  cursor-pointer flex gap-2 items-center"
-        >
-          <UserAvatar src={avatarUrl} name={fullName} />
-          <div className="w-[115px]">
-            <p className="font-medium truncate">{fullName}</p>
-            <p className="text-app-gray-300 text-[12px] truncate">{email}</p>
-          </div>
+        <div className="space-y-3">
+          <GlitterButton
+            aria-description="admin-account"
+            className="p-1 py-1 rounded-full cursor-pointer flex items-centers"
+            containerClassName="shadow-md max-w-full"
+          >
+            <div className="flex gap-2 items-center p-1">
+              <UserAvatar src={avatarUrl} name={fullName} />
+              <div className="z-50 flex gap-1 items-center max-w-[60%] overflow-hidden">
+                <Tooltip>
+                  <TooltipTrigger>
+                    <div className="text-start">
+                      <p className="font-medium leading-5 truncate w-[80%]">
+                        {fullName}
+                      </p>
+                      <p className="text-app-gray-300 text-[12px] truncate w-[80%]">
+                        {email}
+                      </p>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="text-sm text-app-user-primary">
+                      Name : <span className="font-semibold">{fullName}</span>
+                    </p>
+                    <p>
+                      Email :{" "}
+                      <span className="text-sm font-semibold">{email}</span>
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+            </div>
+          </GlitterButton>
 
-          <div>
-            <Tooltip>
-              <TooltipTrigger>
-                <LogOut
-                  size={32}
-                  className="text-red-500 p-2 hover:bg-app-gray-100 rounded-full"
-                  strokeWidth={2.4}
-                  onClick={handleOpenLogoutConfirmationModal}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Logout</p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        </section>
+          <Button
+            className="rounded-full bg-red-600 hover:bg-red-700 text-white text-sm font-semibold w-full"
+            onClick={handleOpenLogoutConfirmationModal}
+          >
+            Logout <LogOut strokeWidth={2.4} size={18} />
+          </Button>
+        </div>
       </section>
 
       {logoutConfirmationModalOpened && (

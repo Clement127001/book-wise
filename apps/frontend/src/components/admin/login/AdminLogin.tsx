@@ -2,19 +2,15 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
-import { ChevronRight, RotateCw } from "lucide-react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { CommonInput } from "@/components/form/CommonInput";
-import { OTPInput } from "@/components/form/OTPInput";
-import AdminPrimaryButton from "@/components/admin/AdminPrimaryButton";
 import BackButton from "@/components/common/BackButton";
 import { useApi } from "@/hooks/useApi";
 import { useTimer } from "@/hooks/useTimer";
 import { getQueryClient } from "@/utils/api";
-import { validateEmail, validateOTP } from "@/utils/common";
 import { defaultLoginFormValues } from "@/utils/admin/login";
 import { LoginType } from "@/types/common";
 import Link from "next/link";
+import Login from "@/components/common/Login";
 
 const AdminLogin = () => {
   const router = useRouter();
@@ -25,13 +21,7 @@ const AdminLogin = () => {
     mode: "onSubmit",
   });
   const { makeApiCall } = useApi();
-  const { handleSubmit, setFocus, getValues, watch } = adminLoginForm;
-
-  const email = watch("email");
-  const otp = watch("otp");
-
-  const isEmailValid = validateEmail(email);
-  const isOTPValid = validateOTP(otp);
+  const { handleSubmit, setFocus, getValues } = adminLoginForm;
 
   const handleSendOTP = () => {
     const email = getValues("email");
@@ -139,74 +129,12 @@ const AdminLogin = () => {
               onSubmit={handleSubmit(onLogin)}
               className="space-y-8 mt-8 md:mt-10"
             >
-              <CommonInput
-                hForm={adminLoginForm}
-                label="email address"
-                name="email"
-                showError
-                placeholder="e.g: johndoe12@gmail.com"
-                registerOptions={{
-                  required: "Email is required",
-                  validate: (value) =>
-                    (typeof value === "string" && validateEmail(value)) ||
-                    "Please enter a valid email address",
-                }}
+              <Login
+                loginForm={adminLoginForm}
+                isEmailVerified={isEmailVerified}
+                handleSendOTP={handleResendOTP}
+                timer={timer}
               />
-              {!isEmailVerified && (
-                <AdminPrimaryButton
-                  className="w-full my-4"
-                  type="submit"
-                  disabled={!isEmailValid}
-                >
-                  Send OTP
-                  <ChevronRight className="group-hover:scale-[1.35] group-hover:translate-x-2 ease-linear transition-[300ms]" />
-                </AdminPrimaryButton>
-              )}
-
-              {isEmailVerified && (
-                <div className="mt-4">
-                  <OTPInput
-                    label={"Enter OTP"}
-                    name="otp"
-                    hForm={adminLoginForm}
-                    registerOptions={{
-                      required: "OTP is required",
-                      validate: (value) =>
-                        (typeof value === "string" && validateOTP(value)) ||
-                        "Please enter a valid OTP",
-                    }}
-                  />
-
-                  <AdminPrimaryButton
-                    className={`w-full mt-8`}
-                    type="submit"
-                    disabled={!isOTPValid}
-                  >
-                    Verify OTP
-                    <ChevronRight className="group-hover:scale-[1.35] group-hover:translate-x-2 ease-linear transition-[300ms]" />
-                  </AdminPrimaryButton>
-
-                  <div className="flex gap-3 font-normal text-[14px] mt-3">
-                    <p> Didn’t receive OTP ?</p>
-                    <p
-                      className={`flex gap-1 items-center ${
-                        timer > 0
-                          ? "text-app-gray-300 cursor-not-allowed"
-                          : "text-app-primary-700 cursor-pointer "
-                      }`}
-                      onClick={handleResendOTP}
-                    >
-                      {timer > 0 ? (
-                        `Resend OTP (${timer}s)`
-                      ) : (
-                        <>
-                          <RotateCw size={19} /> Resend OTP
-                        </>
-                      )}
-                    </p>
-                  </div>
-                </div>
-              )}
             </form>
           </div>
           <p className="text-gray-600 font-[450] text-left mb-4">
