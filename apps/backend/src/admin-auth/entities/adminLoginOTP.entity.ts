@@ -1,5 +1,5 @@
-import { Admin } from '../../admin/entities/admin.entity';
 import { Entity, ManyToOne, Property } from '@mikro-orm/core';
+import { Admin } from '../../admin/entities/admin.entity';
 import { BaseEntity } from '../../../base.entity';
 
 @Entity()

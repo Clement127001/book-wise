@@ -6,8 +6,8 @@ import {
   TsRest,
   TsRestRequest,
 } from '@ts-rest/nest';
-import { adminContract } from 'contract/admin/contract';
 import { AdminService } from './admin.service';
+import { adminContract } from 'contract/admin/contract';
 
 const adminAuthController = nestControllerContract(adminContract);
 export type AdminRequestShape = NestRequestShapes<typeof adminAuthController>;

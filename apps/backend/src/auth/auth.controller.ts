@@ -5,8 +5,8 @@ import {
   TsRest,
   NestRequestShapes,
 } from '@ts-rest/nest';
-import { Auth, getAccountFromToken } from './decorators/auth.decorator';
 import { Account } from './entities/account.entity';
+import { Auth, getAccountFromToken } from './decorators/auth.decorator';
 import { accountContract } from 'contract/account/contract';
 
 const authController = nestControllerContract(accountContract);

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { LogOut } from "lucide-react";
 import SidebarLink from "@/components/admin/sidebar/SidebarLink";
 import UserAvatar from "@/components/common/UserAvatar";
+import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
@@ -14,7 +15,6 @@ import { useUserData } from "@/context/UserDataProvider";
 import useLogout from "@/hooks/useLogout";
 import { adminSidebarLinks } from "@/utils/admin/common";
 import { getFullName } from "@/utils/common";
-import { Button } from "@/components/ui/button";
 
 const LogoutConfirmationModal = dynamic(
   import("@/components/common/ConfirmationModal").then((mod) => mod.default),

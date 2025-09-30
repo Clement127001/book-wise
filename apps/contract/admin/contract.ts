@@ -8,7 +8,7 @@ export const adminContract = c.router(
   {
     createAdmin: {
       method: "POST",
-      path: "/createAdmin",
+      path: "/create-admin",
       body: AdminBaseSchema,
       responses: { 201: CreateUserSuccessSchema },
     },

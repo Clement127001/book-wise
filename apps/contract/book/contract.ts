@@ -37,7 +37,7 @@ export const bookContract = c.router(
     },
     getAllBooks: {
       method: "GET",
-      path: "/allBooks",
+      path: "/all-books",
       query: GetAllBooksQuerySchema,
       responses: { 200: createPaginatedResponseSchema(BookDetailsSchema) },
     },

@@ -28,6 +28,7 @@ export class AuthService {
           'id',
           'avatarUrl',
           'user',
+          'admin',
         ],
       },
     );

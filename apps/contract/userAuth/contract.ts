@@ -14,7 +14,7 @@ export const userAuthContract = c.router(
   {
     generateUserEmailVerficationOTP: {
       method: "POST",
-      path: "/generateUserEmailVerficationOTP",
+      path: "/generate-user-email-verfication-OTP",
       body: emailVerificationRequestSchema,
       responses: {
         200: SuccessSchema,
@@ -22,7 +22,7 @@ export const userAuthContract = c.router(
     },
     verfiyUserEmailVerificationOTP: {
       method: "POST",
-      path: "/verifyUserEmailVerficationOTP",
+      path: "/verify-user-email-verfication-OTP",
       body: VerifyEmailOTPRequestSchema,
       responses: {
         201: emailVerficationSuccessSchema,
@@ -30,7 +30,7 @@ export const userAuthContract = c.router(
     },
     generateUserLoginOTP: {
       method: "POST",
-      path: "/generateUserLoginOTP",
+      path: "/generate-user-login-OTP",
       body: LoginOTPRequetSchema,
       responses: {
         200: SuccessSchema,
@@ -38,7 +38,7 @@ export const userAuthContract = c.router(
     },
     verifyUserLoginOTP: {
       method: "POST",
-      path: "/verifyUserLoginOTP",
+      path: "/verify-user-login-OTP",
       body: VerifyEmailOTPRequestSchema,
       responses: {
         200: LoginOTPVerifiedSuccessSchema,
@@ -46,6 +46,6 @@ export const userAuthContract = c.router(
     },
   },
   {
-    pathPrefix: "/userAuth",
+    pathPrefix: "/user-auth",
   }
 );

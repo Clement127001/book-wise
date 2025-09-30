@@ -14,8 +14,6 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
       contract.account.getAccountDetail.path,
     ]);
 
-  console.log(data);
-
   if (isLoading) return <div>loading...</div>;
 
   if (error) return <div>error occurred</div>;
@@ -38,6 +36,7 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
   const path = router.pathname;
 
   if (!isLoggedIn && loginRestrictedPages.includes(path)) return <></>;
+
   if (!isLoggedIn || loginPages.includes(path)) return <>{children}</>;
 
   return <UserProvider>{children}</UserProvider>;

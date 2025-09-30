@@ -1,7 +1,21 @@
 import Cookies from "js-cookie";
 
-export const loginPages = ["/admin/login", "/user/login", "/user/register"];
-export const loginRestrictedPages = ["/admin/dashboard", "/user/home"];
+export const loginPages = [
+  "/admin/login",
+  "/admin/register",
+  "/user/login",
+  "/user/register",
+  "/superadmin/login",
+];
+export const loginRestrictedPages = [
+  "/user/home",
+  "/admin/dashboard",
+  "/admin/all-users",
+  "/admin/book/",
+  "/admin/account-request",
+  "/admin/all-books",
+  "/admin/borrow-request",
+];
 
 export const validateToken = (token: string | undefined) => {
   return token !== undefined && token.length !== 0;

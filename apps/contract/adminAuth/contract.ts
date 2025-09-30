@@ -14,7 +14,7 @@ export const adminAuthContract = c.router(
   {
     generateAdminLoginOTP: {
       method: "POST",
-      path: "/generateAdminLoginOTP",
+      path: "/generate-admin-login-OTP",
       body: LoginOTPRequetSchema,
       responses: {
         200: SuccessSchema,
@@ -22,7 +22,7 @@ export const adminAuthContract = c.router(
     },
     verifyAdminLoginOTP: {
       method: "POST",
-      path: "/verifyAdminLoginOTP",
+      path: "/verify-admin-login-OTP",
       body: VerifyEmailOTPRequestSchema,
       responses: {
         201: LoginOTPVerifiedSuccessSchema,
@@ -30,7 +30,7 @@ export const adminAuthContract = c.router(
     },
     generateAdminEmailVerficationOTP: {
       method: "POST",
-      path: "/generateAdminEmailVerficationOTP",
+      path: "/generate-admin-email-verfication-OTP",
       body: emailVerificationRequestSchema,
       responses: {
         200: SuccessSchema,
@@ -38,12 +38,12 @@ export const adminAuthContract = c.router(
     },
     verfiyAdminEmailVerificationOTP: {
       method: "POST",
-      path: "/verifyAdminEmailVerficationOTP",
+      path: "/verify-admin-email-verfication-OTP",
       body: VerifyEmailOTPRequestSchema,
       responses: {
         201: emailVerficationSuccessSchema,
       },
     },
   },
-  { pathPrefix: "/adminAuth" }
+  { pathPrefix: "/admin-auth" }
 );

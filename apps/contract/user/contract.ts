@@ -22,7 +22,7 @@ export const userContract = c.router(
   {
     createUser: {
       method: "POST",
-      path: "/createUser",
+      path: "/create-user",
       body: UserBaseSchema,
       responses: {
         201: CreateUserSuccessSchema,
@@ -30,20 +30,20 @@ export const userContract = c.router(
     },
     getUserDetails: {
       method: "GET",
-      path: "/userDetail",
+      path: "/user-detail",
       responses: {
         200: UserDetailsSchema,
       },
     },
     getBorrowedBooks: {
       method: "GET",
-      path: "/getBorrowedBooks",
+      path: "/get-borrowe-books",
       query: PaginatedRequestSchema,
       responses: { 200: GetBorrowedBooks },
     },
     updateUserDetails: {
       method: "PATCH",
-      path: "/updateUser",
+      path: "/update-user",
       body: UserBaseSchema,
       responses: {
         200: SuccessSchema,
@@ -51,7 +51,7 @@ export const userContract = c.router(
     },
     getAllAccountRequest: {
       method: "GET",
-      path: "/allAccountRequest",
+      path: "/all-account-request",
       query: GetAllAccountQuerySchema,
       responses: {
         200: GetAllAccountRequestSchema,
@@ -59,13 +59,13 @@ export const userContract = c.router(
     },
     getAllUsers: {
       method: "GET",
-      path: "/allUsers",
+      path: "/all-users",
       query: GetAllUserDetailsQuerySchema,
       responses: { 200: GetAllUserSchema },
     },
     changeAccountStatus: {
       method: "PATCH",
-      path: "/changeAccountStatus",
+      path: "/change-account-status",
       body: ChangeStatusRequestSchema,
       responses: { 200: SuccessSchema },
     },

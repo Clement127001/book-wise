@@ -8,8 +8,8 @@ import {
 import { Account } from '@/auth/entities/account.entity';
 import { JWTAuthGuard } from '@/auth/jwt-auth.guard';
 import { RolesGuard } from '@/auth/roles.guard';
-import { UserRoleEnum } from 'contract/enum';
 import { OptionalJWTAuthGuard } from '@/auth/optional.guard';
+import { UserRoleEnum } from 'contract/enum';
 
 export const ROLES_KEY = 'roles';
 

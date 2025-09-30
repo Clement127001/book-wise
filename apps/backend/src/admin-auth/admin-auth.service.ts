@@ -1,12 +1,12 @@
 import { EntityManager, QueryOrder, wrap } from '@mikro-orm/postgresql';
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { checkOTPExpiration, generateOTP } from '@/utils';
 import { Admin } from '@/admin/entities/admin.entity';
 import { AdminLoginOTP } from '@/admin-auth/entities/adminLoginOTP.entity';
 import { EmailVerification } from '@/auth/entities/emailVerification.entity';
 import { RegisterOTP } from '@/auth/entities/registerOTP.entity';
 import { AdminAuthRequestShape } from '@/admin-auth/admin-auth.controller';
 import { AuthService } from '@/auth/auth.service';
-import { checkOTPExpiration, generateOTP } from '@/utils';
 import { UserRoleEnum } from 'contract/enum';
 
 @Injectable()
