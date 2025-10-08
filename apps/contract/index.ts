@@ -7,10 +7,12 @@ import { accountContract } from "./account/contract";
 import { genreContract } from "./genre/contract";
 import { bookContract } from "./book/contract";
 import { adminContract } from "./admin/contract";
+import { superadminContract } from "./superadmin/contract";
 
 const c = initContract();
 
 export const contract = c.router({
+  superadmin: superadminContract,
   adminAuth: adminAuthContract,
   admin: adminContract,
   userAuth: userAuthContract,

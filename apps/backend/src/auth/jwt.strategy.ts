@@ -21,14 +21,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: { id: string; email: string }) {
     try {
       const account = await this.authService.validateAccount(payload.id);
-      if (!account?.admin?.isVerified) {
-        throw new BadRequestException('Account is not verified.');
-      }
       return account;
     } catch (err) {
-      if (err instanceof BadRequestException) {
-        throw new BadRequestException(err);
-      }
       return null;
     }
   }

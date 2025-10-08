@@ -6,9 +6,9 @@
 
 - [x] admin auth
 - [x] user auth
-- [ ] admin dashboard
 - [x] add books
 - [x] view book details and edit books
+- [ ] admin dashboard
 
 ### the following things are need to be done before tuesday (14/03):
 
@@ -19,11 +19,11 @@
 - [x] do auth part
 - [x] frontend for auth part with the email verification
 - [x] project setup for frontend with the colors -> no need for mobile responsiveness for v 1.0
-- [ ] admin panel routes
-- [ ] frontend for admin panel
-- [ ] user panel routes
-- [ ] user panel frontend
-- [ ] model development for book recommendation system
+- [x] admin panel routes
+- [x] frontend for admin panel
+- [x] user panel routes
+- [x] user panel frontend
+- [x] model development for book recommendation system
 - [ ] deployment setup for the frontend
 - [ ] deployment setup for the backend
 
@@ -36,3 +36,8 @@
 ### to connect to the psql in terminal
 
 - docker exec -it <postgres-image-name> psql -U <user-name> -d <db-name>
+
+## Design
+
+- what are we are going to to is not split admin from superadmin ( where he is also the admin but with the superadmin role, so I can reuse everything that I could )
+- we can only reuse the entity, but not the modules and controllers

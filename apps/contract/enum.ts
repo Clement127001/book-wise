@@ -7,6 +7,7 @@ export enum UserAccountStatus {
 export enum UserRoleEnum {
   ADMIN = "Admin",
   USER = "User",
+  SUPERADMIN = "Superadmin",
 }
 
 export enum BorrowRequestStatusEnum {

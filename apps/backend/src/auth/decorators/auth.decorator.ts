@@ -33,6 +33,13 @@ export const AdminOnlyAuth = () => {
   );
 };
 
+export const SuperadminOnlyAuth = () => {
+  return (
+    applyDecorators(UseGuards(JWTAuthGuard, RolesGuard)),
+    SetMetadata(ROLES_KEY, UserRoleEnum.SUPERADMIN)
+  );
+};
+
 export const UserOnlyAuth = () => {
   return applyDecorators(
     UseGuards(JWTAuthGuard, RolesGuard),

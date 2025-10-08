@@ -42,10 +42,8 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
     if (!token && loginRestrictedPages.includes(path)) {
       router.push("/?ua=" + true);
       return;
-    } else if (token) {
-      if (loginPages.includes(path)) {
-        router.push("/");
-      }
+    } else if (token && loginPages.includes(path)) {
+      router.push("/");
     } else {
       refreshLoginState();
     }

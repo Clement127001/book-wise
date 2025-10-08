@@ -1,17 +1,17 @@
 import { initContract } from "@ts-rest/core";
 import {
-  CreateUserSuccessSchema,
   LoginOTPRequetSchema,
   LoginOTPVerifiedSuccessSchema,
   PaginatedRequestSchema,
   SuccessSchema,
   VerifyEmailOTPRequestSchema,
 } from "../common";
-import { AdminBaseSchema, verifyAdminRequestSchema } from "../admin/schema";
+import { verifyAdminRequestSchema } from "../admin/schema";
+import { GetAllAdminSchema } from "./schema";
 
 const c = initContract();
 
-export const adminContract = c.router(
+export const superadminContract = c.router(
   {
     generateSuperadminLoginOTP: {
       method: "POST",
@@ -33,7 +33,7 @@ export const adminContract = c.router(
       method: "GET",
       path: "/list-admin",
       query: PaginatedRequestSchema,
-      responses: { 200: AdminBaseSchema },
+      responses: { 200: GetAllAdminSchema },
     },
     verifyAdmin: {
       method: "PATCH",
